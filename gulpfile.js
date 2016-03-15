@@ -11,7 +11,13 @@ var paths = {
   sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['angular']);
+
+gulp.task('angular', function() {
+  gulp.src(['./www/js/app/**/*.module.js', './www/js/app/**/*.js'])
+    .pipe(concat('all.min.js'))
+    .pipe(gulp.dest('./www/js/'));
+});
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -28,6 +34,7 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch(['./www/js/app/**/*.module.js', './www/js/app/**/*.js'], ['angular']);
 });
 
 gulp.task('install', ['git-check'], function() {
