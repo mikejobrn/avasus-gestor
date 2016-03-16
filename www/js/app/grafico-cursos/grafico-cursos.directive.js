@@ -98,7 +98,7 @@
                     useHighStocks: false,
                     //size (optional) if left out the chart will default to size of the div or something sensible.
                     size: {
-                        width: 400,
+                        width: 300,
                         height: 300
                     },
                     //function (optional)
