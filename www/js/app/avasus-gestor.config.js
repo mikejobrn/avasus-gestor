@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('AvasusGestor', ['ionic'])
+        .module('AvasusGestor')
         .config(function($stateProvider, $urlRouterProvider) {
 
             // Ionic uses AngularUI Router which uses the concept of states
