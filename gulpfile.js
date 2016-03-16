@@ -34,7 +34,7 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
-  gulp.watch(['./www/js/app/**/*.module.js', './www/js/app/**/*.js'], ['angular']);
+  gulp.watch(['./www/js/app/**/*.module.js', './www/js/app/**/*.js', './www/**/*.html'], ['angular']);
 });
 
 gulp.task('install', ['git-check'], function() {
