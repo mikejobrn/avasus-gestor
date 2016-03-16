@@ -25,16 +25,16 @@
         }
     }
 
-    Controller.$inject = ['avasusService'];
+    Controller.$inject = ['dadosGeraisService'];
 
     /* @ngInject */
-    function Controller(avasusService) {
+    function Controller(dadosGeraisService) {
         var vm = this;
 
         activate();
 
         function activate() {
-            avasusService.get().then(
+            dadosGeraisService.get().then(
                 function (sucesso) {
                     vm.dadosGerais = sucesso;
                 },
