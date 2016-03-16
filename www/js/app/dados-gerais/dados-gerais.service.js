@@ -5,10 +5,10 @@
         .module('AvasusGestor')
         .factory('dadosGeraisService', dadosGeraisService);
 
-    dadosGeraisService.$inject = ['$http', "constantes", 'avasusService'];
+    dadosGeraisService.$inject = ['$http', 'avasusService'];
 
     /* @ngInject */
-    function dadosGeraisService($http, constantes, avasusService) {
+    function dadosGeraisService($http, avasusService) {
         var detalhes = {
                 usuarios: 0,
                 cursos: 0,
