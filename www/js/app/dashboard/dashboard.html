@@ -1,18 +1,9 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
+    <ag-dados-gerais></ag-dados-gerais>
+
     <div class="card">
-      <div class="item item-divider">
-        Números gerais
-      </div>
-      <div class="item item-text-wrap">
-        Usuários totais: <span class="positive">{{ vm.dashboard.usuarios|number }}</span>
-      </div>
-      <div class="item item-text-wrap">
-        Cursos ativos: <span class="positive">{{ vm.dashboard.cursos|number }}</span>
-      </div>
-      <div class="item item-text-wrap">
-        Usuários certificados: <span class="positive">{{ vm.dashboard.certificados|number }}</span>
-      </div>
+        <highchart id="chart1" config="vm.chartConfig"></highchart>
     </div>
   </ion-content>
 </ion-view>
