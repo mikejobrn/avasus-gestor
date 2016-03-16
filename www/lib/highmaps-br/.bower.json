@@ -1,0 +1,13 @@
+{
+  "name": "br-all",
+  "_cacheHeaders": {
+    "ETag": "W/\"0fa0a6542be55397477674615940f90d\"",
+    "Last-Modified": "Mon, 17 Aug 2015 14:04:07 GMT",
+    "Content-Type": "application/x-javascript"
+  },
+  "_release": "e-tag:W/\"0fa0a65",
+  "main": "index.js",
+  "_source": "https://code.highcharts.com/mapdata/countries/br/br-all.js",
+  "_target": "*",
+  "_originalSource": "https://code.highcharts.com/mapdata/countries/br/br-all.js"
+}
