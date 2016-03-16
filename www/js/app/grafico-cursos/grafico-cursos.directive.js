@@ -52,7 +52,7 @@
                         },
                         plotOptions: {
                             pie: {
-                                allowPointSelect: true,
+                                // allowPointSelect: true,
                                 dataLabels: {
                                     enabled: false
                                 }
