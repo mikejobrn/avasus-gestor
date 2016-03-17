@@ -3,7 +3,12 @@
 
     angular
         .module('AvasusGestor', ['ionic', 'highcharts-ng'])
-        .run(function($ionicPlatform) {
+        .run(run);
+
+        run.$inject = ['$ionicPlatform'];
+
+        /* @ngInject */
+        function run($ionicPlatform) {
             $ionicPlatform.ready(function() {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
@@ -16,5 +21,5 @@
                     StatusBar.styleDefault();
                 }
             });
-        });
+        }
 })();

@@ -7,6 +7,7 @@
 
     avasusService.$inject = ['$http', "constantes"];
 
+    /* @ngInject */
     function avasusService($http, constantes) {
         var service = {
                 getUrl: getUrl

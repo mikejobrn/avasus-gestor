@@ -4,7 +4,12 @@
 
     angular
         .module('AvasusGestor')
-        .config(function($stateProvider, $urlRouterProvider) {
+        .config(config);
+
+        config.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+        /* @ngInject */
+        function config($stateProvider, $urlRouterProvider) {
             $stateProvider
                 .state('inicio', {
                     url: '/inicio',
@@ -12,5 +17,5 @@
                     controller: 'InicioCtrl',
                     controllerAs: 'vm'
                 });
-        });
+        }
 })();

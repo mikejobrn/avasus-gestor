@@ -4,7 +4,12 @@
 
     angular
         .module('AvasusGestor')
-        .config(function($stateProvider, $urlRouterProvider) {
+        .config(config);
+
+        config.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+        /* @ngInject */
+        function config($stateProvider, $urlRouterProvider) {
 
           // Ionic uses AngularUI Router which uses the concept of states
           // Learn more here: https://github.com/angular-ui/ui-router
@@ -23,5 +28,5 @@
               }
             }
           });
-        });
+        }
 })();

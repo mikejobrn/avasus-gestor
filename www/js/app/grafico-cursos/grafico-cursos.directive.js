@@ -25,10 +25,10 @@
         }
     }
 
-    Controller.$inject = ['highchartsNG'];
+    Controller.$inject = ['highchartsNG', 'avasusService', '$http', '$scope'];
 
     /* @ngInject */
-    function Controller(highchartsNG) {
+    function Controller(highchartsNG, avasusService, $http, $scope) {
         var vm = this;
 
         activate();
@@ -44,11 +44,16 @@
                             type: 'pie'
                         },
                         tooltip: {
-                            pointFormat: 'Usuários inscritos: {point.y} ({point.percentage:.1f}%)',
+                            pointFormat: 'Acessos: {point.y} ({point.percentage:.1f}%)',
                             style: {
-                                padding: 10,
-                                fontWeight: 'bold'
-                            }
+                                padding: 10
+                            }//,
+                            // useHTML: true,
+                            // formatter: function() {
+                            //     return "<div style='white-space:normal; min-width:100px; max-width:200px'>" +
+                            //         "<b>" + this.point.name + "</b><br>" +
+                            //         "Acessos: " + this.y + " (" + Highcharts.numberFormat(this.percentage, 2) + "%)</div>";
+                            // }
                         },
                         plotOptions: {
                             pie: {
@@ -62,24 +67,25 @@
                     //The below properties are watched separately for changes.
 
                     //Series object (optional) - a list of series using normal Highcharts series options.
-                    series: [{
-                        data: [{
-                            name: 'Estimulação Precoce',
-                            y: 30
-                        }, {
-                            name: 'Combate ao Aedes Aegypti',
-                            y: 22
-                        }, {
-                            name: 'Oxigenoterapia',
-                            y: 12
-                        }, {
-                            name: 'Teste',
-                            y: 8
-                        }, {
-                            name: 'Outros',
-                            y: 7
-                        }]
-                    }],
+                    series: [{ data: [] }],
+                    // series: [{
+                    //     data: [{
+                    //         name: 'Estimulação Precoce',
+                    //         y: 30
+                    //     }, {
+                    //         name: 'Combate ao Aedes Aegypti',
+                    //         y: 22
+                    //     }, {
+                    //         name: 'Oxigenoterapia',
+                    //         y: 12
+                    //     }, {
+                    //         name: 'Teste',
+                    //         y: 8
+                    //     }, {
+                    //         name: 'Outros',
+                    //         y: 7
+                    //     }]
+                    // }],
                     //Title configuration (optional)
                     title: {
                         text: 'Usuários inscritos por curso'
@@ -107,6 +113,39 @@
                     }
                 };
             }, vm);
+
+            var url = avasusService.getUrl('widesus_dashboard_curso');
+            $http.get(url).then(
+                function (resultado) {
+                    var cursos = resultado.data.map(function (curso) {
+                        return {
+                            name: curso.curso,
+                            y: curso.acessos
+                        };
+                    });
+
+                    var cursosOrdenados = cursos.sort(function (a, b) {
+                        return b.y - a.y;
+                    });
+
+                    var topCursos = cursosOrdenados;
+                    var limite = 10;
+                    if (cursosOrdenados.length > limite) {
+                        topCursos = cursosOrdenados.slice(0, limite - 1);
+                        topCursos.push({
+                            name: 'Outros',
+                            y: cursosOrdenados.slice(limite - 1).reduce(
+                                function (total, curso) {
+                                    return total + curso.y;
+                                },
+                                0
+                            )
+                        });
+                    }
+
+                    vm.chartConfig.series[0].data = topCursos;
+                }
+            );
         }
     }
 })();
