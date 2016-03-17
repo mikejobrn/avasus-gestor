@@ -11,6 +11,7 @@
             restrict: 'EA',
             templateUrl: 'js/app/mapa-cursos/mapa-cursos.html',
             scope: {
+
             },
             link: linkFunc,
             controller: Controller,
@@ -25,133 +26,15 @@
         }
     }
 
-    Controller.$inject = ['highchartsNG'];
+    Controller.$inject = ['highchartsNG', 'cursoService', '$scope'];
 
     /* @ngInject */
-    function Controller(highchartsNG) {
+    function Controller(highchartsNG, cursoService, $scope) {
         var vm = this;
 
         activate();
 
         function activate() {
-            var norte = [
-                {
-                    "hc-key": "br-am",
-                    "value": 45
-                },
-                {
-                    "hc-key": "br-pa",
-                    "value": 654
-                },
-                {
-                    "hc-key": "br-rr",
-                    "value": 12
-                },
-                {
-                    "hc-key": "br-ro",
-                    "value": 20
-                },
-                {
-                    "hc-key": "br-to",
-                    "value": 3
-                },
-                {
-                    "hc-key": "br-ap",
-                    "value": 5
-                },
-                {
-                    "hc-key": "br-ac",
-                    "value": 0
-                },
-            ];
-            var nordeste = [
-                {
-                    "hc-key": "br-ma",
-                    "value": 564
-                },
-                {
-                    "hc-key": "br-pi",
-                    "value": 465
-                },
-                {
-                    "hc-key": "br-ce",
-                    "value": 214
-                },
-                {
-                    "hc-key": "br-rn",
-                    "value": 3542
-                },
-                {
-                    "hc-key": "br-pb",
-                    "value": 231
-                },
-                {
-                    "hc-key": "br-pe",
-                    "value": 5465
-                },
-                {
-                    "hc-key": "br-se",
-                    "value": 564
-                },
-                {
-                    "hc-key": "br-al",
-                    "value": 654
-                },
-                {
-                    "hc-key": "br-ba",
-                    "value": 55
-                },
-            ];
-            var centroOeste = [
-                {
-                    "hc-key": "br-go",
-                    "value": 5623
-                },
-                {
-                    "hc-key": "br-df",
-                    "value": 212
-                },
-                {
-                    "hc-key": "br-mt",
-                    "value": 132
-                },
-                {
-                    "hc-key": "br-ms",
-                    "value": 231
-                },
-            ];
-            var sudeste = [
-                {
-                    "hc-key": "br-sp",
-                    "value": 10432
-                },
-                {
-                    "hc-key": "br-mg",
-                    "value": 1450
-                },
-                {
-                    "hc-key": "br-es",
-                    "value": 3210
-                },
-                {
-                    "hc-key": "br-rj",
-                    "value": 7804
-                }
-            ];
-            var sul = [
-                {
-                    "hc-key": "br-sc",
-                    "value": 321
-                },
-                {
-                    "hc-key": "br-rs",
-                    "value": 46
-                },
-                {
-                    "hc-key": "br-pr",
-                    "value": 987
-                }
-            ];
             var corSelecao = '#f04847';
             var corBorda = '#555';
 
@@ -178,7 +61,7 @@
                     {
                         name: 'Norte',
                         allAreas: false,
-                        data : norte,
+                        data : [],
                         mapData: Highcharts.maps['countries/br/br-all'],
                         joinBy: ['hc-key'],
                         borderColor: corBorda,
@@ -196,7 +79,7 @@
                     {
                         name: 'Nordeste',
                         allAreas: false,
-                        data : nordeste,
+                        data : [],
                         mapData: Highcharts.maps['countries/br/br-all'],
                         joinBy: ['hc-key'],
                         borderColor: corBorda,
@@ -214,7 +97,7 @@
                     {
                         name: 'Centro-Oeste',
                         allAreas: false,
-                        data : centroOeste,
+                        data : [],
                         mapData: Highcharts.maps['countries/br/br-all'],
                         joinBy: ['hc-key'],
                         borderColor: corBorda,
@@ -232,7 +115,7 @@
                     {
                         name: 'Sudeste',
                         allAreas: false,
-                        data : sudeste,
+                        data : [],
                         mapData: Highcharts.maps['countries/br/br-all'],
                         joinBy: ['hc-key'],
                         borderColor: corBorda,
@@ -250,7 +133,7 @@
                     {
                         name: 'Sul',
                         allAreas: false,
-                        data : sul,
+                        data : [],
                         mapData: Highcharts.maps['countries/br/br-all'],
                         joinBy: ['hc-key'],
                         borderColor: corBorda,
@@ -267,6 +150,32 @@
                     }
                 ]
             };
+
+            function carregarDadosRegiao(estados, idRegiao) {
+                return Promise.all(
+                    estados.map(function (estado) {
+                        return cursoService.getResumoPorEstado(estado).then(function (resultado) {
+                            return {
+                                "hc-key": "br-" + estado,
+                                "value": resultado.usuarios
+                            };
+                        });
+                    })
+                ).then(function (resultado) {
+                    vm.config.series[idRegiao].data = resultado;
+                });
+            }
+
+            Promise.all([
+                carregarDadosRegiao(['ac', 'am', 'rr', 'ro', 'pa', 'ap', 'to'], 0),
+                carregarDadosRegiao(['ma', 'pi', 'ce', 'rn', 'pb', 'pe', 'al', 'se', 'ba'], 1),
+                carregarDadosRegiao(['sp', 'es', 'rj', 'mg'], 2),
+                carregarDadosRegiao(['pr', 'sc', 'rs'], 3),
+                carregarDadosRegiao(['ms', 'mt', 'go', 'df'], 4)
+            ]).then(function() {
+                $scope.$apply();
+            });
+
         }
     }
 })();
