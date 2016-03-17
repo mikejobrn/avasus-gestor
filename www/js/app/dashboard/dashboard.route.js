@@ -13,7 +13,7 @@
           $stateProvider
 
           // setup an abstract state for the tabs directive
-          .state('tab.dash', {
+          .state('app.dash', {
             url: '/dash',
             views: {
               'menuContent': {
