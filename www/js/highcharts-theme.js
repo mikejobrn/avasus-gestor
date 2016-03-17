@@ -13,7 +13,7 @@
 Highcharts.theme = {
 	// colors: ["#7cb5ec", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
 	// 	"#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
-    colors: ["#52b99b", "#f48c37", "#f04847", "#9759ff", "#348ea9", "#bcdf00", "#ffdb7d",
+    colors: ["#52b99b", "#f48c37", "#f04847", "#348ea9", "#9759ff", "#bcdf00", "#ffdb7d",
             "#ff925f", "#7eceff", "#c49fff"],
 	chart: {
 		// backgroundColor: null,
