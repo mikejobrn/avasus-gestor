@@ -33,9 +33,11 @@
 
         activate();
 
+        vm.carregando = true;
+
         function activate() {
-            highchartsNG.ready(function(){
-                vm.chartConfig = {
+            // highchartsNG.ready(function(){
+                vm.config = {
 
                     options: {
                         //This is the Main Highcharts chart config. Any Highchart options are valid here.
@@ -112,7 +114,7 @@
                     //setup some logic for the chart
                     }
                 };
-            }, vm);
+            // }, vm);
 
             var url = avasusService.getUrl('widesus_dashboard_curso');
             $http.get(url).then(
@@ -143,7 +145,9 @@
                         });
                     }
 
-                    vm.chartConfig.series[0].data = topCursos;
+                    vm.config.series[0].data = topCursos;
+
+                    vm.carregando = false;
                 }
             );
         }

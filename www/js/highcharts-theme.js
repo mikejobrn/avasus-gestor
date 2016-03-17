@@ -16,59 +16,59 @@ Highcharts.theme = {
     colors: ["#52b99b", "#f48c37", "#f04847", "#9759ff", "#348ea9", "#bcdf00", "#ffdb7d",
             "#ff925f", "#7eceff", "#c49fff"],
 	chart: {
-		backgroundColor: null,
+		// backgroundColor: null,
 		style: {
 			fontFamily: "Open Sans"
 		}
 	},
-	title: {
-		style: {
-			fontSize: '16px',
-			fontWeight: 'bold',
-			textTransform: 'uppercase'
-		}
-	},
-	tooltip: {
-		borderWidth: 0,
-		backgroundColor: 'rgba(219,219,216,0.8)',
-		shadow: false
-	},
-	legend: {
-		itemStyle: {
-			fontWeight: 'bold',
-			fontSize: '13px'
-		}
-	},
-	xAxis: {
-		gridLineWidth: 1,
-		labels: {
-			style: {
-				fontSize: '12px'
-			}
-		}
-	},
-	yAxis: {
-		minorTickInterval: 'auto',
-		title: {
-			style: {
-				textTransform: 'uppercase'
-			}
-		},
-		labels: {
-			style: {
-				fontSize: '12px'
-			}
-		}
-	},
-	plotOptions: {
-		candlestick: {
-			lineColor: '#404048'
-		}
-	},
+	// title: {
+	// 	style: {
+	// 		fontSize: '16px',
+	// 		fontWeight: 'bold',
+	// 		textTransform: 'uppercase'
+	// 	}
+	// },
+	// tooltip: {
+	// 	borderWidth: 0,
+	// 	backgroundColor: 'rgba(219,219,216,0.8)',
+	// 	shadow: false
+	// },
+	// legend: {
+	// 	itemStyle: {
+	// 		fontWeight: 'bold',
+	// 		fontSize: '13px'
+	// 	}
+	// },
+	// xAxis: {
+	// 	gridLineWidth: 1,
+	// 	labels: {
+	// 		style: {
+	// 			fontSize: '12px'
+	// 		}
+	// 	}
+	// },
+	// yAxis: {
+	// 	minorTickInterval: 'auto',
+	// 	title: {
+	// 		style: {
+	// 			textTransform: 'uppercase'
+	// 		}
+	// 	},
+	// 	labels: {
+	// 		style: {
+	// 			fontSize: '12px'
+	// 		}
+	// 	}
+	// },
+	// plotOptions: {
+	// 	candlestick: {
+	// 		lineColor: '#404048'
+	// 	}
+	// },
 
 
 	// General
-	background2: '#F0F0EA'
+	// background2: '#F0F0EA'
 
 };
 

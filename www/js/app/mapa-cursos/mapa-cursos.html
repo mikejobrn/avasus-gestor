@@ -1,9 +1,8 @@
-<style>
-    #mapa_cursos .highcharts-container {
-        margin: auto;
-    }
-</style>
-
 <div class="card">
-    <highchart id="mapa_cursos" config="vm.config"></highchart>
+    <div ng-show="vm.carregando">
+        <div class="item item-wrapper">
+            Carregando mapa...
+        </div>
+    </div>
+    <highchart id="mapa_cursos" config="vm.config" ng-hide="vm.carregando"></highchart>
 </div>

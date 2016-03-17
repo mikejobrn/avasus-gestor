@@ -1,13 +1,8 @@
-<style>
-    #grafico_cursos .highcharts-container {
-        margin: auto;
-    }
-    /*.highcharts-tooltip span {
-        white-space: normal !important;
-        min-width: 200px;
-    }*/
-</style>
-
 <div class="card">
-    <highchart id="grafico_cursos" config="vm.chartConfig"></highchart>
+    <div ng-show="vm.carregando">
+        <div class="item item-wrapper">
+            Carregando gráfico...
+        </div>
+    </div>
+    <highchart id="grafico_cursos" config="vm.config" ng-hide="vm.carregando"></highchart>
 </div>

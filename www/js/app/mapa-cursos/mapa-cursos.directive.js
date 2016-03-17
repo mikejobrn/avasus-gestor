@@ -34,17 +34,17 @@
 
         activate();
 
-        function activate() {
-            var corSelecao = '#f04847';
-            var corBorda = '#555';
+        vm.carregando = true;
 
+        function activate() {
             vm.config = {
+                chartType: 'map',
+                title: {
+                    text: 'Usuários inscritos por região'
+                },
                 options: {
                     legend: {
                         enabled: false
-                    },
-                    chart: {
-                        borderColor: 'black'
                     },
                     mapNavigation: {
                         enabled: true,
@@ -52,104 +52,74 @@
                             verticalAlign: 'bottom'
                         }
                     },
-                },
-                chartType: 'map',
-                title : {
-                    text : 'Usuários inscritos por região'
+                    plotOptions: {
+                        map: {
+                            allAreas: false,
+                            joinBy: ['hc-key'],
+                            // dataLabels: {
+                            //     enabled: false,
+                            //     format: '{point.name}'
+                            // },
+                            // dataLabels: {
+                            //     enabled: true,
+                            //     color: '#FFFFFF',
+                            //     formatter: function () {
+                            //         if (this.point.properties && this.point.properties.labelrank.toString() < 5) {
+                            //             return this.point.properties['iso-a2'];
+                            //         }
+                            //     },
+                            //     format: null,
+                            //     style: {
+                            //         fontWeight: 'bold'
+                            //     }
+                            // },
+                            borderColor: '#555',
+                            // states: {
+                            //     hover: {
+                            //         color: corSelecao
+                            //     }
+                            // },
+                            mapData: Highcharts.maps['countries/br/br-all'],
+                            // tooltip: {
+                            //     headerFormat: '',
+                            //     pointFormat: '{point.name}: <b>{series.name}</b>'
+                            // }
+                        }
+                    }
                 },
                 series : [
                     {
                         name: 'Norte',
-                        allAreas: false,
-                        data : [],
-                        mapData: Highcharts.maps['countries/br/br-all'],
-                        joinBy: ['hc-key'],
-                        borderColor: corBorda,
-                        color: '#7eceff',
-                        states: {
-                            hover: {
-                                color: corSelecao
-                            }
-                        },
-                        dataLabels: {
-                            enabled: false,
-                            format: '{point.name}'
-                        }
+                        color: '#7eceff'
                     },
                     {
                         name: 'Nordeste',
-                        allAreas: false,
-                        data : [],
-                        mapData: Highcharts.maps['countries/br/br-all'],
-                        joinBy: ['hc-key'],
-                        borderColor: corBorda,
-                        color: '#ffdb7d',
-                        states: {
-                            hover: {
-                                color: corSelecao
-                            }
-                        },
-                        dataLabels: {
-                            enabled: false,
-                            format: '{point.name}'
-                        }
+                        color: '#ffdb7d'
                     },
                     {
                         name: 'Centro-Oeste',
-                        allAreas: false,
-                        data : [],
-                        mapData: Highcharts.maps['countries/br/br-all'],
-                        joinBy: ['hc-key'],
-                        borderColor: corBorda,
-                        color: '#bcdf00',
-                        states: {
-                            hover: {
-                                color: corSelecao
-                            }
-                        },
-                        dataLabels: {
-                            enabled: false,
-                            format: '{point.name}'
-                        }
+                        color: '#bcdf00'
                     },
                     {
                         name: 'Sudeste',
-                        allAreas: false,
-                        data : [],
-                        mapData: Highcharts.maps['countries/br/br-all'],
-                        joinBy: ['hc-key'],
-                        borderColor: corBorda,
-                        color: '#ff925f',
-                        states: {
-                            hover: {
-                                color: corSelecao
-                            }
-                        },
-                        dataLabels: {
-                            enabled: false,
-                            format: '{point.name}'
-                        }
+                        color: '#ff925f'
                     },
                     {
                         name: 'Sul',
-                        allAreas: false,
-                        data : [],
-                        mapData: Highcharts.maps['countries/br/br-all'],
-                        joinBy: ['hc-key'],
-                        borderColor: corBorda,
-                        color: '#c49fff',
-                        states: {
-                            hover: {
-                                color: corSelecao
-                            }
-                        },
-                        dataLabels: {
-                            enabled: false,
-                            format: '{point.name}'
-                        }
+                        color: '#c49fff'
                     }
                 ]
             };
+
+            Promise.all([
+                carregarDadosRegiao(['ac', 'am', 'rr', 'ro', 'pa', 'ap', 'to'], 0),
+                carregarDadosRegiao(['ma', 'pi', 'ce', 'rn', 'pb', 'pe', 'al', 'se', 'ba'], 1),
+                carregarDadosRegiao(['ms', 'mt', 'go', 'df'], 2),
+                carregarDadosRegiao(['sp', 'es', 'rj', 'mg'], 3),
+                carregarDadosRegiao(['pr', 'sc', 'rs'], 4)
+            ]).then(function() {
+                vm.carregando = false;
+            });
 
             function carregarDadosRegiao(estados, idRegiao) {
                 return Promise.all(
@@ -165,17 +135,6 @@
                     vm.config.series[idRegiao].data = resultado;
                 });
             }
-
-            Promise.all([
-                carregarDadosRegiao(['ac', 'am', 'rr', 'ro', 'pa', 'ap', 'to'], 0),
-                carregarDadosRegiao(['ma', 'pi', 'ce', 'rn', 'pb', 'pe', 'al', 'se', 'ba'], 1),
-                carregarDadosRegiao(['sp', 'es', 'rj', 'mg'], 2),
-                carregarDadosRegiao(['pr', 'sc', 'rs'], 3),
-                carregarDadosRegiao(['ms', 'mt', 'go', 'df'], 4)
-            ]).then(function() {
-                $scope.$apply();
-            });
-
         }
     }
 })();
