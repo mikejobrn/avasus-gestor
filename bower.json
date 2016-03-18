@@ -8,6 +8,7 @@
     "highcharts": "^4.2.3",
     "angular-i18n": "^1.5.0",
     "highcharts-ng": "^0.0.11",
-    "highmaps-br": "https://code.highcharts.com/mapdata/countries/br/br-all.js"
+    "highmaps-br": "https://code.highcharts.com/mapdata/countries/br/br-all.js",
+    "google-open-sans": "^1.0.0"
   }
 }

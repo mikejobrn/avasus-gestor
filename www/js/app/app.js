@@ -5,15 +5,16 @@
         .module('AvasusGestor')
         .controller('AppCtrl', AppCtrl);
 
-    AppCtrl.$inject = ['$ionicModal', '$scope', '$state'];
+    AppCtrl.$inject = ['$ionicModal', '$scope'];
 
     /* @ngInject */
-    function AppCtrl($ionicModal, $scope, $state) {
+    function AppCtrl($ionicModal, $scope) {
         var vm = this;
 
         activate();
 
         function activate() {
+            $scope.atualizacao = 0;
             criarModal('FiltroDados', 'js/app/filtro/filtro.modal.html');
             criarModal('FiltroEstado', 'js/app/filtro-estado/filtro-estado.modal.html');
         }
@@ -32,14 +33,6 @@
             $scope['fecharModal' + nome] = function () {
                 $scope['modal' + nome].hide();
             };
-        }
-
-        function esconderModais() {
-            $scope.forEach(function (key, value) {
-                if (key.startsWith('modal')) {
-                    $scope[value].hide();
-                }
-            });
         }
 
         vm.filtrarPorEstado = function(estado) {

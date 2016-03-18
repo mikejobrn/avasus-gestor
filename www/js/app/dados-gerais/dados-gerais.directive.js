@@ -11,9 +11,9 @@
             restrict: 'EA',
             templateUrl: 'js/app/dados-gerais/dados-gerais.html',
             scope: {
-                filtro: '='
+                filtro: '=',
+                atualizacao: '='
             },
-            // scope: true,
             link: linkFunc,
             controller: Controller,
             controllerAs: 'vm',
@@ -23,11 +23,12 @@
         return directive;
 
         function linkFunc(scope, el, attr, ctrl) {
-            // scope.filtro = attr.filtro;
             scope.$watch('vm.filtro', function (a) {
-                ctrl.carregando = true;
                 ctrl.activate();
-                console.log('Filtro changed');
+            });
+
+            scope.$watch('vm.atualizacao', function (a) {
+                ctrl.activate();
             });
         }
     }
@@ -41,18 +42,17 @@
         vm.carregando = true;
 
         vm.activate = function() {
-            console.log('Directive activated');
+            vm.carregando = true;
             dadosGeraisService.get(vm.filtro).then(
-                function (sucesso) {
-                    vm.dadosGerais = sucesso;
+                function(resultado) {
+                    vm.dadosGerais = resultado;
                     vm.carregando = false;
                 },
-                function (erro) {
-                    console.log(erro);
+                function(erro) {
+                    vm.erro = erro;
+                    vm.carregando = false;
                 }
             );
         };
-
-        vm.activate();
     }
 })();

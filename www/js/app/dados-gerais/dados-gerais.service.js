@@ -15,12 +15,14 @@
 
         return service;
 
-        function getDetalhes (filtro) {
+        ///////////////
+
+        function getDetalhes(filtro) {
             var url = avasusService.getUrl('widesus_dashboard');
+
             if (filtro && filtro.valor) {
                 url += '&' + filtro.campo + '=' + filtro.valor;
             }
-            console.log(url);
 
             return $http.get(url).then(
                 function (cardapio) {

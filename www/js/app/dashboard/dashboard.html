@@ -2,17 +2,17 @@
   <ion-content class="padding">
     <ion-refresher
       pulling-text="Puxe para atualizar..."
-      on-refresh="vm.atualizar()">
+      on-refresh="vm.atualizarDash()">
     </ion-refresher>
 
     <!-- <input type="text" placeholder="Filtro" ng-model="vm.filtro"> -->
 
     <!-- {{ vm.filtro }} -->
 
-    <ag-dados-gerais filtro="vm.filtro"></ag-dados-gerais>
+    <ag-dados-gerais filtro="filtro" atualizacao="atualizacao"></ag-dados-gerais>
 
-    <ag-grafico-cursos></ag-grafico-cursos>
+    <!-- <ag-grafico-cursos></ag-grafico-cursos>
 
-    <ag-mapa-cursos></ag-mapa-cursos>
+    <ag-mapa-cursos></ag-mapa-cursos> -->
   </ion-content>
 </ion-view>

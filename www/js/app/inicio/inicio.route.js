@@ -6,10 +6,10 @@
         .module('AvasusGestor')
         .config(config);
 
-        config.$inject = ['$stateProvider', '$urlRouterProvider'];
+        config.$inject = ['$stateProvider'];
 
         /* @ngInject */
-        function config($stateProvider, $urlRouterProvider) {
+        function config($stateProvider) {
             $stateProvider
                 .state('inicio', {
                     url: '/inicio',

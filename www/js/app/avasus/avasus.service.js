@@ -3,28 +3,31 @@
 
     angular
         .module('AvasusGestor')
-        .factory("avasusService", avasusService);
+        .factory('avasusService', avasusService);
 
-    avasusService.$inject = ['$http', "constantes"];
+    avasusService.$inject = ['constantes'];
 
     /* @ngInject */
-    function avasusService($http, constantes) {
+    function avasusService(constantes) {
         var service = {
                 getUrl: getUrl
             };
 
         return service;
 
-        function getUrl (funcao, parametros) {
+        ///////////////
+
+        function getUrl(funcao, parametros) {
             var url = constantes.API_URL +
                       constantes.API_SERVICO +
-                      "?wstoken=" + constantes.API_TOKEN +
-                      "&wsfunction=" + funcao +
-                      "&moodlewsrestformat=json";
+                      '?wstoken=' + constantes.API_TOKEN +
+                      '&wsfunction=' + funcao +
+                      '&moodlewsrestformat=json';
 
             if (parametros) {
                 url += parametros;
             }
+
             return url;
         }
     }
