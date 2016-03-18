@@ -46,7 +46,7 @@
                             type: 'pie'
                         },
                         tooltip: {
-                            pointFormat: 'Acessos: {point.y} ({point.percentage:.1f}%)',
+                            pointFormat: 'Inscritos: {point.y} ({point.percentage:.1f}%)',
                             style: {
                                 padding: 10
                             }//,
@@ -122,7 +122,7 @@
                     var cursos = resultado.data.map(function (curso) {
                         return {
                             name: curso.curso,
-                            y: curso.acessos
+                            y: curso.inscritos
                         };
                     });
 
