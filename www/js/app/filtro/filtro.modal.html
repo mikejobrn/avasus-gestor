@@ -1,0 +1,18 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Filtrar dados</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="fecharModalFiltroDados()">Fechar</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+      <div class="list">
+        <ion-radio>Estado</ion-radio>
+        <ion-radio>Perfil</ion-radio>
+        <ion-radio>Curso</ion-radio>
+        <div class="padding">
+          <button class="button button-block button-positive" ng-click="visualizarPerfil()">Filtrar</button>
+        </div>
+      </div>
+  </ion-content>
+</ion-modal-view>

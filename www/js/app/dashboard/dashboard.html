@@ -5,11 +5,11 @@
       on-refresh="vm.atualizar()">
     </ion-refresher>
 
-    <!-- <input type="text" placeholder="Filtro" ng-model="filtro">
+    <input type="text" placeholder="Filtro" ng-model="vm.filtro">
 
-    {{ filtro }} -->
+    {{ vm.filtro }}
 
-    <ag-dados-gerais filtro="filtro"></ag-dados-gerais>
+    <ag-dados-gerais filtro="vm.filtro"></ag-dados-gerais>
 
     <ag-grafico-cursos></ag-grafico-cursos>
 

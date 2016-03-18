@@ -24,7 +24,11 @@
 
         function linkFunc(scope, el, attr, ctrl) {
             // scope.filtro = attr.filtro;
-            console.log(attr);
+            scope.$watch('vm.filtro', function (a) {
+                ctrl.carregando = true;
+                ctrl.activate();
+                console.log('Filtro changed');
+            });
         }
     }
 
@@ -36,10 +40,9 @@
 
         vm.carregando = true;
 
-        activate();
-
-        function activate() {
-            dadosGeraisService.get().then(
+        vm.activate = function() {
+            console.log('Directive activated');
+            dadosGeraisService.get({ campo: 'estado', valor: vm.filtro }).then(
                 function (sucesso) {
                     vm.dadosGerais = sucesso;
                     vm.carregando = false;
@@ -48,6 +51,8 @@
                     console.log(erro);
                 }
             );
-        }
+        };
+
+        vm.activate();
     }
 })();

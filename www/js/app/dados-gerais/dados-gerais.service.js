@@ -9,27 +9,18 @@
 
     /* @ngInject */
     function dadosGeraisService($http, avasusService) {
-        var detalhes = {
-                usuarios: 0,
-                cursos: 0,
-                certificados: 0
-            },
-
-            service = {
-                set: setDetalhes,
+        var service = {
                 get: getDetalhes
             };
 
         return service;
 
-        function setDetalhes (novosDetalhes) {
-            detalhes.usuarios = novosDetalhes.usuarios;
-            detalhes.cursos = novosDetalhes.cursos;
-            detalhes.certificados = novosDetalhes.certificados;
-        }
-
-        function getDetalhes () {
+        function getDetalhes (filtro) {
             var url = avasusService.getUrl('widesus_dashboard');
+            if (filtro && filtro.valor) {
+                url += '&' + filtro.campo + '=' + filtro.valor;
+            }
+            console.log(url);
 
             return $http.get(url).then(
                 function (cardapio) {

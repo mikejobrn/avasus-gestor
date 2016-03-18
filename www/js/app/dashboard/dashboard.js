@@ -18,8 +18,11 @@
         }
 
         vm.atualizar = function() {
-            console.log('oi');
-            $window.location.reload();
+            console.log('Página atualizada');
+            var antigoFiltro = vm.filtro;
+            vm.filtro = '';
+            // vm.filtro = antigoFiltro;
+            // $window.location.reload();
             $scope.$broadcast('scroll.refreshComplete');
         };
     }

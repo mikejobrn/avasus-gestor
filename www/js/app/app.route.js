@@ -19,7 +19,9 @@
                 .state('app', {
                     url: '/app',
                     abstract: true,
-                    templateUrl: 'js/app/menu/menu.html'
+                    templateUrl: 'js/app/menu/menu.html',
+                    controller: 'AppCtrl',
+                    controllerAs: 'vm'
                 });
 
             // if none of the above states are matched, use this as the fallback
