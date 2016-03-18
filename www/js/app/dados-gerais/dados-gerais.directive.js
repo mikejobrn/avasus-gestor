@@ -42,7 +42,7 @@
 
         vm.activate = function() {
             console.log('Directive activated');
-            dadosGeraisService.get({ campo: 'estado', valor: vm.filtro }).then(
+            dadosGeraisService.get(vm.filtro).then(
                 function (sucesso) {
                     vm.dadosGerais = sucesso;
                     vm.carregando = false;

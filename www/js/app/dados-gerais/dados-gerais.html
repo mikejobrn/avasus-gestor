@@ -1,6 +1,10 @@
 <div class="card">
   <div class="item item-divider">
-    Números gerais <span ng-show="vm.filtro">- {{ vm.filtro }}</span>
+    Números gerais
+    <span ng-show="vm.filtro.valor">
+        <br>
+        <strong>{{ vm.filtro.campo|uppercase }} - {{ vm.filtro.valor|uppercase }}</strong>
+    </span>
   </div>
   <div ng-show="vm.carregando">
     <div class="item item-text-wrap">
