@@ -5,7 +5,7 @@
         .module('AvasusGestor')
         .controller('ContatoCtrl', ContatoCtrl);
 
-    ContatoCtrl.$inject = ['$ionicPopup', '$state'];
+    ContatoCtrl.$inject = ['$ionicPopup', '$window', '$state'];
 
     /* @ngInject */
     function ContatoCtrl($ionicPopup, $state) {
