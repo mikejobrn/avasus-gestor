@@ -90,7 +90,7 @@
                     // }],
                     //Title configuration (optional)
                     title: {
-                        text: 'Usuários inscritos por curso'
+                        text: null
                     },
                     //Boolean to control showing loading status on chart (optional)
                     //Could be a string if you want to show specific loading text.

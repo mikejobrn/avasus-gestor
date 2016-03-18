@@ -5,13 +5,13 @@
         .module('AvasusGestor')
         .controller('DashCtrl', DashCtrl);
 
-    DashCtrl.$inject = ['highchartsNG', '$window'];
+    DashCtrl.$inject = ['highchartsNG', '$window', '$scope'];
 
     /* @ngInject */
-    function DashCtrl(highchartsNG, $window) {
+    function DashCtrl(highchartsNG, $window, $scope) {
         var vm = this;
 
-        activate();
+        $scope.$on('$ionicView.enter', activate());
 
         function activate() {
 

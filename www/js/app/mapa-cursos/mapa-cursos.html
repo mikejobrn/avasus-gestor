@@ -1,8 +1,9 @@
 <div class="card">
-    <div ng-show="vm.carregando">
-        <div class="item item-wrapper">
-            Carregando mapa...
-        </div>
+    <div class="item item-divider">
+       Usuários Inscritos por região
+    </div>
+    <div class="item item-wrapper" ng-show="vm.carregando">
+        <ion-spinner></ion-spinner>
     </div>
     <highchart id="mapa_cursos" config="vm.config" ng-hide="vm.carregando"></highchart>
 </div>

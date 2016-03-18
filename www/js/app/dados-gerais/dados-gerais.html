@@ -1,17 +1,21 @@
 <div class="card">
   <div class="item item-divider">
-    Números gerais
+    Números gerais <span ng-show="vm.filtro">- {{ vm.filtro }}</span>
   </div>
-  <div class="item item-text-wrap">
-    <i class="icon ion-person"></i>
-    Usuários totais: <span class="positive">{{ vm.dadosGerais.usuarios|number }}</span>
+  <div ng-show="vm.carregando">
+    <div class="item item-text-wrap">
+      <ion-spinner></ion-spinner>
+    </div>
   </div>
-  <div class="item item-text-wrap">
-    <i class="icon ion-university"></i>
-    Cursos ativos: <span class="positive">{{ vm.dadosGerais.cursos|number }}</span>
-  </div>
-  <div class="item item-text-wrap">
-    <i class="icon ion-ribbon-b"></i>
-    Usuários certificados: <span class="positive">{{ vm.dadosGerais.certificados|number }}</span>
+  <div ng-hide="vm.carregando">
+    <div class="item item-text-wrap">
+      <i class="icon ion-person"></i> Usuários totais: <span class="positive">{{ vm.dadosGerais.usuarios|number }}</span>
+    </div>
+    <div class="item item-text-wrap">
+      <i class="icon ion-university"></i> Cursos ativos: <span class="positive">{{ vm.dadosGerais.cursos|number }}</span>
+    </div>
+    <div class="item item-text-wrap">
+      <i class="icon ion-ribbon-b"></i> Usuários certificados: <span class="positive">{{ vm.dadosGerais.certificados|number }}</span>
+    </div>
   </div>
 </div>

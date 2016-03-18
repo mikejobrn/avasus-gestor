@@ -40,7 +40,7 @@
             vm.config = {
                 chartType: 'map',
                 title: {
-                    text: 'Usuários inscritos por região'
+                    text: null//'Usuários inscritos por região'
                 },
                 options: {
                     legend: {

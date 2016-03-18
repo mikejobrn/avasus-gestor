@@ -48,3 +48,12 @@ $positive: #f04847 !default;
 .highcharts-container {
     margin: auto;
 }
+
+.item-divider {
+    text-align: center;
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+}
