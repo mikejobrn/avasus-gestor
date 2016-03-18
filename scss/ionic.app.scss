@@ -58,6 +58,11 @@ $positive: #f04847 !default;
     margin: auto;
 }
 
+.highcharts-tooltip span {
+    width: 200px;
+    white-space:normal !important; // add this line...
+}
+
 .item-divider {
     text-align: center;
 }

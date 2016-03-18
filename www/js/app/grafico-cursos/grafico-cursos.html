@@ -1,9 +1,22 @@
 <div class="card">
-    <div class="item item-divider">
-       Usuários Inscritos por curso
+  <div class="item item-divider">
+    Usuários Inscritos por Curso
+    <span ng-show="vm.filtro.valor">
+      <br>
+      <strong>{{ vm.filtro.campo|uppercase }} - {{ vm.filtro.valor|uppercase }}</strong>
+    </span>
+  </div>
+  <div ng-show="vm.carregando">
+    <div class="item item-text-wrap">
+      <ion-spinner></ion-spinner>
     </div>
-    <div class="item item-wrapper" ng-show="vm.carregando">
-        <ion-spinner></ion-spinner>
-    </div>
+  </div>
+  <div ng-hide="vm.carregando || vm.erro">
     <highchart id="grafico_cursos" config="vm.config" ng-hide="vm.carregando"></highchart>
+  </div>
+  <div ng-show="!vm.carregando && vm.erro">
+    <div class="item item-text-wrap">
+      Não foi possível obter os dados. Você está conectado à internet?
+    </div>
+  </div>
 </div>

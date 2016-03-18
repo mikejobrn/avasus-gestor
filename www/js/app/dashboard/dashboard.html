@@ -5,14 +5,10 @@
       on-refresh="vm.atualizarDash()">
     </ion-refresher>
 
-    <!-- <input type="text" placeholder="Filtro" ng-model="vm.filtro"> -->
-
-    <!-- {{ vm.filtro }} -->
-
     <ag-dados-gerais filtro="filtro" atualizacao="atualizacao"></ag-dados-gerais>
 
-    <!-- <ag-grafico-cursos></ag-grafico-cursos>
+    <ag-grafico-cursos filtro="filtro" atualizacao="atualizacao"></ag-grafico-cursos>
 
-    <ag-mapa-cursos></ag-mapa-cursos> -->
+    <ag-mapa-cursos filtro="filtro" atualizacao="atualizacao"></ag-mapa-cursos>
   </ion-content>
 </ion-view>
