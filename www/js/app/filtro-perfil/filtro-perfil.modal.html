@@ -1,0 +1,28 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Selecione um perfil</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="fecharModalFiltroPerfil()">Fechar</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Selecione o perfil
+        </div>
+        <select ng-model="perfil">
+          <option value=""></option>
+          <option value="ac">AC</option>
+          <option value="al">AL</option>
+          <option value="am">AM</option>
+          <option value="ap">AP</option>
+        </select>
+      </label>
+      <label class="item">
+        <button class="button button-block button-positive" ng-click="vm.filtrarPorPerfil(perfil)">Filtrar</button>
+      </label>
+    </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

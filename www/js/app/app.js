@@ -17,6 +17,7 @@
             $scope.atualizacao = 0;
             criarModal('FiltroDados', 'js/app/filtro/filtro.modal.html');
             criarModal('FiltroEstado', 'js/app/filtro-estado/filtro-estado.modal.html');
+            criarModal('FiltroPerfil', 'js/app/filtro-perfil/filtro-perfil.modal.html');
         }
 
         function criarModal(nome, caminhoTemplate) {
@@ -39,6 +40,12 @@
             $scope.modalFiltroEstado.hide();
             $scope.modalFiltroDados.hide();
             $scope.filtro = { campo: 'estado', valor: estado };
+        };
+
+        vm.filtrarPorPerfil = function(perfil) {
+            $scope.modalFiltroPerfil.hide();
+            $scope.modalFiltroDados.hide();
+            $scope.filtro = { campo: 'perfil', valor: perfil };
         };
     }
 })();
