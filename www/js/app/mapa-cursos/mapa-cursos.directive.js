@@ -11,7 +11,8 @@
             restrict: 'EA',
             templateUrl: 'js/app/mapa-cursos/mapa-cursos.html',
             scope: {
-
+                filtro: '=',
+                atualizacao: '='
             },
             link: linkFunc,
             controller: Controller,
@@ -22,14 +23,20 @@
         return directive;
 
         function linkFunc(scope, el, attr, ctrl) {
+            scope.$watch('vm.filtro', function (a) {
+                ctrl.activate();
+            });
 
+            scope.$watch('vm.atualizacao', function (a) {
+                ctrl.activate();
+            });
         }
     }
 
-    Controller.$inject = ['highchartsNG', 'cursoService', '$scope'];
+    Controller.$inject = ['cursoService', '$scope'];
 
     /* @ngInject */
-    function Controller(highchartsNG, cursoService, $scope) {
+    function Controller(cursoService, $scope) {
         var vm = this;
 
         activate();
@@ -37,10 +44,45 @@
         vm.carregando = true;
 
         function activate() {
-            vm.config = {
+            vm.config = getConfigMapa();
+
+            Promise.all([
+                carregarDadosRegiao(['ac', 'am', 'rr', 'ro', 'pa', 'ap', 'to'], 0),
+                carregarDadosRegiao(['ma', 'pi', 'ce', 'rn', 'pb', 'pe', 'al', 'se', 'ba'], 1),
+                carregarDadosRegiao(['ms', 'mt', 'go', 'df'], 2),
+                carregarDadosRegiao(['sp', 'es', 'rj', 'mg'], 3),
+                carregarDadosRegiao(['pr', 'sc', 'rs'], 4)
+            ]).then(
+                function() {
+                    vm.carregando = false;
+                },
+                function(erro) {
+                    vm.erro = erro;
+                    vm.carregando = false;
+                }
+            );
+
+            function carregarDadosRegiao(estados, idRegiao) {
+                return Promise.all(
+                    estados.map(function (estado) {
+                        return cursoService.getResumoPorEstado(estado, vm.filtro).then(function (resultado) {
+                            return {
+                                "hc-key": "br-" + estado,
+                                "value": resultado.usuarios
+                            };
+                        });
+                    })
+                ).then(function (resultado) {
+                    vm.config.series[idRegiao].data = resultado;
+                });
+            }
+        }
+
+        function getConfigMapa() {
+            return {
                 chartType: 'map',
                 title: {
-                    text: null//'Usuários inscritos por região'
+                    text: null
                 },
                 options: {
                     legend: {
@@ -56,34 +98,8 @@
                         map: {
                             allAreas: false,
                             joinBy: ['hc-key'],
-                            // dataLabels: {
-                            //     enabled: false,
-                            //     format: '{point.name}'
-                            // },
-                            // dataLabels: {
-                            //     enabled: true,
-                            //     color: '#FFFFFF',
-                            //     formatter: function () {
-                            //         if (this.point.properties && this.point.properties.labelrank.toString() < 5) {
-                            //             return this.point.properties['iso-a2'];
-                            //         }
-                            //     },
-                            //     format: null,
-                            //     style: {
-                            //         fontWeight: 'bold'
-                            //     }
-                            // },
                             borderColor: '#555',
-                            // states: {
-                            //     hover: {
-                            //         color: corSelecao
-                            //     }
-                            // },
                             mapData: Highcharts.maps['countries/br/br-all'],
-                            // tooltip: {
-                            //     headerFormat: '',
-                            //     pointFormat: '{point.name}: <b>{series.name}</b>'
-                            // }
                         }
                     }
                 },
@@ -110,31 +126,6 @@
                     }
                 ]
             };
-
-            Promise.all([
-                carregarDadosRegiao(['ac', 'am', 'rr', 'ro', 'pa', 'ap', 'to'], 0),
-                carregarDadosRegiao(['ma', 'pi', 'ce', 'rn', 'pb', 'pe', 'al', 'se', 'ba'], 1),
-                carregarDadosRegiao(['ms', 'mt', 'go', 'df'], 2),
-                carregarDadosRegiao(['sp', 'es', 'rj', 'mg'], 3),
-                carregarDadosRegiao(['pr', 'sc', 'rs'], 4)
-            ]).then(function() {
-                vm.carregando = false;
-            });
-
-            function carregarDadosRegiao(estados, idRegiao) {
-                return Promise.all(
-                    estados.map(function (estado) {
-                        return cursoService.getResumoPorEstado(estado).then(function (resultado) {
-                            return {
-                                "hc-key": "br-" + estado,
-                                "value": resultado.usuarios
-                            };
-                        });
-                    })
-                ).then(function (resultado) {
-                    vm.config.series[idRegiao].data = resultado;
-                });
-            }
         }
     }
 })();

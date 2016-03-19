@@ -32,8 +32,14 @@
             );
         }
 
-        function getResumoPorEstado(estado) {
+        function getResumoPorEstado(estado, filtro) {
             var url = avasusService.getUrl('widesus_dashboard', '&estado=' + estado);
+
+            if (filtro && filtro.valor && filtro.campo != 'estado') {
+                url += '&' + filtro.campo + '=' + filtro.valor;
+            }
+
+            console.log(url);
 
             return $http.get(url).then(
                 function (resultado) {

@@ -33,10 +33,10 @@
         }
     }
 
-    Controller.$inject = ['highchartsNG', 'cursoService', '$scope'];
+    Controller.$inject = ['cursoService', '$scope'];
 
     /* @ngInject */
-    function Controller(highchartsNG, cursoService, $scope) {
+    function Controller(cursoService, $scope) {
         var vm = this;
 
         vm.carregando = true;
@@ -44,7 +44,7 @@
         vm.activate = function() {
             vm.carregando = true;
 
-            vm.config = getConfigMapa();
+            vm.config = getConfigGrafico();
 
             cursoService.getDetalhes(vm.filtro).then(
                 function (resultado) {
@@ -67,7 +67,7 @@
             );
         };
 
-        function getConfigMapa() {
+        function getConfigGrafico() {
             return {
                 options: {
                     chart: {
