@@ -13,9 +13,12 @@
 
         activate();
 
+        function activate() {
+
+        }
+
         vm.enviar = function(avaliacao) {
             if (!avaliacao ||
-                    !avaliacao.nota || avaliacao.nota.trim() === "" ||
                     !avaliacao.comentarios || avaliacao.comentarios.trim() === "") {
 
                 $ionicPopup.alert({ title: "Por favor, preencha todos os campos." });
@@ -24,9 +27,5 @@
                 $state.go("app.dash");
             }
         };
-
-        function activate() {
-
-        }
     }
 })();

@@ -48,6 +48,8 @@
 
             cursoService.getDetalhes(vm.filtro).then(
                 function (resultado) {
+                    vm.erro = '';
+                    
                     var cursos = resultado.map(function (curso) {
                         return {
                             name: curso.curso,

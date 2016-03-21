@@ -5,10 +5,10 @@
         .module('AvasusGestor')
         .controller('AppCtrl', AppCtrl);
 
-    AppCtrl.$inject = ['$ionicModal', '$scope', '$state', '$ionicHistory', 'perfilService', 'cursoService'];
+    AppCtrl.$inject = ['$ionicModal', '$ionicPopup', '$scope', '$state', '$ionicHistory', 'perfilService', 'cursoService'];
 
     /* @ngInject */
-    function AppCtrl($ionicModal, $scope, $state, $ionicHistory, perfilService, cursoService) {
+    function AppCtrl($ionicModal, $ionicPopup, $scope, $state, $ionicHistory, perfilService, cursoService) {
         var vm = this;
 
         activate();
@@ -28,11 +28,11 @@
         }
 
         function criarModal(nome, caminhoTemplate) {
-            $ionicModal.fromTemplateUrl(caminhoTemplate, {
-                scope: $scope
-            }).then(function (modal) {
-                $scope['modal' + nome] = modal;
-            });
+            $ionicModal
+                .fromTemplateUrl(caminhoTemplate, { scope: $scope })
+                .then(function (modal) {
+                    $scope['modal' + nome] = modal;
+                });
 
             $scope['abrirModal' + nome] = function () {
                 $scope['modal' + nome].show();
@@ -55,21 +55,29 @@
             perfilService.getPerfis().then(
                 function(resultado) {
                     $scope.perfis = perfilService.ordenarPorNome(resultado);
+                },
+                function() {
+                    $scope.perfis = '';
+                    $ionicPopup.alert({ title: 'Não foi possível obter a lista de perfis.' });
                 }
             );
         }
 
         function carregarListaCursos() {
-            cursoService.getDetalhes().then(
+            cursoService.getCursos().then(
                 function(resultado) {
-                    console.log(resultado);
-                    $scope.cursos = resultado;
+                    $scope.cursos = cursoService.ordenarPorNome(resultado);
                 },
                 function(erro) {
-                    console.log(erro);
+                    $scope.cursos = '';
+                    $ionicPopup.alert({ title: 'Não foi possível obter a lista de cursos.' });
                 }
             );
         }
+
+        $scope.voltarParaDashboard = function() {
+            voltarParaDashboard();
+        };
 
         vm.filtrarPorEstado = function(estado) {
             $scope.modalFiltroEstado.hide();

@@ -42,6 +42,8 @@
         vm.carregando = true;
 
         vm.activate = function() {
+            vm.carregando = true;
+
             vm.config = getConfigMapa();
 
             Promise.all([
@@ -52,6 +54,7 @@
                 carregarDadosRegiao(['pr', 'sc', 'rs'], 4)
             ]).then(
                 function() {
+                    vm.erro = '';
                     vm.carregando = false;
                 },
                 function(erro) {
@@ -66,7 +69,8 @@
                         return cursoService.getResumoPorEstado(estado, vm.filtro).then(function (resultado) {
                             return {
                                 "hc-key": "br-" + estado,
-                                "value": resultado.usuarios
+                                "value": resultado.usuarios,
+                                "certificados": resultado.certificados
                             };
                         });
                     })
@@ -92,12 +96,25 @@
                             verticalAlign: 'bottom'
                         }
                     },
+                    tooltip: {
+                        style: {
+                            padding: 10
+                        },
+                        useHTML: true,
+                        formatter: function() {
+                            return "<div>" +
+                                "<strong>" + this.point.name + "</strong><br>" +
+                                "Inscritos: " + Highcharts.numberFormat(this.point.value, 0) + "<br>" +
+                                "Certificados: " + Highcharts.numberFormat(this.point.certificados, 0) +
+                                "</div>";
+                        }
+                    },
                     plotOptions: {
                         map: {
                             allAreas: false,
                             joinBy: ['hc-key'],
                             borderColor: '#555',
-                            mapData: Highcharts.maps['countries/br/br-all'],
+                            mapData: Highcharts.maps['countries/br/br-all']
                         }
                     }
                 },

@@ -5,13 +5,17 @@
         .module('AvasusGestor')
         .controller('ContatoCtrl', ContatoCtrl);
 
-    ContatoCtrl.$inject = ['$ionicPopup', '$window', '$state'];
+    ContatoCtrl.$inject = ['$ionicPopup', '$window', '$scope'];
 
     /* @ngInject */
-    function ContatoCtrl($ionicPopup, $state) {
+    function ContatoCtrl($ionicPopup, $window, $scope) {
         var vm = this;
 
         activate();
+
+        function activate() {
+
+        }
 
         vm.enviar = function(contato) {
             if (!contato ||
@@ -21,13 +25,21 @@
 
                 $ionicPopup.alert({ title: "Por favor, preencha todos os campos." });
             } else {
-                $ionicPopup.alert({ title: "Sua mensagem foi enviada com sucesso!" });
-                $state.go("app.dash");
+                enviarEmail(contato);
+                // $ionicPopup.alert({ title: "Sua mensagem foi enviada com sucesso!" });
+                $scope.voltarParaDashboard();
             }
         };
 
-        function activate() {
-
+        function enviarEmail(contato) {
+            var email = 'moodle@sedis.ufrn.br',
+                subject = 'AVASUS - Gestor',
+                body = 'Nome: ' + contato.nome + '\n' +
+                  'Email: ' + contato.email + '\n' +
+                  'Mensagem: ' + contato.mensagem;
+            $window.location.href = 'mailto:' + email +
+                '?subject=' + encodeURIComponent(subject) +
+                '&body=' + encodeURIComponent(body);
         }
     }
 })();
