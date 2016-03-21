@@ -9,19 +9,20 @@ var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  angular: ['./www/js/app/**/*.module.js', './www/js/app/**/*.js']
 };
 
 gulp.task('default', ['angular']);
 
 gulp.task('angular', function() {
-  gulp.src(['./www/js/app/**/*.module.js', './www/js/app/**/*.js'])
+  gulp.src(paths.angular)
     .pipe(concat('all.min.js'))
     .pipe(gulp.dest('./www/js/'));
 });
 
 gulp.task('compress', function() {
-  gulp.src(['./www/js/app/**/*.module.js', './www/js/app/**/*.js'])
+  gulp.src(paths.angular)
     .pipe(concat('all.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest('./www/js/'));
@@ -42,12 +43,10 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
-  gulp.watch([
-      './www/js/app/**/*.module.js',
-      './www/js/app/**/*.js',
+  gulp.watch(paths.angular.concat([
       './www/**/*.html',
       './www/js/app/**/*.html'
-  ], ['angular']);
+  ]), ['angular']);
 });
 
 gulp.task('install', ['git-check'], function() {
