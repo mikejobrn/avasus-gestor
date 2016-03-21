@@ -39,11 +39,9 @@
     function Controller(cursoService, $scope) {
         var vm = this;
 
-        activate();
-
         vm.carregando = true;
 
-        function activate() {
+        vm.activate = function() {
             vm.config = getConfigMapa();
 
             Promise.all([
@@ -76,7 +74,7 @@
                     vm.config.series[idRegiao].data = resultado;
                 });
             }
-        }
+        };
 
         function getConfigMapa() {
             return {

@@ -1,0 +1,24 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Selecione um curso</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="fecharModalFiltroCurso()">Fechar</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Selecione o curso
+        </div>
+        <select ng-model="curso"
+          ng-options="curso.curso for curso in cursos track by curso.cursoid">
+        </select>
+      </label>
+      <label class="item">
+        <button class="button button-block button-positive" ng-click="vm.filtrarPorCurso(curso)">Filtrar</button>
+      </label>
+    </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

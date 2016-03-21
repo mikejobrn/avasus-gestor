@@ -60,11 +60,12 @@ $positive: #f04847 !default;
 
 .highcharts-tooltip span {
     width: 200px;
-    white-space:normal !important; // add this line...
+    white-space:normal !important;
 }
 
 .item-divider {
     text-align: center;
+    white-space: normal;
 }
 
 .spinner {

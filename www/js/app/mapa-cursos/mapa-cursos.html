@@ -3,7 +3,7 @@
     Usuários Inscritos por Região
     <span ng-show="vm.filtro.valor">
       <br>
-      <strong>{{ vm.filtro.campo|uppercase }} - {{ vm.filtro.valor|uppercase }}</strong>
+      <strong>{{ vm.filtro.campo|uppercase }} - {{ vm.filtro.descricao || vm.filtro.valor|uppercase }}</strong>
     </span>
   </div>
   <div ng-show="vm.carregando">

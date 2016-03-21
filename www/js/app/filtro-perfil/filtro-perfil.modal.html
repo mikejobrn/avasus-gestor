@@ -11,12 +11,8 @@
         <div class="input-label">
           Selecione o perfil
         </div>
-        <select ng-model="perfil">
-          <option value=""></option>
-          <option value="ac">AC</option>
-          <option value="al">AL</option>
-          <option value="am">AM</option>
-          <option value="ap">AP</option>
+        <select ng-model="perfil"
+          ng-options="perfil.nome for perfil in perfis track by perfil.id">
         </select>
       </label>
       <label class="item">
