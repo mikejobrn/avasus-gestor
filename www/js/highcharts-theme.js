@@ -21,6 +21,9 @@ Highcharts.theme = {
 			fontFamily: "Open Sans"
 		}
 	},
+    credits: {
+        enabled: false
+    }
 	// title: {
 	// 	style: {
 	// 		fontSize: '16px',
