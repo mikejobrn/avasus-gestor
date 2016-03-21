@@ -117,7 +117,7 @@
                         map: {
                             allAreas: false,
                             joinBy: ['hc-key'],
-                            borderColor: '#555',
+                            borderColor: '#777',
                             mapData: Highcharts.maps['countries/br/br-all']
                         }
                     }

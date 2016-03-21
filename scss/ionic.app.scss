@@ -69,15 +69,11 @@ $corPrimaria: #ac0306;
     }
 
     .menu.menu-left {
-        box-shadow: 5px 0 30px #222;
+        box-shadow: 6px 0 10px rgba(34, 34, 34, 0.6);
     }
 }
 
-.item-complex:last-of-type {
-    border-bottom: 0;
-}
-
-.bar.bar-header.bar-stable {
+.bar.bar-header {
     background: $corPrimaria;
 
     .header-item, .button, .title {
@@ -112,6 +108,10 @@ $corPrimaria: #ac0306;
     white-space: normal;
 }
 
+.item-radio .radio-icon {
+    color: $positive;
+}
+
 .rating {
     font-size: 40px;
     margin: 0 5px;
@@ -119,6 +119,10 @@ $corPrimaria: #ac0306;
 
 .highcharts-container {
     margin: auto;
+}
+
+.button.button-clear {
+    font-size: 0.9em !important;
 }
 
 #grafico_cursos {
