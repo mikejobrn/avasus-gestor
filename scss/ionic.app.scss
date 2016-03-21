@@ -119,6 +119,10 @@ $corPrimaria: #ac0306;
 
 .highcharts-container {
     margin: auto;
+
+    span.numero {
+        color: $positive;
+    }
 }
 
 .button.button-clear {

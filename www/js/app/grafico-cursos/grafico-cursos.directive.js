@@ -82,12 +82,12 @@
                         borderWidth: 0,
                         useHTML: true,
                         formatter: function() {
-                            return "<div>" +
-                                "<strong>" + this.point.name + "</strong><br>" +
-                                "Inscritos: " + Highcharts.numberFormat(this.y, 0) +
-                                " (" + Highcharts.numberFormat(this.percentage, 1) + "%)<br>" +
-                                "Certificados: " + Highcharts.numberFormat(this.point.certificados, 0) + "<br>" +
-                                "Acessos: " + Highcharts.numberFormat(this.point.acessos, 0) + "</div>";
+                            return '<div>' +
+                                '<strong>' + this.point.name + '</strong><br>' +
+                                'Inscritos: <span class="numero">' + formatarNumero(this.y) + '' +
+                                ' <strong>(' + Highcharts.numberFormat(this.percentage, 1) + '%)</strong></span><br>' +
+                                'Certificados: <span class="numero">' + formatarNumero(this.point.certificados) + '</span><br>' +
+                                'Acessos: <span class="numero">' + formatarNumero(this.point.acessos) + '</span></div>';
                         }
                     },
                     plotOptions: {
@@ -114,6 +114,10 @@
                     height: 300
                 }
             };
+        }
+
+        function formatarNumero(numero) {
+            return  Highcharts.numberFormat(numero, 0, ',', '.');
         }
 
         function getTop(cursos, limite) {

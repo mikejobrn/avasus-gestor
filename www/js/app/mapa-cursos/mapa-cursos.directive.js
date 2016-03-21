@@ -68,9 +68,9 @@
                     estados.map(function (estado) {
                         return cursoService.getResumoPorEstado(estado, vm.filtro).then(function (resultado) {
                             return {
-                                "hc-key": "br-" + estado,
-                                "value": resultado.usuarios,
-                                "certificados": resultado.certificados
+                                'hc-key': 'br-' + estado,
+                                'value': resultado.usuarios,
+                                'certificados': resultado.certificados
                             };
                         });
                     })
@@ -103,14 +103,11 @@
                         borderWidth: 0,
                         useHTML: true,
                         formatter: function() {
-                            return "<div>" +
-                                "<div>" +
-                                "<strong>" + this.point.name + "</strong><br>" +
-                                "</div><div>" +
-                                "Inscritos: " + Highcharts.numberFormat(this.point.value, 0) + "<br>" +
-                                "</div><div>" +
-                                "Certificados: " + Highcharts.numberFormat(this.point.certificados, 0) +
-                                "</div>";
+                            return '<div>' +
+                                '<strong>' + this.point.name + '</strong><br>' +
+                                'Inscritos: <span class="numero">' + formatarNumero(this.point.value) + '</span><br>' +
+                                'Certificados: <span class="numero">' + formatarNumero(this.point.certificados) + '</span>' +
+                                '</div>';
                         }
                     },
                     plotOptions: {
@@ -145,6 +142,10 @@
                     }
                 ]
             };
+        }
+
+        function formatarNumero(numero) {
+            return Highcharts.numberFormat(numero, 0, ',', '.');
         }
     }
 })();
