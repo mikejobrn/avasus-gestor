@@ -100,11 +100,15 @@
                         style: {
                             padding: 10
                         },
+                        borderWidth: 0,
                         useHTML: true,
                         formatter: function() {
                             return "<div>" +
+                                "<div>" +
                                 "<strong>" + this.point.name + "</strong><br>" +
+                                "</div><div>" +
                                 "Inscritos: " + Highcharts.numberFormat(this.point.value, 0) + "<br>" +
+                                "</div><div>" +
                                 "Certificados: " + Highcharts.numberFormat(this.point.certificados, 0) +
                                 "</div>";
                         }

@@ -49,7 +49,7 @@
             cursoService.getDetalhes(vm.filtro).then(
                 function (resultado) {
                     vm.erro = '';
-                    
+
                     var cursos = resultado.map(function (curso) {
                         return {
                             name: curso.curso,
@@ -79,6 +79,7 @@
                         style: {
                             padding: 10
                         },
+                        borderWidth: 0,
                         useHTML: true,
                         formatter: function() {
                             return "<div>" +
@@ -94,8 +95,15 @@
                             dataLabels: {
                                 enabled: false
                             }
-                        }
+
+                        },
+                        // showInLegend: true,
+
                     }
+                },
+                legend: {
+                    enabled: true,
+                    itemWidth: 200
                 },
                 series: [{ data: [] }],
                 title: {

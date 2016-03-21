@@ -30,6 +30,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 $font-family-base: "Open Sans" !default;
 $positive: #f04847 !default;
+$corPrimaria: #ac0306;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
@@ -54,17 +55,50 @@ $positive: #f04847 !default;
     }
 }
 
-.highcharts-container {
-    margin: auto;
+.menu-content {
+    .scroll-content {
+        background: #f2f0f3;
+    }
 }
 
-.highcharts-tooltip span {
-    width: 200px;
-    white-space:normal !important;
+.menu-open {
+    .menu-content {
+        -webkit-filter: brightness(40%);
+        transition: all 200ms ease;
+        z-index: -100;
+    }
+
+    .menu.menu-left {
+        box-shadow: 5px 0 30px #222;
+    }
+}
+
+.item-complex:last-of-type {
+    border-bottom: 0;
+}
+
+.bar.bar-header.bar-stable {
+    background: $corPrimaria;
+
+    .header-item, .button, .title {
+        color: #fff;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+}
+
+.card {
+    border-radius: 0;
+
+    .item {
+        border-radius: 0 !important;
+    }
 }
 
 .item-divider {
-    text-align: center;
+    background: $corPrimaria;
+    color: #fff;
+    text-transform: uppercase;
     white-space: normal;
 }
 
@@ -74,7 +108,24 @@ $positive: #f04847 !default;
     stroke: $positive;
 }
 
+.input-label {
+    white-space: normal;
+}
+
 .rating {
     font-size: 40px;
     margin: 0 5px;
+}
+
+.highcharts-container {
+    margin: auto;
+}
+
+#grafico_cursos {
+    .highcharts-tooltip {
+        span {
+            width: 200px;
+            white-space:normal !important;
+        }
+    }
 }
