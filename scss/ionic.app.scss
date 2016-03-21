@@ -89,13 +89,13 @@ $corPrimaria: #ac0306;
     .item {
         border-radius: 0 !important;
     }
-}
 
-.item-divider {
-    background: $corPrimaria;
-    color: #fff;
-    text-transform: uppercase;
-    white-space: normal;
+    .item-divider {
+        background: $corPrimaria;
+        color: #fff;
+        text-transform: uppercase;
+        white-space: normal;
+    }
 }
 
 .spinner {
@@ -108,6 +108,10 @@ $corPrimaria: #ac0306;
     white-space: normal;
 }
 
+.item-input textarea {
+    background: none;
+}
+
 .item-radio .radio-icon {
     color: $positive;
 }
@@ -117,16 +121,16 @@ $corPrimaria: #ac0306;
     margin: 0 5px;
 }
 
+.button.button-clear {
+    font-size: 0.9em !important;
+}
+
 .highcharts-container {
     margin: auto;
 
     span.numero {
         color: $positive;
     }
-}
-
-.button.button-clear {
-    font-size: 0.9em !important;
 }
 
 #grafico_cursos {
