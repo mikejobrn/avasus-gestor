@@ -95,24 +95,17 @@
                             dataLabels: {
                                 enabled: false
                             }
-
-                        },
-                        // showInLegend: true,
-
+                        }
                     }
-                },
-                legend: {
-                    enabled: true,
-                    itemWidth: 200
                 },
                 series: [{ data: [] }],
                 title: {
                     text: null
                 },
-                size: {
-                    width: 300,
-                    height: 300
-                }
+                // size: {
+                //     width: 300,
+                //     height: 300
+                // }
             };
         }
 
