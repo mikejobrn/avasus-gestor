@@ -27,7 +27,7 @@
                 url += '&' + filtro.campo + '=' + filtro.valor;
             }
 
-            // console.log(url);
+            console.log(url);
 
             return $http.get(url).then(
                 function (resultado) {
