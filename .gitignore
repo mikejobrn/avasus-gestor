@@ -4,5 +4,8 @@
 node_modules/
 platforms/
 plugins/
+www/js/lib.min.js
 www/js/all.min.js
 www/css/
+www/lib
+lib

@@ -10,7 +10,28 @@ var uglify = require('gulp-uglify');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
-  angular: ['./www/js/app/**/*.module.js', './www/js/app/**/*.js']
+  angular: ['./www/js/app/**/*.module.js', './www/js/app/**/*.js'],
+  libsJs: [
+      './lib/ionic/js/ionic.bundle.min.js',
+      './lib/angular-i18n/angular-locale_pt-br.js',
+      './lib/highcharts/highcharts.js',
+      './lib/highcharts/modules/map.js',
+      './lib/highmaps-br/index.js',
+      './www/js/highcharts-theme.js',
+      './lib/highcharts-ng/dist/highcharts-ng.min.js',
+      './lib/moment/min/moment.min.js',
+      './lib/moment/locale/pt-br.js'
+  ],
+  libsFonts: [
+      {
+          src: './lib/google-open-sans/open-sans/regular.*',
+          dest: './www/lib/google-open-sans/open-sans'
+      },
+      {
+          src: './lib/ionic/fonts/**/*',
+          dest: './www/lib/ionic/fonts'
+      }
+  ]
 };
 
 gulp.task('default', ['angular']);
@@ -19,6 +40,15 @@ gulp.task('angular', function() {
   gulp.src(paths.angular)
     .pipe(concat('all.min.js'))
     .pipe(gulp.dest('./www/js/'));
+
+  gulp.src(paths.libsJs)
+    .pipe(concat('lib.min.js'))
+    .pipe(gulp.dest('./www/js/'));
+
+  paths.libsFonts.forEach(function(font) {
+    gulp.src(font.src)
+      .pipe(gulp.dest(font.dest));
+  });
 });
 
 gulp.task('compress', function() {

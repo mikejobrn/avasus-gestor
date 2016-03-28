@@ -1,9 +1,0 @@
-{
-  "name": "google-open-sans",
-  "private": true,
-  "dependencies": {
-    "gulp": "*",
-    "gulp-gzip": "*",
-    "merge-stream": "*"
-  }
-}
