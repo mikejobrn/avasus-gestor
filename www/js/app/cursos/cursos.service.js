@@ -27,8 +27,6 @@
                 url += '&' + filtro.campo + '=' + filtro.valor;
             }
 
-            console.log(url);
-
             return $http.get(url).then(
                 function (resultado) {
                     return resultado.data;
@@ -48,8 +46,6 @@
             if (filtro && filtro.valor) {
                 url += '&' + filtro.campo + '=' + filtro.valor;
             }
-
-            // console.log(url);
 
             return $http.get(url).then(
                 function (resultado) {

@@ -82,23 +82,27 @@
         vm.filtrarPorEstado = function(estado) {
             $scope.modalFiltroEstado.hide();
             $scope.filtro = { campo: 'estado', valor: estado };
+            $scope.atualizacao++;
             voltarParaDashboard();
         };
 
         vm.filtrarPorPerfil = function(perfil) {
             $scope.modalFiltroPerfil.hide();
             $scope.filtro = { campo: 'perfil', valor: perfil.id, descricao: perfil.nome };
+            $scope.atualizacao++;
             voltarParaDashboard();
         };
 
         vm.filtrarPorCurso = function(curso) {
             $scope.modalFiltroCurso.hide();
             $scope.filtro = { campo: 'curso', valor: curso.cursoid, descricao: curso.curso };
+            $scope.atualizacao++;
             voltarParaDashboard();
         };
 
         vm.removerFiltro = function() {
             $scope.filtro = null;
+            $scope.atualizacao++;
         };
     }
 })();

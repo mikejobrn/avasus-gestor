@@ -23,9 +23,9 @@
         return directive;
 
         function linkFunc(scope, el, attr, ctrl) {
-            scope.$watch('vm.filtro', function (a) {
-                ctrl.activate();
-            });
+            // scope.$watch('vm.filtro', function (a) {
+            //     ctrl.activate();
+            // });
 
             scope.$watch('vm.atualizacao', function (a) {
                 ctrl.activate();

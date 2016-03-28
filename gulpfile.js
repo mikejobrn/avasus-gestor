@@ -12,13 +12,20 @@ var paths = {
   sass: ['./scss/**/*.scss'],
   angular: ['./www/js/app/**/*.module.js', './www/js/app/**/*.js'],
   libsJs: [
+      // Bundle minimificado contendo AngularJS e componentes do Ionic
       './lib/ionic/js/ionic.bundle.min.js',
+      // Tradução dos componentes do Angular para pt-BR
       './lib/angular-i18n/angular-locale_pt-br.js',
+      // Biblioteca para gráficos e mapas
       './lib/highcharts/highcharts.js',
       './lib/highcharts/modules/map.js',
+      // Mapa do Brasil
       './lib/highmaps-br/index.js',
+      // Tema utilizado pelos gráficos e mapas
       './www/js/highcharts-theme.js',
+      // Diretivas Angular para o Highcharts
       './lib/highcharts-ng/dist/highcharts-ng.min.js',
+      // Biblioteca para manipular datas
       './lib/moment/min/moment.min.js',
       './lib/moment/locale/pt-br.js'
   ],

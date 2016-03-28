@@ -23,13 +23,9 @@
         return directive;
 
         function linkFunc(scope, el, attr, ctrl) {
-            scope.$watch('vm.filtro', function (a) {
+            scope.$watch('vm.atualizacao', function (a) {
                 ctrl.activate();
             });
-
-            // scope.$watch('vm.atualizacao', function (a) {
-            //     ctrl.activate();
-            // });
         }
     }
 
@@ -150,13 +146,14 @@
             var data = moment('2015-05-01');
             var urls = [];
             while (data < moment().endOf('month')) {
-                urls.push(avasusService.getUrl('widesus_dashboard', '&data=' + data.endOf('month').format('DD/MM/YYYY')));
+                var params = '&data=' + data.endOf('month').format('DD/MM/YYYY');
+                if (vm.filtro && vm.filtro.campo == 'estado') {
+                    params += '&estado=' + vm.filtro.valor;
+                }
+                var url = avasusService.getUrl('widesus_dashboard', params);
+                urls.push(url);
                 data.add(1, 'months');
             }
-
-            // if (data != moment()) {
-            //     urls.push(avasusService.getUrl('widesus_dashboard', '&data=' + moment().add(1, 'days').format('DD/MM/YYYY')));
-            // }
 
             var resultado = urls.map(function(url) {
                 return $http.get(url).then(function(res) {
@@ -164,81 +161,74 @@
                 });
             });
 
-            return Promise.all(resultado).then(function(resultadoCarregado) {
-                console.log('Usuários:');
-                console.log(resultadoCarregado.map(function(r) { return r.usuarios; }));
+            return Promise.all(resultado).then(
+                function(resultadoCarregado) {
+                    var diferencas = resultadoCarregado.slice(1).map(function(res, i) {
+                        return {
+                            usuarios: res.usuarios - resultadoCarregado[i].usuarios,
+                            inscritos: res.inscritos - resultadoCarregado[i].inscritos
+                        };
+                    });
 
-                console.log('Inscritos:');
-                console.log(resultadoCarregado.map(function(r) { return r.inscritos; }));
+                    var totalInscritos = [];
+                    var totalUsuarios = [];
 
-                var diferencas = resultadoCarregado.slice(1).map(function(res, i) {
-                    return {
-                        usuarios: res.usuarios - resultadoCarregado[i].usuarios,
-                        inscritos: res.inscritos - resultadoCarregado[i].inscritos
-                    };
-                });
+                    var data = moment('2015-06-01');
+                    var i = 0;
+                    while (i < diferencas.length) {
+                        totalInscritos.push([data.format('X') * 1000, diferencas[i].inscritos]);
+                        totalUsuarios.push([data.format('X') * 1000, diferencas[i].usuarios]);
+                        data.add(1, 'months');
+                        i++;
+                    }
 
-                console.log('Usuários (soma das diferenças):');
-                console.log(diferencas.reduce(function(total, i) {
-                    return total += i.usuarios;
-                }, 0));
+                    vm.config.series = [];
 
-                console.log('Inscritos (soma das diferenças):');
-                console.log(diferencas.reduce(function(total, i) {
-                    return total += i.inscritos;
-                }, 0));
+                    vm.config.series.push({
+                        name: 'Matrícula',
+                        color: '#f04847',
+                        data: totalInscritos,
+                        tooltip : {
+                            style: {
+                                padding: 10
+                            },
+                            borderWidth: 0,
+                            useHTML: true,
+                            formatter: function() {
+                                return '<div>' +
+                                    '<strong>' + moment(this.x).format('MMM/YYYY') + '</strong><br>' +
+                                    'Inscritos: <span class="numero">' + formatarNumero(this.y) + '' +
+                                    '</div>';
+                            }
+                        },
+                    });
 
-                var totalInscritos = [];
-                var totalUsuarios = [];
+                    vm.config.series.push({
+                        name: 'Usuários',
+                        color: '#52b99b',
+                        data: totalUsuarios,
+                        tooltip : {
+                            style: {
+                                padding: 10
+                            },
+                            borderWidth: 0,
+                            useHTML: true,
+                            formatter: function() {
+                                return '<div>' +
+                                    '<strong>' + moment(this.x).format('MMM/YYYY') + '</strong><br>' +
+                                    'Usuários: <span class="numero">' + formatarNumero(this.y) + '' +
+                                    '</div>';
+                            }
+                        },
+                    });
 
-                var data = moment('2015-06-01');
-                var i = 0;
-                while (i < diferencas.length) {
-                    totalInscritos.push([data.format('X') * 1000, diferencas[i].inscritos]);
-                    totalUsuarios.push([data.format('X') * 1000, diferencas[i].usuarios]);
-                    data.add(1, 'months');
-                    i++;
+                    vm.carregando = false;
+                },
+                function(erro) {
+                    vm.erro = erro;
+                    vm.carregando = false;
                 }
-
-                vm.config.series.push({
-                    name: 'Matrícula',
-                    color: '#f04847',
-                    data: totalInscritos,
-                    tooltip : {
-                        style: {
-                            padding: 10
-                        },
-                        borderWidth: 0,
-                        useHTML: true,
-                        formatter: function() {
-                            return '<div>' +
-                                '<strong>' + moment(this.x).format('MMM/YYYY') + '</strong><br>' +
-                                'Inscritos: <span class="numero">' + formatarNumero(this.y) + '' +
-                                '</div>';
-                        }
-                    },
-                });
-
-                vm.config.series.push({
-                    name: 'Usuários',
-                    data: totalUsuarios,
-                    tooltip : {
-                        style: {
-                            padding: 10
-                        },
-                        borderWidth: 0,
-                        useHTML: true,
-                        formatter: function() {
-                            return '<div>' +
-                                '<strong>' + moment(this.x).format('MMM/YYYY') + '</strong><br>' +
-                                'Usuários: <span class="numero">' + formatarNumero(this.y) + '' +
-                                '</div>';
-                        }
-                    },
-                });
-
-                vm.carregando = false;
-            });
+            );
         }
 
         function formatarNumero(numero) {
