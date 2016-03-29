@@ -40,9 +40,9 @@
         vm.activate = function() {
             vm.carregando = true;
 
-            vm.configPizza = getConfigGrafico();
+            vm.configPizza = getConfigGraficoPizza();
 
-            vm.configBarra = getConfigGrafico2();
+            vm.configBarra = getConfigGraficoBarra();
 
 
             cursoService.getDetalhes(vm.filtro).then(
@@ -65,8 +65,10 @@
                         };
                     });
 
-                    vm.configPizza.series[0].data = getTop(cursos, 10);
-                    vm.configBarra.series[0].data = getTop(cursos, 10);
+                    var topCursos = getTop(cursos, 10);
+
+                    vm.configPizza.series[0].data = topCursos;
+                    vm.configBarra.series[0].data = topCursos;
 
                     vm.carregando = false;
                 },
@@ -81,7 +83,7 @@
             }
         };
 
-        function getConfigGrafico() {
+        function getConfigGraficoPizza() {
             return {
                 options: {
                     chart: {
@@ -117,7 +119,7 @@
             };
         }
 
-        function getConfigGrafico2() {
+        function getConfigGraficoBarra() {
             return {
                 options: {
                     chart: {
@@ -183,27 +185,20 @@
 
             if (cursosOrdenados.length > limite) {
                 topCursos = cursosOrdenados.slice(0, limite - 1);
-                topCursos.push({
-                    name: 'Outros',
-                    y: cursosOrdenados.slice(limite - 1).reduce(
-                        function (total, curso) {
-                            return total + curso.y;
-                        },
-                        0
-                    ),
-                    acessos: cursosOrdenados.slice(limite - 1).reduce(
-                        function (total, curso) {
-                            return total + curso.acessos;
-                        },
-                        0
-                    ),
-                    certificados: cursosOrdenados.slice(limite - 1).reduce(
-                        function (total, curso) {
-                            return total + curso.certificados;
-                        },
-                        0
-                    )
-                });
+                topCursos.push(cursosOrdenados.slice(limite - 1).reduce(
+                    function (total, curso) {
+                        total.y += curso.y;
+                        total.acessos += curso.acessos;
+                        total.certificados += curso.certificados;
+                        return total;
+                    },
+                    {
+                        name: 'Outros',
+                        y: 0,
+                        acessos: 0,
+                        certificados: 0
+                    }
+                ));
             }
 
             return topCursos;
