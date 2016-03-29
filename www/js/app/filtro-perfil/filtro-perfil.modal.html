@@ -7,16 +7,26 @@
   </ion-header-bar>
   <ion-content>
     <div class="list">
-      <label class="item item-input item-select">
+      <label class="item item-input" ng-class="{ 'item-select': !perfilCarregando }" ng-hide="perfilErro">
         <div class="input-label">
           Selecione o perfil
         </div>
-        <select ng-model="perfil"
-          ng-options="perfil.nome for perfil in perfis track by perfil.id">
-        </select>
+        <div class="col col-33 col-offset-33" ng-show="perfilCarregando">
+          <ion-spinner></ion-spinner>
+        </div>
+        <div ng-hide="perfilCarregando">
+          <select ng-model="perfil"
+            ng-options="perfil.nome for perfil in perfis track by perfil.id">
+          </select>
+        </div>
       </label>
+
+      <label class="item" ng-show="perfilErro">
+        {{ perfilErro }}
+      </label>
+
       <label class="item">
-        <button class="button button-block button-positive" ng-click="vm.filtrarPorPerfil(perfil)">Filtrar</button>
+        <button class="button button-block button-positive" ng-click="filtrarPorPerfil(perfil)">Filtrar</button>
       </label>
     </div>
     </form>

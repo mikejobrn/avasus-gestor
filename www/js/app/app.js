@@ -25,8 +25,6 @@
 
             criarModal('FiltroCurso',   'js/app/filtro-curso/filtro-curso.modal.html');
             carregarListaCursos();
-
-            // vm.filtrarPorCurso({ cursoid: 12, curso: 'AVASUS'});
         }
 
         function criarModal(nome, caminhoTemplate) {
@@ -54,57 +52,70 @@
         }
 
         function carregarListaPerfis() {
-            perfilService.getPerfis().then(
-                function(resultado) {
-                    $scope.perfis = perfilService.ordenarPorNome(resultado);
-                },
-                function() {
-                    $scope.perfis = '';
-                    $ionicPopup.alert({ title: 'Não foi possível obter a lista de perfis.' });
-                }
-            );
+            $scope.perfilCarregando = true;
+            $scope.perfilErro = '';
+            perfilService
+                .getPerfis()
+                .then(
+                    function(perfis) {
+                        $scope.perfis = perfilService.ordenarPorNome(perfis);
+                    },
+                    function() {
+                        $scope.perfis = '';
+                        $scope.perfilErro = 'Não foi possível obter lista de perfis.';
+                    }
+                )
+                .finally(function() {
+                    $scope.perfilCarregando = false;
+                });
         }
 
         function carregarListaCursos() {
-            cursoService.getCursos().then(
-                function(resultado) {
-                    $scope.cursos = cursoService.ordenarPorNome(resultado);
-                },
-                function(erro) {
-                    $scope.cursos = '';
-                    $ionicPopup.alert({ title: 'Não foi possível obter a lista de cursos.' });
-                }
-            );
+            $scope.cursoCarregando = true;
+            $scope.cursoErro = '';
+            cursoService
+                .getCursos()
+                .then(
+                    function(cursos) {
+                        $scope.cursos = cursoService.ordenarPorNome(cursos);
+                    },
+                    function() {
+                        $scope.cursos = '';
+                        $scope.cursoErro = 'Não foi possível obter lista de cursos.';
+                    }
+                )
+                .finally(function() {
+                    $scope.cursoCarregando = false;
+                });
         }
 
         $scope.voltarParaDashboard = function() {
             voltarParaDashboard();
         };
 
-        vm.filtrarPorEstado = function(estado) {
+        $scope.filtrarPorEstado = function(estado) {
             $scope.modalFiltroEstado.hide();
-            $scope.filtro = { campo: 'estado', valor: estado };
-            $scope.atualizacao++;
-            voltarParaDashboard();
+            setFiltro({ campo: 'estado', valor: estado });
         };
 
-        vm.filtrarPorPerfil = function(perfil) {
+        $scope.filtrarPorPerfil = function(perfil) {
             $scope.modalFiltroPerfil.hide();
-            $scope.filtro = { campo: 'perfil', valor: perfil.id, descricao: perfil.nome };
-            $scope.atualizacao++;
-            voltarParaDashboard();
+            setFiltro({ campo: 'perfil', valor: perfil.id, descricao: perfil.nome })
         };
 
-        vm.filtrarPorCurso = function(curso) {
+        $scope.filtrarPorCurso = function(curso) {
             $scope.modalFiltroCurso.hide();
-            $scope.filtro = { campo: 'cursos', valor: curso.cursoid, descricao: curso.curso };
-            $scope.atualizacao++;
-            voltarParaDashboard();
+            setFiltro({ campo: 'cursos', valor: curso.cursoid, descricao: curso.curso })
         };
 
-        vm.removerFiltro = function() {
-            $scope.filtro = null;
-            $scope.atualizacao++;
+        $scope.removerFiltro = function() {
+            setFiltro();
         };
+
+        function setFiltro(filtro) {
+            $scope.filtro = filtro;
+            $scope.atualizacao++;
+            voltarParaDashboard();
+        }
     }
 })();

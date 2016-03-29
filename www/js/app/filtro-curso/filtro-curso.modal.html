@@ -7,16 +7,25 @@
   </ion-header-bar>
   <ion-content>
     <div class="list">
-      <label class="item item-input item-select">
+      <label class="item item-input" ng-class="{ 'item-select': !cursoCarregando }" ng-hide="cursoErro">
         <div class="input-label">
           Selecione o curso
         </div>
+        <div class="col col-33 col-offset-33" ng-show="cursoCarregando">
+          <ion-spinner></ion-spinner>
+        </div>
         <select ng-model="curso"
-          ng-options="curso.curso for curso in cursos track by curso.cursoid">
+          ng-options="curso.curso for curso in cursos track by curso.cursoid"
+          ng-hide="cursoCarregando">
         </select>
       </label>
+
+      <label class="item" ng-show="cursoErro">
+        {{ cursoErro }}
+      </label>
+
       <label class="item">
-        <button class="button button-block button-positive" ng-click="vm.filtrarPorCurso(curso)">Filtrar</button>
+        <button class="button button-block button-positive" ng-click="filtrarPorCurso(curso)">Filtrar</button>
       </label>
     </div>
     </form>
