@@ -140,9 +140,7 @@
                     plotOptions: {
                         bar: {
                             dataLabels: {
-                                enabled: true,
-                                color: '#f04847',
-                                format: '{point.y:,.0f}'
+                                enabled: false
                             }
                         }
                     },
