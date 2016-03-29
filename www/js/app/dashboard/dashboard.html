@@ -5,16 +5,28 @@
       on-refresh="vm.atualizarDash()">
     </ion-refresher>
 
-    <ag-dados-gerais filtro="filtro" atualizacao="atualizacao"
-        ng-show="!filtro.campo || filtro.campo == 'estado' || filtro.campo == 'cursos'"></ag-dados-gerais>
+    <ag-dados-gerais
+      filtro="filtro"
+      atualizacao="atualizacao"
+      ng-show="visualizarDadosGerais()">
+    </ag-dados-gerais>
 
-    <ag-grafico-inscricoes-mes filtro="filtro" atualizacao="atualizacao"
-        ng-hide="filtro.campo == 'perfil' || filtro.campo == 'cursos'"></ag-grafico-inscricoes-mes>
+    <ag-grafico-inscricoes-mes
+      filtro="filtro"
+      atualizacao="atualizacao"
+      ng-show="visualizarGraficoInscricoesMes()">
+    </ag-grafico-inscricoes-mes>
 
-    <ag-grafico-cursos filtro="filtro" atualizacao="atualizacao"
-        ng-hide="filtro.campo == 'cursos'"></ag-grafico-cursos>
+    <ag-grafico-cursos
+      filtro="filtro"
+      atualizacao="atualizacao"
+      ng-show="visualizarGraficoCursos()">
+    </ag-grafico-cursos>
 
-    <ag-mapa-cursos filtro="filtro" atualizacao="atualizacao"
-        ng-hide="filtro.campo == 'estado' || filtro.campo == 'perfil' || filtro.campo == 'cursos'"></ag-mapa-cursos>
+    <ag-mapa-cursos
+      filtro="filtro"
+      atualizacao="atualizacao"
+      ng-show="visualizarMapaCursos()">
+    </ag-mapa-cursos>
   </ion-content>
 </ion-view>

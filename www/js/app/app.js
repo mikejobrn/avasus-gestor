@@ -89,6 +89,12 @@
                 });
         }
 
+        function setFiltro(filtro) {
+            $scope.filtro = filtro;
+            $scope.atualizacao++;
+            voltarParaDashboard();
+        }
+
         $scope.voltarParaDashboard = function() {
             voltarParaDashboard();
         };
@@ -100,22 +106,41 @@
 
         $scope.filtrarPorPerfil = function(perfil) {
             $scope.modalFiltroPerfil.hide();
-            setFiltro({ campo: 'perfil', valor: perfil.id, descricao: perfil.nome })
+            setFiltro({ campo: 'perfil', valor: perfil.id, descricao: perfil.nome });
         };
 
         $scope.filtrarPorCurso = function(curso) {
             $scope.modalFiltroCurso.hide();
-            setFiltro({ campo: 'cursos', valor: curso.cursoid, descricao: curso.curso })
+            setFiltro({ campo: 'cursos', valor: curso.cursoid, descricao: curso.curso });
         };
 
         $scope.removerFiltro = function() {
             setFiltro();
         };
 
-        function setFiltro(filtro) {
-            $scope.filtro = filtro;
-            $scope.atualizacao++;
-            voltarParaDashboard();
-        }
+        $scope.visualizarDadosGerais = function() {
+            return !$scope.filtro ||
+                $scope.filtro.campo === 'estado' ||
+                $scope.filtro.campo === 'cursos';
+        };
+
+        $scope.visualizarGraficoInscricoesMes = function() {
+            return !$scope.filtro || (
+                $scope.filtro.campo !== 'perfil' &&
+                $scope.filtro.campo !== 'cursos'
+            );
+        };
+
+        $scope.visualizarGraficoCursos = function() {
+            return !$scope.filtro || $scope.filtro.campo !== 'cursos';
+        };
+
+        $scope.visualizarMapaCursos = function() {
+            return !$scope.filtro || (
+                $scope.filtro.campo !== 'estado' &&
+                $scope.filtro.campo !== 'perfil' &&
+                $scope.filtro.campo !== 'cursos'
+            );
+        };
     }
 })();
