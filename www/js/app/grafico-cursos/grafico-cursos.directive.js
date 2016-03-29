@@ -29,10 +29,10 @@
         }
     }
 
-    Controller.$inject = ['cursoService', '$scope'];
+    Controller.$inject = ['cursoService', '$scope', '$timeout'];
 
     /* @ngInject */
-    function Controller(cursoService, $scope) {
+    function Controller(cursoService, $scope, $timeout) {
         var vm = this;
 
         vm.carregando = true;
@@ -45,7 +45,7 @@
             vm.configBarra = getConfigGraficoBarra();
 
 
-            cursoService.getDetalhes(vm.filtro).then(
+            cursoService.getCursos(vm.filtro).then(
                 function (resultado) {
                     vm.erro = '';
 
@@ -66,11 +66,13 @@
                     });
 
                     var topCursos = getTop(cursos, 10);
-
                     vm.configPizza.series[0].data = topCursos;
                     vm.configBarra.series[0].data = topCursos;
 
-                    vm.carregando = false;
+                    $timeout(function() {
+                      vm.carregando = false;
+                    });
+
                 },
                 function(erro) {
                     vm.erro = erro;

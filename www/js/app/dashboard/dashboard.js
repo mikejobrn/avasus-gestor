@@ -5,10 +5,10 @@
         .module('AvasusGestor')
         .controller('DashCtrl', DashCtrl);
 
-    DashCtrl.$inject = ['$window', '$scope'];
+    DashCtrl.$inject = ['$window', '$scope', 'localStorageService'];
 
     /* @ngInject */
-    function DashCtrl($window, $scope) {
+    function DashCtrl($window, $scope, localStorageService) {
         var vm = this;
 
         activate();
@@ -19,6 +19,7 @@
 
         vm.atualizarDash = function() {
             $scope.atualizacao++;
+            localStorageService.clear();
             $scope.$broadcast('scroll.refreshComplete');
         };
     }

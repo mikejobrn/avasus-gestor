@@ -5,10 +5,10 @@
         .module('AvasusGestor')
         .factory('cursoService', cursoService);
 
-    cursoService.$inject = ['avasusService', '$http'];
+    cursoService.$inject = ['avasusService', 'localStorageService', '$http', '$q'];
 
     /* @ngInject */
-    function cursoService(avasusService, $http) {
+    function cursoService(avasusService, localStorageService, $http, $q) {
         var service = {
             getCursos: getCursos,
             ordenarPorNome: ordenarPorNome,
@@ -20,15 +20,21 @@
 
         ///////////////
 
-        function getCursos(filtro) {
+        function getCursos(filtro, atualizar) {
             var url = avasusService.getUrl('widesus_dashboard_curso');
 
             if (filtro && filtro.valor) {
                 url += '&' + filtro.campo + '=' + filtro.valor;
             }
 
+            var cursosSalvos = localStorageService.getObject('listaCursos');
+            if (cursosSalvos && !atualizar) {
+                return $q.resolve(cursosSalvos);
+            }
+
             return $http.get(url).then(
                 function (resultado) {
+                    localStorageService.setObject('listaCursos', resultado.data);
                     return resultado.data;
                 }
             );

@@ -34,8 +34,11 @@
             $window.localStorage[key] = JSON.stringify(value);
         }
 
-        function getObject(key) {
-            return JSON.parse($window.localStorage[key] || '{}');
+        function getObject(key, defaultValue) {
+            if ($window.localStorage[key]) {
+                return JSON.parse($window.localStorage[key]);
+            }
+            return defaultValue;
         }
 
         function remove(key) {
