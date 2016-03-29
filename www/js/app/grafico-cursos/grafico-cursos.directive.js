@@ -40,9 +40,9 @@
         vm.activate = function() {
             vm.carregando = true;
 
-            vm.config = getConfigGrafico();
+            vm.configPizza = getConfigGrafico();
 
-            vm.config2 = getConfigGrafico2();
+            vm.configBarra = getConfigGrafico2();
 
 
             cursoService.getDetalhes(vm.filtro).then(
@@ -65,8 +65,8 @@
                         };
                     });
 
-                    vm.config.series[0].data = getTop(cursos, 10);
-                    vm.config2.series[0].data = getTop(cursos, 10);
+                    vm.configPizza.series[0].data = getTop(cursos, 10);
+                    vm.configBarra.series[0].data = getTop(cursos, 10);
 
                     vm.carregando = false;
                 },
