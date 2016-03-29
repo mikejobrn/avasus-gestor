@@ -56,6 +56,7 @@
                 function() {
                     vm.erro = '';
                     vm.carregando = false;
+                    $scope.$apply();
                 },
                 function(erro) {
                     vm.erro = erro;

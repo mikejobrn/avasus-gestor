@@ -25,6 +25,8 @@
 
             criarModal('FiltroCurso',   'js/app/filtro-curso/filtro-curso.modal.html');
             carregarListaCursos();
+
+            // vm.filtrarPorCurso({ cursoid: 12, curso: 'AVASUS'});
         }
 
         function criarModal(nome, caminhoTemplate) {
@@ -95,7 +97,7 @@
 
         vm.filtrarPorCurso = function(curso) {
             $scope.modalFiltroCurso.hide();
-            $scope.filtro = { campo: 'curso', valor: curso.cursoid, descricao: curso.curso };
+            $scope.filtro = { campo: 'cursos', valor: curso.cursoid, descricao: curso.curso };
             $scope.atualizacao++;
             voltarParaDashboard();
         };
