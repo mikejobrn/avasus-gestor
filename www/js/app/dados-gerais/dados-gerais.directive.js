@@ -43,8 +43,7 @@
             if (vm.filtro) {
                 vm.subtitulo = vm.filtro.descricao || vm.filtro.valor;
             }
-            if (vm.filtro && vm.filtro.campo == 'cursos') {
-                // vm.subtitulo = vm.filtro.descricao;
+            if (vm.filtro && vm.filtro.campo === 'cursos') {
                 vm.erro = '';
                 cursoService.getCursos(vm.filtro).then(
                     function(res) {
@@ -60,15 +59,9 @@
                     }
                 );
             } else {
-                // if (vm.filtro) {
-                //
-                // }
                 dadosGeraisService.get(vm.filtro).then(
                     function(resultado) {
                         vm.dadosGerais = resultado;
-                        // if (vm.filtro) {
-                        //     vm.subtitulo = vm.filtro.valor;
-                        // }
                         vm.erro = '';
                         $timeout(function() {
                           vm.carregando = false;

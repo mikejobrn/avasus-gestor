@@ -15,15 +15,17 @@
 
         //////////////
 
-        function getUrl(funcao, filtro) {
+        function getUrl(funcao, filtros) {
             let url = constantes.API_URL +
                       `/${constantes.API_SERVICO}` +
                       `?wstoken=${constantes.API_TOKEN}` +
                       `&wsfunction=${funcao}` +
                       `&moodlewsrestformat=json`
 
-            if (filtro) {
-                url += filtro
+            if (filtros) {
+                filtros.forEach((filtro) => {
+                    url += `&${filtro.campo}=${filtro.valor}`
+                })
             }
 
             return url

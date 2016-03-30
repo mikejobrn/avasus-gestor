@@ -11,7 +11,8 @@
       <ion-spinner></ion-spinner>
     </div>
   </div>
-  <div ng-if="!vm.carregando && !vm.erro">
+  <div ng-if="!vm.carregando && !vm.erro"
+      ng-show="!vm.carregando && !vm.erro">
     <highchart id="grafico-cursos-pizza" config="vm.configPizza" ng-hide="vm.carregando"></highchart>
 
     <highchart id="grafico-cursos-barra" config="vm.configBarra" ng-hide="vm.carregando"></highchart>

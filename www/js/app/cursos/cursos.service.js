@@ -1,22 +1,19 @@
-(function() {
-    'use strict';
-
+(() => {
     angular
         .module('AvasusGestor')
-        .factory('cursoService', cursoService);
+        .factory('cursoService', cursoService)
 
-    cursoService.$inject = ['avasusService', 'localStorageService', '$http', '$q'];
+    cursoService.$inject = ['avasusService', 'localStorageService', '$http', '$q']
 
     /* @ngInject */
     function cursoService(avasusService, localStorageService, $http, $q) {
-        var service = {
-            getCursos: getCursos,
-            ordenarPorNome: ordenarPorNome,
-            getDetalhes: getDetalhes,
-            getResumoPorEstado: getResumoPorEstado
-        };
+        let service = {
+            getCursos,
+            ordenarPorNome,
+            getResumoPorEstado,
+        }
 
-        return service;
+        return service
 
         ///////////////
 
@@ -48,24 +45,10 @@
             });
         }
 
-        function getDetalhes(filtro) {
-            var url = avasusService.getUrl('widesus_dashboard_curso');
-
-            if (filtro && filtro.valor) {
-                url += '&' + filtro.campo + '=' + filtro.valor;
-            }
-
-            return $http.get(url).then(
-                function (resultado) {
-                    return resultado.data;
-                }
-            );
-        }
-
         function getResumoPorEstado(estado, filtro, atualizar) {
-            var url = avasusService.getUrl('widesus_dashboard', '&estado=' + estado);
+            var url = avasusService.getUrl('widesus_dashboard', [{ campo: 'estado', valor: estado }]);
 
-            if (filtro && filtro.valor && filtro.campo != 'estado') {
+            if (filtro && filtro.valor && filtro.campo !== 'estado') {
                 url += '&' + filtro.campo + '=' + filtro.valor;
             }
 

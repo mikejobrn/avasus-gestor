@@ -5,10 +5,12 @@
         .module('AvasusGestor')
         .controller('AppCtrl', AppCtrl);
 
-    AppCtrl.$inject = ['$ionicModal', '$ionicPopup', '$scope', '$state', '$ionicHistory', 'perfilService', 'cursoService'];
+    AppCtrl.$inject = ['$ionicModal', '$ionicPopup', '$scope', '$state',
+      '$ionicHistory', 'perfilService', 'cursoService', '$http'];
 
     /* @ngInject */
-    function AppCtrl($ionicModal, $ionicPopup, $scope, $state, $ionicHistory, perfilService, cursoService) {
+    function AppCtrl($ionicModal, $ionicPopup, $scope, $state,
+        $ionicHistory, perfilService, cursoService, $http) {
         var vm = this;
 
         activate();
@@ -92,6 +94,9 @@
         function setFiltro(filtro) {
             $scope.filtro = filtro;
             $scope.atualizacao++;
+            angular.forEach($http.pendingRequests, request => {
+                $http.abort(request);
+            });
             voltarParaDashboard();
         }
 
