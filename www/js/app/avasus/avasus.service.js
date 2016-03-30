@@ -1,34 +1,32 @@
-(function() {
-    'use strict';
-
+(() => {
     angular
         .module('AvasusGestor')
-        .factory('avasusService', avasusService);
+        .factory('avasusService', avasusService)
 
-    avasusService.$inject = ['constantes'];
+    avasusService.$inject = ['constantes']
 
     /* @ngInject */
     function avasusService(constantes) {
-        var service = {
-                getUrl: getUrl
-            };
-
-        return service;
-
-        ///////////////
-
-        function getUrl(funcao, parametros) {
-            var url = constantes.API_URL +
-                      constantes.API_SERVICO +
-                      '?wstoken=' + constantes.API_TOKEN +
-                      '&wsfunction=' + funcao +
-                      '&moodlewsrestformat=json';
-
-            if (parametros) {
-                url += parametros;
+        let service = {
+                getUrl,
             }
 
-            return url;
+        return service
+
+        //////////////
+
+        function getUrl(funcao, filtro) {
+            let url = constantes.API_URL +
+                      `/${constantes.API_SERVICO}` +
+                      `?wstoken=${constantes.API_TOKEN}` +
+                      `&wsfunction=${funcao}` +
+                      `&moodlewsrestformat=json`
+
+            if (filtro) {
+                url += filtro
+            }
+
+            return url
         }
     }
 })();
