@@ -29,10 +29,10 @@
         }
     }
 
-    Controller.$inject = ['$http', 'avasusService', '$scope', '$timeout', '$window'];
+    Controller.$inject = ['$http', 'avasusService', '$scope', '$timeout', '$window', 'dadosGeraisService'];
 
     /* @ngInject */
-    function Controller($http, avasusService, $scope, $timeout, $window) {
+    function Controller($http, avasusService, $scope, $timeout, $window, dadosGeraisService) {
         var vm = this;
 
         vm.carregando = true;
@@ -78,8 +78,7 @@
                                 enabled : true,
                                 radius : 5
                             },
-                            shadow : true,
-                            // color: '#f04847'
+                            shadow : true
                         }
                     }
                 },
@@ -87,9 +86,6 @@
                     text: ''
                 },
                 series: [],
-                // series : [{
-                //     name : 'Inscritos',
-                // }],
                 xAxis: {
                     type: 'datetime'
                 },
@@ -108,58 +104,47 @@
             moment.locale('pt-br');
 
             Highcharts.setOptions({
-            	lang: {
-            		months: [
-                        'Janeiro',
-                        'Fevereiro',
-                        'Março',
-                        'Abril',
-                        'Maio',
-                        'Junho',
-                        'Julho',
-                        'Agosto',
-                        'Setembro',
-                        'Outubro',
-                        'Novembro',
-                        'Dezembro'
-                    ],
-                    shortMonths : [
-                        'Jan',
-                        'Fev',
-                        'Mar',
-                        'Abr',
-                        'Mai',
-                        'Jun',
-                        'Jul',
-                        'Ago',
-                        'Set',
-                        'Out',
-                        'Nov',
-                        'Dez'
-                    ],
-            		weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
-            	}
+              	lang: {
+                		months: [
+                            'Janeiro',
+                            'Fevereiro',
+                            'Março',
+                            'Abril',
+                            'Maio',
+                            'Junho',
+                            'Julho',
+                            'Agosto',
+                            'Setembro',
+                            'Outubro',
+                            'Novembro',
+                            'Dezembro'
+                        ],
+                        shortMonths : [
+                            'Jan',
+                            'Fev',
+                            'Mar',
+                            'Abr',
+                            'Mai',
+                            'Jun',
+                            'Jul',
+                            'Ago',
+                            'Set',
+                            'Out',
+                            'Nov',
+                            'Dez'
+                        ],
+                		weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+              	}
             });
         }
 
         function getData() {
             var data = moment('2015-05-01');
-            var urls = [];
+            var resultado = [];
             while (data < moment().endOf('month')) {
-                var params = '&data=' + data.endOf('month').format('DD/MM/YYYY');
-                if (vm.filtro && vm.filtro.campo == 'estado') {
-                    params += '&estado=' + vm.filtro.valor;
-                }
-                var url = avasusService.getUrl('widesus_dashboard', params);
-                urls.push(url);
+                resultado.push(dadosGeraisService.getPorMes(data, vm.filtro));
                 data.add(1, 'months');
             }
-
-            var resultado = urls.map(function(url) {
-                return $http.get(url).then(function(res) {
-                    return res.data;
-                });
-            });
 
             return Promise.all(resultado).then(
                 function(resultadoCarregado) {

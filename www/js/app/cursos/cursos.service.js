@@ -28,13 +28,15 @@
             }
 
             var cursosSalvos = localStorageService.getObject('listaCursos');
-            if (cursosSalvos && !atualizar) {
+            if (cursosSalvos && !atualizar && !filtro) {
                 return $q.resolve(cursosSalvos);
             }
 
             return $http.get(url).then(
                 function (resultado) {
-                    localStorageService.setObject('listaCursos', resultado.data);
+                    if (!filtro) {
+                        localStorageService.setObject('listaCursos', resultado.data);
+                    }
                     return resultado.data;
                 }
             );
@@ -60,17 +62,23 @@
             );
         }
 
-        function getResumoPorEstado(estado, filtro) {
+        function getResumoPorEstado(estado, filtro, atualizar) {
             var url = avasusService.getUrl('widesus_dashboard', '&estado=' + estado);
 
             if (filtro && filtro.valor && filtro.campo != 'estado') {
                 url += '&' + filtro.campo + '=' + filtro.valor;
             }
 
-            // console.log(url);
+            var estadoSalvo = localStorageService.getObject('estado_' + estado);
+            if (estadoSalvo && !atualizar && !filtro) {
+                return $q.resolve(estadoSalvo);
+            }
 
             return $http.get(url).then(
                 function (resultado) {
+                    if (!filtro) {
+                        localStorageService.setObject('estado_' + estado, resultado.data);
+                    }
                     return resultado.data;
                 }
             );

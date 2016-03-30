@@ -29,43 +29,56 @@
         }
     }
 
-    Controller.$inject = ['dadosGeraisService', 'cursoService', '$scope'];
+    Controller.$inject = ['dadosGeraisService', 'cursoService', '$scope', '$timeout'];
 
     /* @ngInject */
-    function Controller(dadosGeraisService, cursoService, $scope) {
+    function Controller(dadosGeraisService, cursoService, $scope, $timeout) {
         var vm = this;
 
         vm.carregando = true;
 
         vm.activate = function() {
             vm.carregando = true;
+            vm.subtitulo = '';
+            if (vm.filtro) {
+                vm.subtitulo = vm.filtro.descricao || vm.filtro.valor;
+            }
             if (vm.filtro && vm.filtro.campo == 'cursos') {
-                cursoService.getDetalhes(vm.filtro).then(
+                // vm.subtitulo = vm.filtro.descricao;
+                vm.erro = '';
+                cursoService.getCursos(vm.filtro).then(
                     function(res) {
                         var dadosGerais = {
                             usuarios: res[0].inscritos,
                             cursos: 1,
                             certificados: res[0].certificados
-                        }
+                        };
                         vm.dadosGerais = dadosGerais;
-                        vm.subtitulo = vm.filtro.descricao;
-                        vm.erro = '';
-                        vm.carregando = false;
+                        $timeout(function() {
+                          vm.carregando = false;
+                        });
                     }
                 );
             } else {
+                // if (vm.filtro) {
+                //
+                // }
                 dadosGeraisService.get(vm.filtro).then(
                     function(resultado) {
                         vm.dadosGerais = resultado;
-                        if (vm.filtro) {
-                            vm.subtitulo = vm.filtro.valor;
-                        }
+                        // if (vm.filtro) {
+                        //     vm.subtitulo = vm.filtro.valor;
+                        // }
                         vm.erro = '';
-                        vm.carregando = false;
+                        $timeout(function() {
+                          vm.carregando = false;
+                        });
                     },
                     function(erro) {
                         vm.erro = erro;
-                        vm.carregando = false;
+                        $timeout(function() {
+                          vm.carregando = false;
+                        });
                     }
                 );
             }

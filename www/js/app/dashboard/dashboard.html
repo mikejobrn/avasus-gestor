@@ -8,24 +8,28 @@
     <ag-dados-gerais
       filtro="filtro"
       atualizacao="atualizacao"
+      ng-if="visualizarDadosGerais()"
       ng-show="visualizarDadosGerais()">
     </ag-dados-gerais>
 
     <ag-grafico-inscricoes-mes
       filtro="filtro"
       atualizacao="atualizacao"
+      ng-if="visualizarGraficoInscricoesMes()"
       ng-show="visualizarGraficoInscricoesMes()">
     </ag-grafico-inscricoes-mes>
 
     <ag-grafico-cursos
       filtro="filtro"
       atualizacao="atualizacao"
+      ng-if="visualizarGraficoCursos()"
       ng-show="visualizarGraficoCursos()">
     </ag-grafico-cursos>
 
     <ag-mapa-cursos
       filtro="filtro"
       atualizacao="atualizacao"
+      ng-if="visualizarMapaCursos()"
       ng-show="visualizarMapaCursos()">
     </ag-mapa-cursos>
   </ion-content>
