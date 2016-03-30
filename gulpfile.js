@@ -7,7 +7,7 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var uglify = require('gulp-uglify');
-var babel = require("gulp-babel");
+var babel = require('gulp-babel');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
@@ -63,6 +63,7 @@ gulp.task('angular', function() {
 gulp.task('compress', function() {
   gulp.src(paths.angular)
     .pipe(concat('all.min.js'))
+    .pipe(babel({ presets: ['es2015'] }))
     .pipe(uglify())
     .pipe(gulp.dest('./www/js/'));
 });
