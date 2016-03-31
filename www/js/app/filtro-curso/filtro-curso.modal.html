@@ -17,6 +17,7 @@
         <select ng-model="curso"
           ng-options="curso.curso for curso in cursos track by curso.cursoid"
           ng-hide="cursoCarregando">
+          <option value="" ng-show="false"></option>
         </select>
       </label>
 

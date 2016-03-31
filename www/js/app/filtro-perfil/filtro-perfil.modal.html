@@ -17,6 +17,7 @@
         <div ng-hide="perfilCarregando">
           <select ng-model="perfil"
             ng-options="perfil.nome for perfil in perfis track by perfil.id">
+            <option value="" ng-show="false"></option>
           </select>
         </div>
       </label>
