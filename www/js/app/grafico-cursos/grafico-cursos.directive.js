@@ -75,8 +75,10 @@
 
                 },
                 function(erro) {
-                    vm.erro = erro;
-                    vm.carregando = false;
+                    if (erro.config.timeout && erro.config.timeout.$$state.processScheduled == null) {
+                        vm.erro = erro;
+                        vm.carregando = false;
+                    }
                 }
             );
 

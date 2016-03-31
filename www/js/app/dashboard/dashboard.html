@@ -32,5 +32,9 @@
       ng-if="visualizarMapaCursos()"
       ng-show="visualizarMapaCursos()">
     </ag-mapa-cursos>
+
+    <div id="ultima_atualizacao">
+      Dados atualizados em {{ atualizacao.format('DD/MM/YYYY') }} às {{ atualizacao.format('HH:mm:ss') }}
+    </div>
   </ion-content>
 </ion-view>

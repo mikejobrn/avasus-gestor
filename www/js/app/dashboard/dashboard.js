@@ -18,7 +18,7 @@
         }
 
         vm.atualizarDash = function() {
-            $scope.atualizacao++;
+            $scope.atualizacao = moment();
             localStorageService.clear();
             $scope.$broadcast('scroll.refreshComplete');
         };

@@ -11,7 +11,8 @@
       <ion-spinner></ion-spinner>
     </div>
   </div>
-  <div ng-hide="vm.carregando || vm.erro">
+  <div ng-if="!vm.carregando && !vm.erro"
+    ng-show="!vm.carregando && !vm.erro">
     <div class="item item-text-wrap">
       <i class="icon ion-person"></i>
       Usuários totais:

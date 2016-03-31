@@ -48,7 +48,7 @@
                 return $q.resolve(dadosGeraisMes);
             }
 
-            return $http.get(url, { timeout: (a) => a.resolve() }).then(resultado => {
+            return $http.get(url).then(resultado => {
                 if (!filtro) {
                     localStorageService.setObject(chave, resultado.data);
                 }

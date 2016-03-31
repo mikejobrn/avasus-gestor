@@ -6,17 +6,21 @@
         .controller('AppCtrl', AppCtrl);
 
     AppCtrl.$inject = ['$ionicModal', '$ionicPopup', '$scope', '$state',
-      '$ionicHistory', 'perfilService', 'cursoService', '$http'];
+      '$ionicHistory', 'perfilService', 'cursoService', 'dadosGeraisService', '$http', 'localStorageService'];
 
     /* @ngInject */
     function AppCtrl($ionicModal, $ionicPopup, $scope, $state,
-        $ionicHistory, perfilService, cursoService, $http) {
+        $ionicHistory, perfilService, cursoService, dadosGeraisService, $http, localStorageService) {
         var vm = this;
 
         activate();
 
+        let atualizacaoGeral
+
         function activate() {
-            $scope.atualizacao = 0;
+            localStorageService.clear()
+            $scope.atualizacao = moment();
+            atualizacaoGeral = $scope.atualizacao;
 
             criarModal('FiltroDados',   'js/app/filtro/filtro.modal.html');
 
@@ -92,11 +96,16 @@
         }
 
         function setFiltro(filtro) {
-            $scope.filtro = filtro;
-            $scope.atualizacao++;
             angular.forEach($http.pendingRequests, request => {
-                $http.abort(request);
+              $http.abort(request);
             });
+            $scope.filtro = filtro;
+            if (filtro) {
+                atualizacaoGeral = $scope.atualizacao
+                $scope.atualizacao = moment();
+            } else {
+                $scope.atualizacao = atualizacaoGeral
+            }
             voltarParaDashboard();
         }
 
