@@ -27,10 +27,10 @@
         }
     }
 
-    Controller.$inject = ['$http', 'avasusService', '$scope', '$timeout', '$window', 'dadosGeraisService']
+    Controller.$inject = ['$http', 'avasusService', '$scope', '$timeout', '$window', 'dadosGeraisService', 'Highcharts']
 
     /* @ngInject */
-    function Controller($http, avasusService, $scope, $timeout, $window, dadosGeraisService) {
+    function Controller($http, avasusService, $scope, $timeout, $window, dadosGeraisService, Highcharts) {
         let vm = this
 
         vm.carregando = true

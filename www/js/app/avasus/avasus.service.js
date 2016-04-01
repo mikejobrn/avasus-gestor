@@ -3,10 +3,10 @@
         .module('AvasusGestor')
         .factory('avasusService', avasusService)
 
-    avasusService.$inject = ['constantes']
+    avasusService.$inject = ['avasusConstantes']
 
     /* @ngInject */
-    function avasusService(constantes) {
+    function avasusService(avasusConstantes) {
         let service = {
                 getUrl,
             }
@@ -16,9 +16,9 @@
         //////////////
 
         function getUrl(funcao, filtros) {
-            let url = constantes.API_URL +
-                      `/${constantes.API_SERVICO}` +
-                      `?wstoken=${constantes.API_TOKEN}` +
+            let url = avasusConstantes.API_URL +
+                      `/${avasusConstantes.API_SERVICO}` +
+                      `?wstoken=${avasusConstantes.API_TOKEN}` +
                       `&wsfunction=${funcao}` +
                       `&moodlewsrestformat=json`
 
