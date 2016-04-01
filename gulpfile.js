@@ -11,7 +11,7 @@ var babel = require('gulp-babel');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
-  angular: ['./www/js/app/**/*.module.js', './www/js/app/**/*.js'],
+  angular: ['www/js/app/**/*.module.js', 'www/js/app/**/*.js'],
   libsJs: [
       // Bundle minimificado contendo AngularJS e componentes do Ionic
       './lib/ionic/js/ionic.bundle.min.js',
@@ -84,8 +84,8 @@ gulp.task('sass', function(done) {
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.angular.concat([
-      './www/**/*.html',
-      './www/js/app/**/*.html'
+      'www/**/*.html',
+      'www/js/app/**/*.html'
   ]), ['angular']);
 });
 
