@@ -1,35 +1,26 @@
-(function() {
-    'use strict';
-
+(() => {
     angular
         .module('AvasusGestor')
-        .factory('perfilService', perfilService);
+        .factory('perfilService', perfilService)
 
-    perfilService.$inject = ['avasusService', '$http'];
+    perfilService.$inject = ['avasusService', '$http']
 
     /* @ngInject */
     function perfilService(avasusService, $http) {
-        var service = {
-            getPerfis: getPerfis,
-            ordenarPorNome: ordenarPorNome
-        };
+        let service = {
+            getPerfis,
+            ordenarPorNome,
+        }
 
-        return service;
+        return service
 
         function getPerfis() {
-            var url = avasusService.getUrl('widesus_dashboard_perfis');
-
-            return $http.get(url).then(
-                function (resultado) {
-                    return resultado.data;
-                }
-            );
+            let url = avasusService.getUrl('widesus_dashboard_perfis')
+            return $http.get(url).then(resultado => resultado.data)
         }
 
         function ordenarPorNome(perfis) {
-            return perfis.sort(function(a, b) {
-                return a.nome.localeCompare(b.nome);
-            });
+            return perfis.sort((a, b) => a.nome.localeCompare(b.nome))
         }
     }
 })();

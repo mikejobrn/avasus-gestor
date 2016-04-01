@@ -1,160 +1,154 @@
-(function() {
-    'use strict';
-
+(() => {
     angular
         .module('AvasusGestor')
         .controller('AppCtrl', AppCtrl);
 
     AppCtrl.$inject = ['$ionicModal', '$ionicPopup', '$scope', '$state',
-      '$ionicHistory', 'perfilService', 'cursoService', 'dadosGeraisService', '$http', 'localStorageService'];
+      '$ionicHistory', 'perfilService', 'cursoService', 'ultimaAtualizacaoService',
+      'localStorageService', '$http'];
 
     /* @ngInject */
     function AppCtrl($ionicModal, $ionicPopup, $scope, $state,
-        $ionicHistory, perfilService, cursoService, dadosGeraisService, $http, localStorageService) {
-        var vm = this;
+        $ionicHistory, perfilService, cursoService, ultimaAtualizacaoService,
+        localStorageService, $http) {
 
-        activate();
-
-        let atualizacaoGeral
+        activate()
 
         function activate() {
             localStorageService.clear()
-            $scope.atualizacao = moment();
-            atualizacaoGeral = $scope.atualizacao;
+            $scope.atualizacao = 0
+            $scope.dataAtualizacao = ultimaAtualizacaoService.get()
 
-            criarModal('FiltroDados',   'js/app/filtro/filtro.modal.html');
+            criarModal('FiltroDados',   'js/app/filtros/filtro.modal.html')
 
-            criarModal('FiltroEstado',  'js/app/filtro-estado/filtro-estado.modal.html');
+            criarModal('FiltroEstado',  'js/app/filtros/filtro-estado.modal.html')
 
-            criarModal('FiltroPerfil',  'js/app/filtro-perfil/filtro-perfil.modal.html');
-            carregarListaPerfis();
+            criarModal('FiltroPerfil',  'js/app/filtros/filtro-perfil.modal.html')
+            carregarListaPerfis()
 
-            criarModal('FiltroCurso',   'js/app/filtro-curso/filtro-curso.modal.html');
-            carregarListaCursos();
+            criarModal('FiltroCurso',   'js/app/filtros/filtro-curso.modal.html')
+            carregarListaCursos()
         }
 
         function criarModal(nome, caminhoTemplate) {
             $ionicModal
                 .fromTemplateUrl(caminhoTemplate, { scope: $scope })
-                .then(function (modal) {
-                    $scope['modal' + nome] = modal;
-                });
+                .then(modal => {
+                    $scope['modal' + nome] = modal
+                })
 
-            $scope['abrirModal' + nome] = function () {
-                $scope['modal' + nome].show();
-            };
+            $scope['abrirModal' + nome] = () => {
+                $scope['modal' + nome].show()
+            }
 
-            $scope['fecharModal' + nome] = function () {
-                $scope['modal' + nome].hide();
-            };
+            $scope['fecharModal' + nome] = () => {
+                $scope['modal' + nome].hide()
+            }
         }
 
         function voltarParaDashboard() {
             $ionicHistory.nextViewOptions({
                 disableBack: true
-            });
-            $scope.modalFiltroDados.hide();
-            $state.go('app.dash');
+            })
+            $scope.modalFiltroDados.hide()
+            $state.go('app.dash')
         }
 
         function carregarListaPerfis() {
-            $scope.perfilCarregando = true;
-            $scope.perfilErro = '';
+            $scope.perfilCarregando = true
+            $scope.perfilErro = ''
             perfilService
                 .getPerfis()
                 .then(
-                    function(perfis) {
-                        $scope.perfis = perfilService.ordenarPorNome(perfis);
+                    perfis => {
+                        $scope.perfis = perfilService.ordenarPorNome(perfis)
                     },
-                    function() {
-                        $scope.perfis = '';
-                        $scope.perfilErro = 'Não foi possível obter lista de perfis.';
+                    () => {
+                        $scope.perfis = ''
+                        $scope.perfilErro = 'Não foi possível obter lista de perfis.'
                     }
                 )
-                .finally(function() {
-                    $scope.perfilCarregando = false;
-                });
+                .finally(() => {
+                    $scope.perfilCarregando = false
+                })
         }
 
         function carregarListaCursos() {
-            $scope.cursoCarregando = true;
-            $scope.cursoErro = '';
+            $scope.cursoCarregando = true
+            $scope.cursoErro = ''
             cursoService
                 .getCursos()
                 .then(
-                    function(cursos) {
+                    cursos => {
                         $scope.cursos = cursoService.ordenarPorNome(cursos);
                     },
-                    function() {
+                    () => {
                         $scope.cursos = '';
                         $scope.cursoErro = 'Não foi possível obter lista de cursos.';
                     }
                 )
-                .finally(function() {
+                .finally(() => {
                     $scope.cursoCarregando = false;
-                });
+                })
         }
 
         function setFiltro(filtro) {
             angular.forEach($http.pendingRequests, request => {
-              $http.abort(request);
-            });
-            $scope.filtro = filtro;
-            if (filtro) {
-                atualizacaoGeral = $scope.atualizacao
-                $scope.atualizacao = moment();
-            } else {
-                $scope.atualizacao = atualizacaoGeral
-            }
-            voltarParaDashboard();
+                $http.abort(request)
+            })
+            $scope.filtro = filtro
+            $scope.atualizacao++
+            $scope.dataAtualizacao = ultimaAtualizacaoService.get(filtro)
+            voltarParaDashboard()
         }
 
-        $scope.voltarParaDashboard = function() {
-            voltarParaDashboard();
-        };
+        $scope.voltarParaDashboard = () => {
+            voltarParaDashboard()
+        }
 
-        $scope.filtrarPorEstado = function(estado) {
-            $scope.modalFiltroEstado.hide();
-            setFiltro({ campo: 'estado', valor: estado });
-        };
+        $scope.filtrarPorEstado = estado => {
+            $scope.modalFiltroEstado.hide()
+            setFiltro({ campo: 'estado', valor: estado })
+        }
 
-        $scope.filtrarPorPerfil = function(perfil) {
-            $scope.modalFiltroPerfil.hide();
-            setFiltro({ campo: 'perfil', valor: perfil.id, descricao: perfil.nome });
-        };
+        $scope.filtrarPorPerfil = perfil => {
+            $scope.modalFiltroPerfil.hide()
+            setFiltro({ campo: 'perfil', valor: perfil.id, descricao: perfil.nome })
+        }
 
-        $scope.filtrarPorCurso = function(curso) {
-            $scope.modalFiltroCurso.hide();
-            setFiltro({ campo: 'cursos', valor: curso.cursoid, descricao: curso.curso });
-        };
+        $scope.filtrarPorCurso = curso => {
+            $scope.modalFiltroCurso.hide()
+            setFiltro({ campo: 'cursos', valor: curso.cursoid, descricao: curso.curso })
+        }
 
-        $scope.removerFiltro = function() {
-            setFiltro();
-        };
+        $scope.removerFiltro = () => {
+            setFiltro()
+        }
 
-        $scope.visualizarDadosGerais = function() {
+
+        $scope.visualizarDadosGerais = () => {
             return !$scope.filtro ||
                 $scope.filtro.campo === 'estado' ||
-                $scope.filtro.campo === 'cursos';
-        };
+                $scope.filtro.campo === 'cursos'
+        }
 
-        $scope.visualizarGraficoInscricoesMes = function() {
+        $scope.visualizarGraficoInscricoesMes = () => {
             return !$scope.filtro || (
                 $scope.filtro.campo !== 'perfil' &&
                 $scope.filtro.campo !== 'cursos'
-            );
-        };
+            )
+        }
 
-        $scope.visualizarGraficoCursos = function() {
-            return !$scope.filtro || $scope.filtro.campo !== 'cursos';
-        };
+        $scope.visualizarGraficoCursos = () => {
+            return !$scope.filtro || $scope.filtro.campo !== 'cursos'
+        }
 
-        $scope.visualizarMapaCursos = function() {
+        $scope.visualizarMapaCursos = () => {
             return !$scope.filtro || (
                 $scope.filtro.campo !== 'estado' &&
                 $scope.filtro.campo !== 'perfil' &&
                 $scope.filtro.campo !== 'cursos'
-            );
-        };
+            )
+        }
     }
 })();
