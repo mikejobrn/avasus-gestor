@@ -18,53 +18,43 @@
         ///////////////
 
         function getCursos(filtro, atualizar) {
-            var url = avasusService.getUrl('widesus_dashboard_curso');
+            let url = avasusService.getUrl('widesus_dashboard_curso', filtro)
 
-            if (filtro && filtro.valor) {
-                url += '&' + filtro.campo + '=' + filtro.valor;
-            }
-
-            var cursosSalvos = localStorageService.getObject('listaCursos');
+            let cursosSalvos = localStorageService.getObject('listaCursos')
             if (cursosSalvos && !atualizar && !filtro) {
-                return $q.resolve(cursosSalvos);
+                return $q.resolve(cursosSalvos)
             }
 
-            return $http.get(url).then(
-                function (resultado) {
-                    if (!filtro) {
-                        localStorageService.setObject('listaCursos', resultado.data);
-                    }
-                    return resultado.data;
+            return $http.get(url).then(resultado => {
+                if (!filtro) {
+                    localStorageService.setObject('listaCursos', resultado.data)
                 }
-            );
+                return resultado.data
+            })
         }
 
         function ordenarPorNome(cursos) {
-            return cursos.sort(function(a, b) {
-                return a.curso.localeCompare(b.curso);
-            });
+            return cursos.sort((a, b) => a.curso.localeCompare(b.curso));
         }
 
         function getResumoPorEstado(estado, filtro, atualizar) {
-            var url = avasusService.getUrl('widesus_dashboard', [{ campo: 'estado', valor: estado }]);
+            let url = avasusService.getUrl('widesus_dashboard', [{ campo: 'estado', valor: estado }])
 
             if (filtro && filtro.valor && filtro.campo !== 'estado') {
-                url += '&' + filtro.campo + '=' + filtro.valor;
+                url += `&${filtro.campo}=${filtro.valor}`
             }
 
-            var estadoSalvo = localStorageService.getObject('estado_' + estado);
+            let estadoSalvo = localStorageService.getObject('estado_' + estado)
             if (estadoSalvo && !atualizar && !filtro) {
-                return $q.resolve(estadoSalvo);
+                return $q.resolve(estadoSalvo)
             }
 
-            return $http.get(url).then(
-                function (resultado) {
-                    if (!filtro) {
-                        localStorageService.setObject('estado_' + estado, resultado.data);
-                    }
-                    return resultado.data;
+            return $http.get(url).then(resultado => {
+                if (!filtro) {
+                    localStorageService.setObject('estado_' + estado, resultado.data)
                 }
-            );
+                return resultado.data
+            })
         }
     }
 })();

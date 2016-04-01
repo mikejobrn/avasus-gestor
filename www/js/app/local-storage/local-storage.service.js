@@ -1,9 +1,9 @@
 (() => {
     angular
         .module('AvasusGestor')
-        .factory('localStorageService', localStorageService);
+        .factory('localStorageService', localStorageService)
 
-    localStorageService.$inject = ['$window'];
+    localStorageService.$inject = ['$window']
 
     /* @ngInject */
     function localStorageService($window) {

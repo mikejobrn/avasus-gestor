@@ -1,9 +1,7 @@
-(function() {
-    'use strict';
-
+(() => {
     angular
         .module('AvasusGestor')
-        .directive('agMapaCursos', agMapaCursos);
+        .directive('agMapaCursos', agMapaCursos)
 
     /* @ngInject */
     function agMapaCursos() {
@@ -18,33 +16,29 @@
             controller: Controller,
             controllerAs: 'vm',
             bindToController: true
-        };
+        }
 
-        return directive;
+        return directive
 
         function linkFunc(scope, el, attr, ctrl) {
-            // scope.$watch('vm.filtro', function (a) {
-            //     ctrl.activate();
-            // });
-
-            scope.$watch('vm.atualizacao', function (a) {
-                ctrl.activate();
-            });
+            scope.$watch('vm.atualizacao', () => {
+                ctrl.activate()
+            })
         }
     }
 
-    Controller.$inject = ['cursoService', '$scope'];
+    Controller.$inject = ['cursoService', '$scope']
 
     /* @ngInject */
     function Controller(cursoService, $scope) {
-        var vm = this;
+        let vm = this
 
-        vm.carregando = true;
+        vm.carregando = true
 
-        vm.activate = function() {
-            vm.carregando = true;
+        vm.activate = () => {
+            vm.carregando = true
 
-            vm.config = getConfigMapa();
+            vm.config = getConfigMapa()
 
             Promise.all([
                 carregarDadosRegiao(['ac', 'am', 'rr', 'ro', 'pa', 'ap', 'to'], 0),
@@ -53,35 +47,35 @@
                 carregarDadosRegiao(['sp', 'es', 'rj', 'mg'], 3),
                 carregarDadosRegiao(['pr', 'sc', 'rs'], 4)
             ]).then(
-                function() {
+                () => {
                     vm.erro = '';
                     vm.carregando = false;
                     $scope.$apply();
                 },
-                function(erro) {
+                erro => {
                     if (erro.config.timeout && erro.config.timeout.$$state.processScheduled == null) {
-                        vm.erro = erro;
-                        vm.carregando = false;
+                        vm.erro = erro
+                        vm.carregando = false
                     }
                 }
-            );
+            )
 
             function carregarDadosRegiao(estados, idRegiao) {
                 return Promise.all(
-                    estados.map(function (estado) {
-                        return cursoService.getResumoPorEstado(estado, vm.filtro).then(function (resultado) {
+                    estados.map(estado => {
+                        return cursoService.getResumoPorEstado(estado, vm.filtro).then(resultado => {
                             return {
                                 'hc-key': 'br-' + estado,
                                 'value': resultado.usuarios,
                                 'certificados': resultado.certificados
-                            };
-                        });
+                            }
+                        })
                     })
-                ).then(function (resultado) {
-                    vm.config.series[idRegiao].data = resultado;
-                });
+                ).then(resultado => {
+                    vm.config.series[idRegiao].data = resultado
+                })
             }
-        };
+        }
 
         function getConfigMapa() {
             return {
@@ -105,12 +99,12 @@
                         },
                         borderWidth: 0,
                         useHTML: true,
-                        formatter: function() {
-                            return '<div>' +
-                                '<strong>' + this.point.name + '</strong><br>' +
-                                'Inscritos: <span class="numero">' + formatarNumero(this.point.value) + '</span><br>' +
-                                'Certificados: <span class="numero">' + formatarNumero(this.point.certificados) + '</span>' +
-                                '</div>';
+                        formatter: () => {
+                            return `<div>
+                                <strong>${this.point.name}</strong><br>
+                                Inscritos: <span class="numero">${formatarNumero(this.point.value)}</span><br>
+                                Certificados: <span class="numero">${formatarNumero(this.point.certificados)}</span>
+                                </div>`;
                         }
                     },
                     plotOptions: {
@@ -144,11 +138,11 @@
                         color: '#c49fff'
                     }
                 ]
-            };
+            }
         }
 
         function formatarNumero(numero) {
-            return Highcharts.numberFormat(numero, 0, ',', '.');
+            return Highcharts.numberFormat(numero, 0, ',', '.')
         }
     }
 })();

@@ -1,17 +1,15 @@
-(function() {
-    'use strict';
-
+(() => {
     angular
         .module('AvasusGestor')
-        .controller('ContatoCtrl', ContatoCtrl);
+        .controller('ContatoCtrl', ContatoCtrl)
 
-    ContatoCtrl.$inject = ['$ionicPopup', '$window', '$scope'];
+    ContatoCtrl.$inject = ['$ionicPopup', '$window', '$scope']
 
     /* @ngInject */
     function ContatoCtrl($ionicPopup, $window, $scope) {
-        var vm = this;
+        let vm = this
 
-        activate();
+        activate()
 
         function activate() {
 
@@ -19,27 +17,28 @@
 
         vm.enviar = function(contato) {
             if (!contato ||
-                    !contato.nome || contato.nome.trim() === "" ||
-                    !contato.email || contato.email.trim() === "" ||
-                    !contato.mensagem || contato.mensagem.trim() === "") {
+                    !contato.nome || contato.nome.trim() === '' ||
+                    !contato.email || contato.email.trim() === '' ||
+                    !contato.mensagem || contato.mensagem.trim() === '') {
 
-                $ionicPopup.alert({ title: "Por favor, preencha todos os campos." });
+                $ionicPopup.alert({ title: 'Por favor, preencha todos os campos.' });
             } else {
                 enviarEmail(contato);
-                // $ionicPopup.alert({ title: "Sua mensagem foi enviada com sucesso!" });
+                $ionicPopup.alert({ title: 'Sua mensagem foi enviada com sucesso!' });
                 $scope.voltarParaDashboard();
             }
         };
 
         function enviarEmail(contato) {
-            var email = 'moodle@sedis.ufrn.br',
+            let email = 'moodle@sedis.ufrn.br',
                 subject = 'AVASUS - Gestor',
-                body = 'Nome: ' + contato.nome + '\n' +
-                  'Email: ' + contato.email + '\n' +
-                  'Mensagem: ' + contato.mensagem;
-            $window.location.href = 'mailto:' + email +
-                '?subject=' + encodeURIComponent(subject) +
-                '&body=' + encodeURIComponent(body);
+                body = `Nome: ${contato.nome}
+                        Email: ${contato.email}
+                        Mensagem: ${contato.mensagem}`
+
+            $window.location.href = `mailto:${email}` +
+                `?subject=${encodeURIComponent(subject)}` +
+                `&body=${encodeURIComponent(body)}`;
         }
     }
 })();

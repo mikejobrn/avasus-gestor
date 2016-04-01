@@ -1,17 +1,15 @@
-(function() {
-    'use strict';
-
+(() => {
     angular
         .module('AvasusGestor')
-        .controller('InicioCtrl', InicioCtrl);
+        .controller('InicioCtrl', InicioCtrl)
 
-    InicioCtrl.$inject = [];
+    InicioCtrl.$inject = []
 
     /* @ngInject */
     function InicioCtrl() {
-        var vm = this;
+        let vm = this
 
-        activate();
+        activate()
 
         function activate() {
 

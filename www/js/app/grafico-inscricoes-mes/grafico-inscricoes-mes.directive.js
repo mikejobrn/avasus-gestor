@@ -1,9 +1,7 @@
-(function() {
-    'use strict';
-
+(() => {
     angular
         .module('AvasusGestor')
-        .directive('agGraficoInscricoesMes', agGraficoInscricoesMes);
+        .directive('agGraficoInscricoesMes', agGraficoInscricoesMes)
 
     /* @ngInject */
     function agGraficoInscricoesMes() {
@@ -18,33 +16,33 @@
             controller: Controller,
             controllerAs: 'vm',
             bindToController: true
-        };
+        }
 
-        return directive;
+        return directive
 
         function linkFunc(scope, el, attr, ctrl) {
-            scope.$watch('vm.atualizacao', function (a) {
-                ctrl.activate();
-            });
+            scope.$watch('vm.atualizacao', () => {
+                ctrl.activate()
+            })
         }
     }
 
-    Controller.$inject = ['$http', 'avasusService', '$scope', '$timeout', '$window', 'dadosGeraisService'];
+    Controller.$inject = ['$http', 'avasusService', '$scope', '$timeout', '$window', 'dadosGeraisService']
 
     /* @ngInject */
     function Controller($http, avasusService, $scope, $timeout, $window, dadosGeraisService) {
-        var vm = this;
+        let vm = this
 
-        vm.carregando = true;
+        vm.carregando = true
 
         vm.activate = function() {
-            vm.carregando = true;
+            vm.carregando = true
 
-            setLocalePtBr();
+            setLocalePtBr()
 
-            vm.config = getConfigMapa();
+            vm.config = getConfigMapa()
 
-            getData();
+            getData()
         };
 
         function getConfigMapa() {
@@ -65,11 +63,11 @@
                         },
                         borderWidth: 0,
                         useHTML: true,
-                        formatter: function() {
-                            return '<div>' +
-                                '<strong>' + moment(this.x).format('MMM/YYYY') + '</strong><br>' +
-                                this.series.name + ': <span class="numero">' + formatarNumero(this.y) + '' +
-                                '</div>';
+                        formatter: () => {
+                            return `<div>
+                                <strong>${moment(this.x).format('MMM/YYYY')}</strong><br>
+                                ${this.series.name}: <span class="numero">${formatarNumero(this.y)}
+                                </div>`;
                         }
                     },
                     plotOptions: {
@@ -97,11 +95,11 @@
                         format: '{value:.,0f}'
                     },
                 }
-            };
+            }
         }
 
         function setLocalePtBr() {
-            moment.locale('pt-br');
+            moment.locale('pt-br')
 
             Highcharts.setOptions({
               	lang: {
@@ -135,39 +133,39 @@
                         ],
                 		weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
               	}
-            });
+            })
         }
 
         function getData() {
-            var data = moment('2015-05-01');
-            var resultado = [];
+            let data = moment('2015-05-01')
+            var resultado = []
             while (data < moment().endOf('month')) {
-                resultado.push(dadosGeraisService.getPorMes(data, vm.filtro));
-                data.add(1, 'months');
+                resultado.push(dadosGeraisService.getPorMes(data, vm.filtro))
+                data.add(1, 'months')
             }
 
             return Promise.all(resultado).then(
-                function(resultadoCarregado) {
-                    var diferencas = resultadoCarregado.slice(1).map(function(res, i) {
+                resultadoCarregado => {
+                    let diferencas = resultadoCarregado.slice(1).map((res, i) => {
                         return {
                             usuarios: res.usuarios - resultadoCarregado[i].usuarios,
                             inscritos: res.inscritos - resultadoCarregado[i].inscritos
-                        };
-                    });
+                        }
+                    })
 
-                    var totalInscritos = [];
-                    var totalUsuarios = [];
+                    let totalInscritos = []
+                    let totalUsuarios = []
 
-                    var data = moment('2015-06-01');
-                    var i = 0;
+                    let data = moment('2015-06-01')
+                    let i = 0
                     while (i < diferencas.length) {
-                        totalInscritos.push([data.format('X') * 1000, diferencas[i].inscritos]);
-                        totalUsuarios.push([data.format('X') * 1000, diferencas[i].usuarios]);
-                        data.add(1, 'months');
-                        i++;
+                        totalInscritos.push([data.format('X') * 1000, diferencas[i].inscritos])
+                        totalUsuarios.push([data.format('X') * 1000, diferencas[i].usuarios])
+                        data.add(1, 'months')
+                        i++
                     }
 
-                    vm.config.series = [];
+                    vm.config.series = []
 
                     vm.config.series.push({
                         name: 'Matrícula',
@@ -179,11 +177,11 @@
                             },
                             borderWidth: 0,
                             useHTML: true,
-                            formatter: function() {
-                                return '<div>' +
-                                    '<strong>' + moment(this.x).format('MMM/YYYY') + '</strong><br>' +
-                                    'Inscritos: <span class="numero">' + formatarNumero(this.y) + '' +
-                                    '</div>';
+                            formatter: () => {
+                                return `<div>
+                                    <strong>${moment(this.x).format('MMM/YYYY')}</strong><br>
+                                    Inscritos: <span class="numero">${formatarNumero(this.y)}
+                                    </div>`;
                             }
                         },
                     });
@@ -198,28 +196,28 @@
                             },
                             borderWidth: 0,
                             useHTML: true,
-                            formatter: function() {
-                                return '<div>' +
-                                    '<strong>' + moment(this.x).format('MMM/YYYY') + '</strong><br>' +
-                                    'Usuários: <span class="numero">' + formatarNumero(this.y) + '' +
-                                    '</div>';
+                            formatter: () => {
+                                return `<div>
+                                    <strong>${moment(this.x).format('MMM/YYYY')}</strong><br>
+                                    Usuários: <span class="numero">${formatarNumero(this.y)}
+                                    </div>`;
                             }
                         },
                     });
 
-                    vm.carregando = false;
+                    vm.carregando = false
                 },
-                function(erro) {
+                erro => {
                     if (erro.config.timeout && erro.config.timeout.$$state.processScheduled == null) {
-                        vm.erro = erro;
-                        vm.carregando = false;
+                        vm.erro = erro
+                        vm.carregando = false
                     }
                 }
             );
         }
 
         function formatarNumero(numero) {
-            return Highcharts.numberFormat(numero, 0, ',', '.');
+            return Highcharts.numberFormat(numero, 0, ',', '.')
         }
     }
 })();

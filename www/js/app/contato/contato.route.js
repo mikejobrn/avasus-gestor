@@ -1,12 +1,9 @@
-(
-  function() {
-    'use strict';
-
+(() => {
     angular
         .module('AvasusGestor')
-        .config(config);
+        .config(config)
 
-        config.$inject = ['$stateProvider', '$urlRouterProvider'];
+        config.$inject = ['$stateProvider', '$urlRouterProvider']
 
         /* @ngInject */
         function config($stateProvider, $urlRouterProvider) {
@@ -20,6 +17,6 @@
                         controllerAs: 'vm'
                         }
                     }
-                });
+                })
         }
 })();

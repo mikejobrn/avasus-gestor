@@ -1,12 +1,9 @@
-(
-  function() {
-    'use strict';
-
+(() => {
     angular
         .module('AvasusGestor')
-        .config(config);
+        .config(config)
 
-        config.$inject = ['$stateProvider'];
+        config.$inject = ['$stateProvider']
 
         /* @ngInject */
         function config($stateProvider) {
@@ -16,6 +13,6 @@
                     templateUrl: 'js/app/inicio/inicio.html',
                     controller: 'InicioCtrl',
                     controllerAs: 'vm'
-                });
+                })
         }
 })();
