@@ -93,7 +93,7 @@
                         },
                         borderWidth: 0,
                         useHTML: true,
-                        formatter: () => {
+                        formatter: function() {
                             return `<div>
                                 <strong>${this.point.name}</strong><br>
                                 Inscritos: <span class="numero">${formatarNumero(this.y)}
@@ -129,7 +129,7 @@
                         },
                         borderWidth: 0,
                         useHTML: true,
-                        formatter: () => {
+                        formatter: function() {
                             return `<div>
                                 <strong>${this.point.name}</strong><br>
                                 Inscritos: <span class="numero">${formatarNumero(this.y)}</span><br>

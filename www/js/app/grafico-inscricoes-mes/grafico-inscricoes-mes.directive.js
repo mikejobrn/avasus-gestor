@@ -63,7 +63,7 @@
                         },
                         borderWidth: 0,
                         useHTML: true,
-                        formatter: () => {
+                        formatter: function() {
                             return `<div>
                                 <strong>${moment(this.x).format('MMM/YYYY')}</strong><br>
                                 ${this.series.name}: <span class="numero">${formatarNumero(this.y)}
@@ -177,7 +177,7 @@
                             },
                             borderWidth: 0,
                             useHTML: true,
-                            formatter: () => {
+                            formatter: function() {
                                 return `<div>
                                     <strong>${moment(this.x).format('MMM/YYYY')}</strong><br>
                                     Inscritos: <span class="numero">${formatarNumero(this.y)}
@@ -196,7 +196,7 @@
                             },
                             borderWidth: 0,
                             useHTML: true,
-                            formatter: () => {
+                            formatter: function() {
                                 return `<div>
                                     <strong>${moment(this.x).format('MMM/YYYY')}</strong><br>
                                     Usuários: <span class="numero">${formatarNumero(this.y)}
