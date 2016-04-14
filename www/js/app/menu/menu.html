@@ -14,7 +14,7 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" id="sidemenu">
     <ion-header-bar class="bar-stable">
       <h1 class="title">Menu</h1>
     </ion-header-bar>
@@ -23,10 +23,10 @@
         <ion-item menu-close href="#/app/dash">
           <i class="icon ion-stats-bars"></i> Dashboard
         </ion-item>
-        <ion-item menu-close ng-click="abrirModalFiltroDados()">
+        <ion-item menu-close href="#" ng-click="abrirModalFiltroDados()">
           <i class="icon ion-funnel"></i> Filtrar dados
         </ion-item>
-        <ion-item menu-close ng-click="removerFiltro()" ng-show="filtro">
+        <ion-item menu-close href="#" ng-click="removerFiltro()" ng-show="filtro">
           <i class="icon ion-trash-a"></i> Remover filtro
         </ion-item>
         <ion-item menu-close href="#/app/contato">
