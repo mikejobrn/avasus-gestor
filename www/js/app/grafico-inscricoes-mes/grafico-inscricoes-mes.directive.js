@@ -8,10 +8,7 @@
         var directive = {
             restrict: 'EA',
             templateUrl: 'js/app/grafico-inscricoes-mes/grafico-inscricoes-mes.html',
-            scope: {
-                filtro: '=',
-                atualizacao: '='
-            },
+            scope: {},
             link: linkFunc,
             controller: Controller,
             controllerAs: 'vm',
@@ -21,7 +18,8 @@
         return directive
 
         function linkFunc(scope, el, attr, ctrl) {
-            scope.$watch('vm.atualizacao', () => {
+            scope.$on('publico.atualizarFiltro', (event, args) => {
+                ctrl.filtro = args
                 ctrl.activate()
             })
         }

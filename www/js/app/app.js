@@ -5,12 +5,12 @@
 
     AppCtrl.$inject = ['$ionicModal', '$ionicPopup', '$scope', '$state',
       '$ionicHistory', 'perfilService', 'cursoService', 'ultimaAtualizacaoService',
-      'localStorageService', '$http'];
+      'localStorageService', '$http', 'filtroService'];
 
     /* @ngInject */
     function AppCtrl($ionicModal, $ionicPopup, $scope, $state,
         $ionicHistory, perfilService, cursoService, ultimaAtualizacaoService,
-        localStorageService, $http) {
+        localStorageService, $http, filtroService) {
 
         activate()
 
@@ -96,8 +96,8 @@
             angular.forEach($http.pendingRequests, request => {
                 $http.abort(request)
             })
-            $scope.filtro = filtro
-            $scope.atualizacao++
+            filtroService.set(filtro)
+            $scope.$broadcast('publico.atualizarFiltro', filtro)
             $scope.dataAtualizacao = ultimaAtualizacaoService.get(filtro)
             voltarParaDashboard()
         }
@@ -123,32 +123,6 @@
 
         $scope.removerFiltro = () => {
             setFiltro()
-        }
-
-
-        $scope.visualizarDadosGerais = () => {
-            return !$scope.filtro ||
-                $scope.filtro.campo === 'estado' ||
-                $scope.filtro.campo === 'cursos'
-        }
-
-        $scope.visualizarGraficoInscricoesMes = () => {
-            return !$scope.filtro || (
-                $scope.filtro.campo !== 'perfil' &&
-                $scope.filtro.campo !== 'cursos'
-            )
-        }
-
-        $scope.visualizarGraficoCursos = () => {
-            return !$scope.filtro || $scope.filtro.campo !== 'cursos'
-        }
-
-        $scope.visualizarMapaCursos = () => {
-            return !$scope.filtro || (
-                $scope.filtro.campo !== 'estado' &&
-                $scope.filtro.campo !== 'perfil' &&
-                $scope.filtro.campo !== 'cursos'
-            )
         }
     }
 })();

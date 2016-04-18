@@ -6,31 +6,23 @@
     </ion-refresher>
 
     <ag-dados-gerais
-      filtro="filtro"
-      atualizacao="atualizacao"
-      ng-if="visualizarDadosGerais()"
-      ng-show="visualizarDadosGerais()">
+      ng-if="vm.visualizarDadosGerais()"
+      ng-show="vm.visualizarDadosGerais()">
     </ag-dados-gerais>
 
     <ag-grafico-inscricoes-mes
-      filtro="filtro"
-      atualizacao="atualizacao"
-      ng-if="visualizarGraficoInscricoesMes()"
-      ng-show="visualizarGraficoInscricoesMes()">
+      ng-if="vm.visualizarGraficoInscricoesMes()"
+      ng-show="vm.visualizarGraficoInscricoesMes()">
     </ag-grafico-inscricoes-mes>
 
     <ag-grafico-cursos
-      filtro="filtro"
-      atualizacao="atualizacao"
-      ng-if="visualizarGraficoCursos()"
-      ng-show="visualizarGraficoCursos()">
+      ng-if="vm.visualizarGraficoCursos()"
+      ng-show="vm.visualizarGraficoCursos()">
     </ag-grafico-cursos>
 
     <ag-mapa-cursos
-      filtro="filtro"
-      atualizacao="atualizacao"
-      ng-if="visualizarMapaCursos()"
-      ng-show="visualizarMapaCursos()">
+      ng-if="vm.visualizarMapaCursos()"
+      ng-show="vm.visualizarMapaCursos()">
     </ag-mapa-cursos>
 
     <div id="ultima_atualizacao">
