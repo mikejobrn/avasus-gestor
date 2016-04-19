@@ -3,47 +3,21 @@
         .module('AvasusGestor')
         .controller('DashCtrl', DashCtrl)
 
-    DashCtrl.$inject = ['$scope', 'localStorageService', 'ultimaAtualizacaoService', 'filtroService']
+    DashCtrl.$inject = ['$scope', 'filtroService', 'ultimaAtualizacaoService']
 
     /* @ngInject */
-    function DashCtrl($scope, localStorageService, ultimaAtualizacaoService, filtroService) {
+    function DashCtrl($scope, filtroService, ultimaAtualizacaoService) {
         let vm = this
 
         activate()
 
         function activate() {
-            vm.visualizarDadosGerais = () => {
-                let filtro = filtroService.get()
-                return !filtro || filtro.campo === 'estado' || filtro.campo === 'cursos'
-            }
-
-            vm.visualizarGraficoInscricoesMes = () => {
-                let filtro = filtroService.get()
-                return !filtro || (
-                    filtro.campo !== 'perfil' &&
-                    filtro.campo !== 'cursos'
-                )
-            }
-
-            vm.visualizarGraficoCursos = () => {
-                let filtro = filtroService.get()
-                return !filtro || filtro.campo !== 'cursos'
-            }
-
-            vm.visualizarMapaCursos = () => {
-                let filtro = filtroService.get()
-                return !filtro || (
-                    filtro.campo !== 'estado' &&
-                    filtro.campo !== 'perfil' &&
-                    filtro.campo !== 'cursos'
-                )
-            }
+            vm.filtro = filtroService.get()
+            vm.dataAtualizacao = ultimaAtualizacaoService.get()
         }
 
         vm.atualizarDash = () => {
-            $scope.atualizacao++
-            $scope.dataAtualizacao = ultimaAtualizacaoService.get()
-            localStorageService.clear()
+            $scope.atualizarDados()
             $scope.$broadcast('scroll.refreshComplete')
         }
     }

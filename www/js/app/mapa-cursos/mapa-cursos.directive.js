@@ -22,6 +22,7 @@
                 ctrl.filtro = args
                 ctrl.activate()
             })
+            ctrl.activate()
         }
     }
 
@@ -32,6 +33,8 @@
         let vm = this
 
         vm.carregando = true
+
+        vm.visualizar = visualizar
 
         vm.activate = () => {
             vm.carregando = true
@@ -141,6 +144,14 @@
 
         function formatarNumero(numero) {
             return Highcharts.numberFormat(numero, 0, ',', '.')
+        }
+
+        function visualizar() {
+            return !vm.filtro || (
+                vm.filtro.campo !== 'estado' &&
+                vm.filtro.campo !== 'perfil' &&
+                vm.filtro.campo !== 'cursos'
+            )
         }
     }
 })();

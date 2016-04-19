@@ -2,33 +2,36 @@
   <ion-header-bar>
     <h1 class="title">Selecione um curso</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="fecharModalFiltroCurso()">Fechar</button>
+      <button ng-click="fecharModalFiltroCurso()" class="button button-clear">Fechar</button>
     </div>
   </ion-header-bar>
   <ion-content>
     <div class="list">
-      <label class="item item-input" ng-class="{ 'item-select': !cursoCarregando }" ng-hide="cursoErro">
+
+      <label ng-hide="cursosErro" ng-class="{ 'item-select': cursos }" class="item item-input">
         <div class="input-label">
           Selecione o curso
         </div>
-        <div class="col col-33 col-offset-33" ng-show="cursoCarregando">
+
+        <div ng-hide="cursos" class="col col-33 col-offset-33">
           <ion-spinner></ion-spinner>
         </div>
-        <select ng-model="curso"
-          ng-options="curso.curso for curso in cursos track by curso.cursoid"
-          ng-hide="cursoCarregando">
-          <option value="" ng-show="false"></option>
-        </select>
+
+        <div ng-show="cursos">
+          <select ng-model="curso" ng-options="curso.curso for curso in cursos track by curso.cursoid">
+            <option value="" ng-show="false"></option>
+          </select>
+        </div>
       </label>
 
-      <label class="item" ng-show="cursoErro">
-        {{ cursoErro }}
+      <label ng-show="cursosErro" class="item">
+        {{ cursosErro }}
       </label>
 
       <label class="item">
-        <button class="button button-block button-positive" ng-click="filtrarPorCurso(curso)">Filtrar</button>
+        <button ng-click="filtrarPorCurso(curso)" class="button button-block button-positive">Filtrar</button>
       </label>
+      
     </div>
-    </form>
   </ion-content>
 </ion-modal-view>

@@ -4,20 +4,30 @@
         .controller('AppCtrl', AppCtrl);
 
     AppCtrl.$inject = ['$ionicModal', '$ionicPopup', '$scope', '$state',
-      '$ionicHistory', 'perfilService', 'cursoService', 'ultimaAtualizacaoService',
+      '$ionicHistory', 'perfilService', 'cursoService',
       'localStorageService', '$http', 'filtroService'];
 
     /* @ngInject */
     function AppCtrl($ionicModal, $ionicPopup, $scope, $state,
-        $ionicHistory, perfilService, cursoService, ultimaAtualizacaoService,
+        $ionicHistory, perfilService, cursoService,
         localStorageService, $http, filtroService) {
 
         activate()
 
+        //////
+
         function activate() {
             localStorageService.clear()
-            $scope.atualizacao = 0
-            $scope.dataAtualizacao = ultimaAtualizacaoService.get()
+
+            $scope.filtro = {}
+
+            $scope.filtrarPorEstado = filtrarPorEstado
+            $scope.filtrarPorPerfil = filtrarPorPerfil
+            $scope.filtrarPorCurso = filtrarPorCurso
+            $scope.removerFiltro = removerFiltro
+
+            $scope.voltarParaDashboard = voltarParaDashboard
+            $scope.atualizarDados = atualizarDados
 
             criarModal('FiltroDados',   'js/app/filtros/filtro.modal.html')
 
@@ -30,7 +40,49 @@
             carregarListaCursos()
         }
 
-        function criarModal(nome, caminhoTemplate) {
+        function filtrarPorEstado (estado) {
+            $scope.modalFiltroEstado.hide()
+            setFiltro({ campo: 'estado', valor: estado })
+        }
+
+        function filtrarPorPerfil (perfil) {
+            $scope.modalFiltroPerfil.hide()
+            setFiltro({ campo: 'perfil', valor: perfil.id, descricao: perfil.nome })
+        }
+
+        function filtrarPorCurso (curso) {
+            $scope.modalFiltroCurso.hide()
+            setFiltro({ campo: 'cursos', valor: curso.cursoid, descricao: curso.curso })
+        }
+
+        function removerFiltro () {
+            setFiltro()
+        }
+
+        function setFiltro (filtro) {
+            angular.forEach($http.pendingRequests, request => {
+                $http.abort(request)
+            })
+            $scope.filtro = filtro
+            filtroService.set(filtro)
+            voltarParaDashboard()
+        }
+
+        function voltarParaDashboard () {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            })
+            $scope.modalFiltroDados.hide()
+            $state.go('app.dash')
+        }
+
+        function atualizarDados (filtro) {
+            if (filtro) {
+                $scope.filtro = filtro
+            }
+        }
+
+        function criarModal (nome, caminhoTemplate) {
             $ionicModal
                 .fromTemplateUrl(caminhoTemplate, { scope: $scope })
                 .then(modal => {
@@ -46,17 +98,9 @@
             }
         }
 
-        function voltarParaDashboard() {
-            $ionicHistory.nextViewOptions({
-                disableBack: true
-            })
-            $scope.modalFiltroDados.hide()
-            $state.go('app.dash')
-        }
-
-        function carregarListaPerfis() {
-            $scope.perfilCarregando = true
-            $scope.perfilErro = ''
+        function carregarListaPerfis () {
+            $scope.perfis = ''
+            $scope.perfisErro = ''
             perfilService
                 .getPerfis()
                 .then(
@@ -64,18 +108,14 @@
                         $scope.perfis = perfilService.ordenarPorNome(perfis)
                     },
                     () => {
-                        $scope.perfis = ''
-                        $scope.perfilErro = 'Não foi possível obter lista de perfis.'
+                        $scope.perfisErro = 'Não foi possível obter lista de perfis.'
                     }
                 )
-                .finally(() => {
-                    $scope.perfilCarregando = false
-                })
         }
 
-        function carregarListaCursos() {
-            $scope.cursoCarregando = true
-            $scope.cursoErro = ''
+        function carregarListaCursos () {
+            $scope.cursos = ''
+            $scope.cursosErro = ''
             cursoService
                 .getCursos()
                 .then(
@@ -83,46 +123,10 @@
                         $scope.cursos = cursoService.ordenarPorNome(cursos);
                     },
                     () => {
-                        $scope.cursos = '';
-                        $scope.cursoErro = 'Não foi possível obter lista de cursos.';
+                        $scope.cursosErro = 'Não foi possível obter lista de cursos.';
                     }
                 )
-                .finally(() => {
-                    $scope.cursoCarregando = false;
-                })
         }
 
-        function setFiltro(filtro) {
-            angular.forEach($http.pendingRequests, request => {
-                $http.abort(request)
-            })
-            filtroService.set(filtro)
-            $scope.$broadcast('publico.atualizarFiltro', filtro)
-            $scope.dataAtualizacao = ultimaAtualizacaoService.get(filtro)
-            voltarParaDashboard()
-        }
-
-        $scope.voltarParaDashboard = () => {
-            voltarParaDashboard()
-        }
-
-        $scope.filtrarPorEstado = estado => {
-            $scope.modalFiltroEstado.hide()
-            setFiltro({ campo: 'estado', valor: estado })
-        }
-
-        $scope.filtrarPorPerfil = perfil => {
-            $scope.modalFiltroPerfil.hide()
-            setFiltro({ campo: 'perfil', valor: perfil.id, descricao: perfil.nome })
-        }
-
-        $scope.filtrarPorCurso = curso => {
-            $scope.modalFiltroCurso.hide()
-            setFiltro({ campo: 'cursos', valor: curso.cursoid, descricao: curso.curso })
-        }
-
-        $scope.removerFiltro = () => {
-            setFiltro()
-        }
     }
 })();

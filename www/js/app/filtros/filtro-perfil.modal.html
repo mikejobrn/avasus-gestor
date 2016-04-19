@@ -2,34 +2,36 @@
   <ion-header-bar>
     <h1 class="title">Selecione um perfil</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="fecharModalFiltroPerfil()">Fechar</button>
+      <button ng-click="fecharModalFiltroPerfil()" class="button button-clear">Fechar</button>
     </div>
   </ion-header-bar>
   <ion-content>
     <div class="list">
-      <label class="item item-input" ng-class="{ 'item-select': !perfilCarregando }" ng-hide="perfilErro">
+
+      <label ng-hide="perfisErro" ng-class="{ 'item-select': perfis }" class="item item-input">
         <div class="input-label">
           Selecione o perfil
         </div>
-        <div class="col col-33 col-offset-33" ng-show="perfilCarregando">
+
+        <div ng-hide="perfis" class="col col-33 col-offset-33">
           <ion-spinner></ion-spinner>
         </div>
-        <div ng-hide="perfilCarregando">
-          <select ng-model="perfil"
-            ng-options="perfil.nome for perfil in perfis track by perfil.id">
+
+        <div ng-show="perfis">
+          <select ng-model="perfil" ng-options="perfil.nome for perfil in perfis track by perfil.id">
             <option value="" ng-show="false"></option>
           </select>
         </div>
       </label>
 
-      <label class="item" ng-show="perfilErro">
-        {{ perfilErro }}
+      <label ng-show="perfisErro" class="item">
+        {{ perfisErro }}
       </label>
 
       <label class="item">
-        <button class="button button-block button-positive" ng-click="filtrarPorPerfil(perfil)">Filtrar</button>
+        <button ng-click="filtrarPorPerfil(perfil)" class="button button-block button-positive">Filtrar</button>
       </label>
+
     </div>
-    </form>
   </ion-content>
 </ion-modal-view>

@@ -3,10 +3,10 @@
         .module('AvasusGestor')
         .factory('filtroService', filtroService)
 
-    filtroService.$inject = []
+    filtroService.$inject = ['$rootScope']
 
     /* @ngInject */
-    function filtroService() {
+    function filtroService($rootScope) {
         let filtro
 
         let service = {
@@ -18,6 +18,7 @@
 
         function set(filtro) {
             this.filtro = filtro
+            $rootScope.$emit('publico.atualizarFiltro', filtro)
         }
 
         function get() {

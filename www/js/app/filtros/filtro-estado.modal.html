@@ -2,7 +2,7 @@
   <ion-header-bar>
     <h1 class="title">Selecione um estado</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="fecharModalFiltroEstado()">Fechar</button>
+      <button ng-click="fecharModalFiltroEstado()" class="button button-clear">Fechar</button>
     </div>
   </ion-header-bar>
   <ion-content>
@@ -43,9 +43,8 @@
         </select>
       </label>
       <label class="item">
-        <button class="button button-block button-positive" ng-click="filtrarPorEstado(estado)">Filtrar</button>
+        <button ng-click="filtrarPorEstado(estado)" class="button button-block button-positive">Filtrar</button>
       </label>
     </div>
-    </form>
   </ion-content>
 </ion-modal-view>

@@ -1,18 +1,17 @@
-<div class="card">
+<div ng-if="vm.visualizar()" class="card">
   <div class="item item-divider">
     Números Gerais
     <span ng-show="vm.filtro.valor">
       <br>
-      <strong>{{ vm.filtro.campo|uppercase }} - {{ vm.subtitulo }}</strong>
+      <strong>{{ vm.filtro.campo|uppercase }} - {{ vm.filtro.descricao || vm.filtro.valor }}</strong>
     </span>
   </div>
-  <div ng-show="vm.carregando">
+  <div ng-hide="vm.dadosGerais || vm.erro">
     <div class="item item-text-wrap">
       <ion-spinner></ion-spinner>
     </div>
   </div>
-  <div ng-if="!vm.carregando && !vm.erro"
-    ng-show="!vm.carregando && !vm.erro">
+  <div ng-if="vm.dadosGerais" ng-show="vm.dadosGerais">
     <div class="item item-text-wrap">
       <i class="icon ion-person"></i>
       Usuários totais:
@@ -29,7 +28,7 @@
       <span class="positive">{{ vm.dadosGerais.certificados|number }}</span>
     </div>
   </div>
-  <div ng-show="!vm.carregando && vm.erro">
+  <div ng-show="vm.erro">
     <div class="item item-text-wrap">
       Não foi possível obter os dados.
     </div>

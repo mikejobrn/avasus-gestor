@@ -22,6 +22,7 @@
                 ctrl.filtro = args
                 ctrl.activate()
             })
+            ctrl.activate()
         }
     }
 
@@ -32,6 +33,8 @@
         var vm = this
 
         vm.carregando = true
+
+        vm.visualizar = visualizar
 
         vm.activate = () => {
             vm.carregando = true
@@ -196,6 +199,10 @@
             }
 
             return topCursos
+        }
+
+        function visualizar() {
+            return !vm.filtro || vm.filtro.campo !== 'cursos'
         }
     }
 })();

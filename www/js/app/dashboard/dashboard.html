@@ -5,28 +5,20 @@
       on-refresh="vm.atualizarDash()">
     </ion-refresher>
 
-    <ag-dados-gerais
-      ng-if="vm.visualizarDadosGerais()"
-      ng-show="vm.visualizarDadosGerais()">
+    <ag-dados-gerais filtro={{filtro}}>
     </ag-dados-gerais>
 
-    <ag-grafico-inscricoes-mes
-      ng-if="vm.visualizarGraficoInscricoesMes()"
-      ng-show="vm.visualizarGraficoInscricoesMes()">
+    <ag-grafico-inscricoes-mes filtro={{filtro}}>
     </ag-grafico-inscricoes-mes>
 
-    <ag-grafico-cursos
-      ng-if="vm.visualizarGraficoCursos()"
-      ng-show="vm.visualizarGraficoCursos()">
+    <ag-grafico-cursos filtro={{filtro}}>
     </ag-grafico-cursos>
 
-    <ag-mapa-cursos
-      ng-if="vm.visualizarMapaCursos()"
-      ng-show="vm.visualizarMapaCursos()">
+    <ag-mapa-cursos filtro={{filtro}}>
     </ag-mapa-cursos>
 
     <div id="ultima_atualizacao">
-      Dados atualizados em {{ dataAtualizacao.format('DD/MM/YYYY') }} às {{ dataAtualizacao.format('HH:mm:ss') }}
+      Dados atualizados em {{ vm.dataAtualizacao.format('DD/MM/YYYY') }} às {{ vm.dataAtualizacao.format('HH:mm:ss') }}
     </div>
   </ion-content>
 </ion-view>
