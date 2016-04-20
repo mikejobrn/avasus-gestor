@@ -3,12 +3,16 @@
         .module('AvasusGestor')
         .directive('agGraficoCursos', agGraficoCursos)
 
+    agGraficoCursos.$inject = ['Eventos']
+
     /* @ngInject */
-    function agGraficoCursos() {
+    function agGraficoCursos(Eventos) {
         var directive = {
             restrict: 'EA',
-            templateUrl: 'js/app/grafico-cursos/grafico-cursos.html',
-            scope: {},
+            templateUrl: 'js/templates/grafico-cursos/grafico-cursos.html',
+            scope: {
+                filtroString: '@filtro',
+            },
             link: linkFunc,
             controller: Controller,
             controllerAs: 'vm',
@@ -18,18 +22,20 @@
         return directive
 
         function linkFunc(scope, el, attr, ctrl) {
-            scope.$on('publico.atualizarFiltro', (event, args) => {
-                ctrl.filtro = args
+            scope.$watch('vm.filtroString', () => {
                 ctrl.activate()
             })
-            ctrl.activate()
+
+            scope.$on(Eventos.ATUALIZAR_DADOS, () => {
+                ctrl.activate()
+            })
         }
     }
 
-    Controller.$inject = ['cursoService', '$scope', '$timeout']
+    Controller.$inject = ['cursoService', '$scope', '$timeout', 'Highcharts']
 
     /* @ngInject */
-    function Controller(cursoService, $scope, $timeout) {
+    function Controller(cursoService, $scope, $timeout, Highcharts) {
         var vm = this
 
         vm.carregando = true

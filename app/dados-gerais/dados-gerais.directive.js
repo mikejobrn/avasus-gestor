@@ -3,13 +3,13 @@
         .module('AvasusGestor')
         .directive('agDadosGerais', agDadosGerais)
 
-    /* @ngInject */
     agDadosGerais.$inject = ['Eventos']
 
+    /* @ngInject */
     function agDadosGerais(Eventos) {
         let directive = {
             restrict: 'EA',
-            templateUrl: 'js/app/dados-gerais/dados-gerais.html',
+            templateUrl: 'js/templates/dados-gerais/dados-gerais.html',
             scope: {
                 filtroString: '@filtro',
             },
@@ -44,7 +44,6 @@
         function activate () {
             vm.dadosGerais = ''
             vm.erro = ''
-
             if (vm.filtroString !== '') {
                 vm.filtro = JSON.parse(vm.filtroString)
             } else {
@@ -88,8 +87,8 @@
         }
 
         function visualizar () {
-            console.log(vm.filtro);
-            return vm.filtro || vm.filtro.campo === 'estado' || vm.filtro.campo === 'cursos'
+            return (!vm.filtro || Object.keys(vm.filtro).length === 0) ||
+                    (vm.filtro && vm.filtro.campo && (vm.filtro.campo === 'estado' || vm.filtro.campo === 'cursos'))
         }
     }
 })();

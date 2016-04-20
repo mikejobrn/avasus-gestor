@@ -12,7 +12,7 @@
                     url: '/contato',
                     views: {
                     'menuContent': {
-                        templateUrl: 'js/app/contato/contato.html',
+                        templateUrl: 'js/templates/contato/contato.html',
                         controller: 'ContatoCtrl',
                         controllerAs: 'vm'
                         }

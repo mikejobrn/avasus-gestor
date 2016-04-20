@@ -7,7 +7,7 @@
     function agGraficoInscricoesMes() {
         var directive = {
             restrict: 'EA',
-            templateUrl: 'js/app/grafico-inscricoes-mes/grafico-inscricoes-mes.html',
+            templateUrl: 'js/templates/grafico-inscricoes-mes/grafico-inscricoes-mes.html',
             scope: {},
             link: linkFunc,
             controller: Controller,

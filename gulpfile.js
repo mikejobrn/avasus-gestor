@@ -10,49 +10,51 @@ var uglify = require('gulp-uglify');
 var babel = require('gulp-babel');
 
 var paths = {
-  sass: ['./scss/**/*.scss'],
-  angular: ['www/js/app/**/*.module.js', 'www/js/app/**/*.js'],
+  sass: ['scss/**/*.scss'],
+  app: ['app/**/*.module.js', 'app/**/*.js'],
   libsJs: [
-      // Bundle minimificado contendo AngularJS e componentes do Ionic
-      './lib/ionic/js/ionic.bundle.min.js',
-      // Tradução dos componentes do Angular para pt-BR
-      './lib/angular-i18n/angular-locale_pt-br.js',
-      // Biblioteca para gráficos e mapas
-      './lib/highcharts/highcharts.js',
-      './lib/highcharts/modules/map.js',
-      // Mapa do Brasil
-      './lib/highmaps-br/index.js',
-      // Tema utilizado pelos gráficos e mapas
-      './www/js/highcharts-theme.js',
-      // Diretivas Angular para o Highcharts
-      './lib/highcharts-ng/dist/highcharts-ng.min.js',
-      // Biblioteca para manipular datas
-      './lib/moment/min/moment.min.js',
-      './lib/moment/locale/pt-br.js'
+    // Bundle minimificado contendo AngularJS e componentes do Ionic
+    'lib/ionic/js/ionic.bundle.min.js',
+    // Tradução dos componentes do Angular para pt-BR
+    'lib/angular-i18n/angular-locale_pt-br.js',
+    // Biblioteca para gráficos e mapas
+    'lib/highcharts/highcharts.js',
+    'lib/highcharts/modules/map.js',
+    // Mapa do Brasil
+    'lib/highmaps-br/index.js',
+    // Tema utilizado pelos gráficos e mapas
+    'www/js/highcharts-theme.js',
+    // Diretivas Angular para o Highcharts
+    'lib/highcharts-ng/dist/highcharts-ng.min.js',
+    // Biblioteca para manipular datas
+    'lib/moment/min/moment.min.js',
+    'lib/moment/locale/pt-br.js'
   ],
   libsFonts: [
-      {
-          src: './lib/google-open-sans/open-sans/regular.*',
-          dest: './www/lib/google-open-sans/open-sans'
-      },
-      {
-          src: './lib/ionic/fonts/**/*',
-          dest: './www/lib/ionic/fonts'
-      }
+    {
+      src: 'lib/google-open-sans/open-sans/regular.*',
+      dest: 'www/lib/google-open-sans/open-sans'
+    },
+    {
+      src: 'lib/ionic/fonts/**/*',
+      dest: 'www/lib/ionic/fonts'
+    }
   ]
 };
 
-gulp.task('default', ['angular']);
+gulp.task('default', ['app', 'libs', 'sass']);
 
-gulp.task('angular', function() {
-  gulp.src(paths.angular)
+gulp.task('app', function() {
+  gulp.src(paths.app)
     .pipe(concat('all.min.js'))
     .pipe(babel({ presets: ['es2015'] }))
-    .pipe(gulp.dest('./www/js/'));
+    .pipe(gulp.dest('www/js/'));
+});
 
+gulp.task('libs', function() {
   gulp.src(paths.libsJs)
     .pipe(concat('lib.min.js'))
-    .pipe(gulp.dest('./www/js/'));
+    .pipe(gulp.dest('www/js/'));
 
   paths.libsFonts.forEach(function(font) {
     gulp.src(font.src)
@@ -60,33 +62,28 @@ gulp.task('angular', function() {
   });
 });
 
-gulp.task('compress', function() {
-  gulp.src(paths.angular)
-    .pipe(concat('all.min.js'))
-    .pipe(babel({ presets: ['es2015'] }))
-    .pipe(uglify())
-    .pipe(gulp.dest('./www/js/'));
-});
-
 gulp.task('sass', function(done) {
-  gulp.src('./scss/ionic.app.scss')
+  gulp.src('scss/ionic.app.scss')
     .pipe(sass())
     .on('error', sass.logError)
-    .pipe(gulp.dest('./www/css/'))
+    .pipe(gulp.dest('www/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/css/'))
+    .pipe(gulp.dest('www/css/'))
     .on('end', done);
+});
+
+gulp.task('compress', function() {
+  gulp.src('www/js/all.min.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('www/js/'));
 });
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
-  gulp.watch(paths.angular.concat([
-      'www/**/*.html',
-      'www/js/app/**/*.html'
-  ]), ['angular']);
+  gulp.watch(paths.app, ['app']);
 });
 
 gulp.task('install', ['git-check'], function() {

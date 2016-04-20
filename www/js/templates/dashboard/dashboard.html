@@ -5,16 +5,16 @@
       on-refresh="vm.atualizarDash()">
     </ion-refresher>
 
-    <ag-dados-gerais filtro={{filtro}}>
+    <ag-dados-gerais filtro={{vm.filtro}}>
     </ag-dados-gerais>
 
-    <ag-grafico-inscricoes-mes filtro={{filtro}}>
+    <ag-grafico-inscricoes-mes filtro={{vm.filtro}}>
     </ag-grafico-inscricoes-mes>
 
-    <ag-grafico-cursos filtro={{filtro}}>
+    <ag-grafico-cursos filtro={{vm.filtro}}>
     </ag-grafico-cursos>
 
-    <ag-mapa-cursos filtro={{filtro}}>
+    <ag-mapa-cursos filtro={{vm.filtro}}>
     </ag-mapa-cursos>
 
     <div id="ultima_atualizacao">

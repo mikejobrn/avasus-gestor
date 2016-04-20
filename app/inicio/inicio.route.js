@@ -10,7 +10,7 @@
             $stateProvider
                 .state('inicio', {
                     url: '/inicio',
-                    templateUrl: 'js/app/inicio/inicio.html',
+                    templateUrl: 'js/templates/inicio/inicio.html',
                     controller: 'InicioCtrl',
                     controllerAs: 'vm'
                 })

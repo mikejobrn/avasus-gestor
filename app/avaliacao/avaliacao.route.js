@@ -15,7 +15,7 @@
                     url: '/avaliacao',
                     views: {
                         'menuContent': {
-                        templateUrl: 'js/app/avaliacao/avaliacao.html',
+                        templateUrl: 'js/templates/avaliacao/avaliacao.html',
                             controller: 'AvaliacaoCtrl',
                             controllerAs: 'vm'
                         }

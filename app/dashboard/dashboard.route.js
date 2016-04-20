@@ -12,7 +12,7 @@
                     url: '/dash',
                     views: {
                         'menuContent': {
-                            templateUrl: 'js/app/dashboard/dashboard.html',
+                            templateUrl: 'js/templates/dashboard/dashboard.html',
                             controller: 'DashCtrl',
                             controllerAs: 'vm'
                         }

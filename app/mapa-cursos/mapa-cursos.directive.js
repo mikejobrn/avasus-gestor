@@ -7,7 +7,7 @@
     function agMapaCursos() {
         var directive = {
             restrict: 'EA',
-            templateUrl: 'js/app/mapa-cursos/mapa-cursos.html',
+            templateUrl: 'js/templates/mapa-cursos/mapa-cursos.html',
             scope: {},
             link: linkFunc,
             controller: Controller,

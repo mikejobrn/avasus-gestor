@@ -19,8 +19,6 @@
         function activate() {
             localStorageService.clear()
 
-            $scope.filtro = {}
-
             $scope.filtrarPorEstado = filtrarPorEstado
             $scope.filtrarPorPerfil = filtrarPorPerfil
             $scope.filtrarPorCurso = filtrarPorCurso
@@ -29,14 +27,14 @@
             $scope.voltarParaDashboard = voltarParaDashboard
             $scope.atualizarDados = atualizarDados
 
-            criarModal('FiltroDados',   'js/app/filtros/filtro.modal.html')
+            criarModal('FiltroDados',   'js/templates/filtros/filtro.modal.html')
 
-            criarModal('FiltroEstado',  'js/app/filtros/filtro-estado.modal.html')
+            criarModal('FiltroEstado',  'js/templates/filtros/filtro-estado.modal.html')
 
-            criarModal('FiltroPerfil',  'js/app/filtros/filtro-perfil.modal.html')
+            criarModal('FiltroPerfil',  'js/templates/filtros/filtro-perfil.modal.html')
             carregarListaPerfis()
 
-            criarModal('FiltroCurso',   'js/app/filtros/filtro-curso.modal.html')
+            criarModal('FiltroCurso',   'js/templates/filtros/filtro-curso.modal.html')
             carregarListaCursos()
         }
 
@@ -63,7 +61,6 @@
             angular.forEach($http.pendingRequests, request => {
                 $http.abort(request)
             })
-            $scope.filtro = filtro
             filtroService.set(filtro)
             voltarParaDashboard()
         }
@@ -78,7 +75,7 @@
 
         function atualizarDados (filtro) {
             if (filtro) {
-                $scope.filtro = filtro
+                filtroService.set(filtro)
             }
         }
 

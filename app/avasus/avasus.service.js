@@ -22,9 +22,11 @@
                       `&wsfunction=${funcao}` +
                       `&moodlewsrestformat=json`
 
-            if (filtros) {
-                filtros.forEach((filtro) => {
-                    url += `&${filtro.campo}=${filtro.valor}`
+            if (filtros && filtros.length) {
+                filtros.forEach(filtro => {
+                    if (Object.keys(filtro).length) {
+                        url += `&${filtro.campo}=${filtro.valor}`
+                    }
                 })
             }
 

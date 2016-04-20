@@ -3,10 +3,10 @@
         .module('AvasusGestor')
         .config(config)
 
-        config.$inject = ['$stateProvider', '$urlRouterProvider']
+        config.$inject = ['$stateProvider', '$urlRouterProvider', '$compileProvider']
 
         /* @ngInject */
-        function config($stateProvider, $urlRouterProvider) {
+        function config($stateProvider, $urlRouterProvider, $compileProvider) {
             // Ionic uses AngularUI Router which uses the concept of states
             // Learn more here: https://github.com/angular-ui/ui-router
             // Set up the various states which the app can be in.
@@ -16,12 +16,14 @@
                 .state('app', {
                     url: '/app',
                     abstract: true,
-                    templateUrl: 'js/app/menu/menu.html',
+                    templateUrl: 'js/templates/menu/menu.html',
                     controller: 'AppCtrl',
                     controllerAs: 'vm'
                 })
 
             // if none of the above states are matched, use this as the fallback
             $urlRouterProvider.otherwise('/inicio')
+
+            $compileProvider.debugInfoEnabled(false)
         }
 })();

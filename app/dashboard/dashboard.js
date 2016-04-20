@@ -12,7 +12,9 @@
         activate()
 
         function activate() {
-            vm.filtro = filtroService.get()
+            $scope.$watch(() => filtroService.get(), () => {
+                vm.filtro = filtroService.get()
+            })
             vm.dataAtualizacao = ultimaAtualizacaoService.get()
         }
 
