@@ -19,7 +19,6 @@
 
         function getCursos(filtro, atualizar) {
             let url = avasusService.getUrl('widesus_dashboard_curso', filtro)
-
             let cursosSalvos = localStorageService.getObject('listaCursos')
             if (cursosSalvos && !atualizar && !filtro) {
                 return $q.resolve(cursosSalvos)

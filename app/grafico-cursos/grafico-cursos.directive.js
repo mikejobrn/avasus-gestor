@@ -11,7 +11,7 @@
             restrict: 'EA',
             templateUrl: 'js/templates/grafico-cursos/grafico-cursos.html',
             scope: {
-                filtroString: '@filtro',
+                filtroString: '@filtro'
             },
             link: linkFunc,
             controller: Controller,
@@ -44,6 +44,12 @@
 
         vm.activate = () => {
             vm.carregando = true
+
+            if (vm.filtroString !== '') {
+                vm.filtro = JSON.parse(vm.filtroString)
+            } else {
+                vm.filtro = ''
+            }
 
             vm.configPizza = getConfigGraficoPizza()
 

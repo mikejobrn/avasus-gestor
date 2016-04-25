@@ -28,6 +28,8 @@
                         url += `&${filtro.campo}=${filtro.valor}`
                     }
                 })
+            } else if (filtros) {
+                url += `&${filtros.campo}=${filtros.valor}`
             }
 
             return url

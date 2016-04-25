@@ -49,6 +49,9 @@ gulp.task('app', function() {
     .pipe(concat('all.min.js'))
     .pipe(babel({ presets: ['es2015'] }))
     .pipe(gulp.dest('www/js/'));
+
+  gulp.src('app/**/*.html')
+    .pipe(gulp.dest('www/js/templates/'));
 });
 
 gulp.task('libs', function() {
