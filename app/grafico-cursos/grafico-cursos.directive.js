@@ -214,7 +214,8 @@
         }
 
         function visualizar() {
-            return !vm.filtro || vm.filtro.campo !== 'cursos'
+            return (!vm.filtro || Object.keys(vm.filtro).length === 0) ||
+                (vm.filtro && vm.filtro.campo && vm.filtro.campo !== 'cursos')
         }
     }
 })();

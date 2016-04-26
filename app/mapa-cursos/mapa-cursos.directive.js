@@ -32,10 +32,10 @@
         }
     }
 
-    Controller.$inject = ['cursoService', '$scope']
+    Controller.$inject = ['cursoService', '$scope', 'Highcharts']
 
     /* @ngInject */
-    function Controller(cursoService, $scope) {
+    function Controller(cursoService, $scope, Highcharts) {
         let vm = this
 
         vm.carregando = true
@@ -159,7 +159,9 @@
         }
 
         function visualizar() {
-            return !vm.filtro || (
+            return (!vm.filtro || Object.keys(vm.filtro).length === 0) || (
+                vm.filtro &&
+                vm.filtro.campo &&
                 vm.filtro.campo !== 'estado' &&
                 vm.filtro.campo !== 'perfil' &&
                 vm.filtro.campo !== 'cursos'

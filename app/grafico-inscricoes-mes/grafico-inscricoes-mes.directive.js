@@ -32,10 +32,13 @@
         }
     }
 
-    Controller.$inject = ['$http', 'avasusService', '$scope', '$timeout', '$window', 'dadosGeraisService', 'Highcharts']
+    Controller.$inject = ['$http', 'avasusService', '$scope', '$timeout', '$window',
+      'dadosGeraisService', 'Highcharts', 'Moment']
 
     /* @ngInject */
-    function Controller($http, avasusService, $scope, $timeout, $window, dadosGeraisService, Highcharts) {
+    function Controller($http, avasusService, $scope, $timeout, $window,
+        dadosGeraisService, Highcharts, Moment) {
+
         let vm = this
 
         vm.carregando = true
@@ -78,7 +81,7 @@
                         useHTML: true,
                         formatter: function() {
                             return `<div>
-                                <strong>${moment(this.x).format('MMM/YYYY')}</strong><br>
+                                <strong>${Moment(this.x).format('MMM/YYYY')}</strong><br>
                                 ${this.series.name}: <span class="numero">${formatarNumero(this.y)}
                                 </div>`;
                         }
@@ -112,7 +115,7 @@
         }
 
         function setLocalePtBr() {
-            moment.locale('pt-br')
+            Moment.locale('pt-br')
 
             Highcharts.setOptions({
               	lang: {
@@ -150,9 +153,9 @@
         }
 
         function getData() {
-            let data = moment('2015-05-01')
+            let data = Moment('2015-05-01')
             var resultado = []
-            while (data < moment().endOf('month')) {
+            while (data < Moment().endOf('month')) {
                 resultado.push(dadosGeraisService.getPorMes(data, vm.filtro))
                 data.add(1, 'months')
             }
@@ -169,7 +172,7 @@
                     let totalInscritos = []
                     let totalUsuarios = []
 
-                    let data = moment('2015-06-01')
+                    let data = Moment('2015-06-01')
                     let i = 0
                     while (i < diferencas.length) {
                         totalInscritos.push([data.format('X') * 1000, diferencas[i].inscritos])
@@ -192,7 +195,7 @@
                             useHTML: true,
                             formatter: function() {
                                 return `<div>
-                                    <strong>${moment(this.x).format('MMM/YYYY')}</strong><br>
+                                    <strong>${Moment(this.x).format('MMM/YYYY')}</strong><br>
                                     Inscritos: <span class="numero">${formatarNumero(this.y)}
                                     </div>`;
                             }
@@ -211,7 +214,7 @@
                             useHTML: true,
                             formatter: function() {
                                 return `<div>
-                                    <strong>${moment(this.x).format('MMM/YYYY')}</strong><br>
+                                    <strong>${Moment(this.x).format('MMM/YYYY')}</strong><br>
                                     Usuários: <span class="numero">${formatarNumero(this.y)}
                                     </div>`;
                             }
@@ -234,10 +237,8 @@
         }
 
         function visualizar () {
-          return !vm.filtro || (
-              vm.filtro.campo !== 'perfil' &&
-              vm.filtro.campo !== 'cursos'
-          )
+          return (!vm.filtro || Object.keys(vm.filtro).length === 0) ||
+            (vm.filtro && vm.filtro.campo &&  vm.filtro.campo !== 'perfil' && vm.filtro.campo !== 'cursos')
         }
     }
 })();
