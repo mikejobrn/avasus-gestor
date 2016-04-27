@@ -9,12 +9,12 @@
             restrict: 'EA',
             templateUrl: 'js/templates/card/card.html',
             scope: {
-                filtro: '=',
+                filtro: '@',
                 titulo: '@',
-                subtitulo: '=',
                 dados: '=',
                 erro: '=',
                 visualizar: '&',
+                status: '=',
             },
             link: linkFunc,
             controller: Controller,
@@ -30,19 +30,22 @@
         }
     }
 
-    Controller.$inject = []
+    Controller.$inject = ['$scope']
 
     /* @ngInject */
-    function Controller() {
+    function Controller($scope) {
         let vm = this
-
-        vm.dados = ''
-        vm.erro = ''
 
         activate()
 
         function activate() {
-
+            console.log(vm.status);
+            $scope.$watch('vm.filtro', () => {
+                if (vm.filtro) {
+                    let filtro = JSON.parse(vm.filtro)
+                    vm.subtitulo = `${filtro.campo} - ${filtro.descricao || filtro.valor}`
+                }
+            })
         }
     }
 })();

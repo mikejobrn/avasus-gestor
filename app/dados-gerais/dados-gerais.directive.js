@@ -22,7 +22,9 @@
         return directive
 
         function linkFunc(scope, el, attr, ctrl) {
-
+            scope.$watch('vm.filtroString', () => {
+                ctrl.activate()
+            })
 
             scope.$on(Eventos.ATUALIZAR_DADOS, () => {
                 ctrl.activate()
@@ -36,19 +38,15 @@
     function Controller(dadosGeraisService, cursoService, $scope) {
         let vm = this
 
-
         vm.activate = activate
         vm.visualizar = visualizar
-
-        $scope.$watch('vm.filtroString', () => {
-          vm.activate()
-        })
-
+        vm.status = {}
+        vm.status.visivel = visualizar
 
         function activate () {
-            console.log('Dados Gerais - Vm: ', vm);
-            vm.dados = ''
-            vm.erro = ''
+            vm.status.sucesso = false
+            vm.status.erro = false
+
             if (vm.filtroString !== '') {
                 vm.filtro = JSON.parse(vm.filtroString)
                 vm.subtitulo = `${vm.filtro.campo} - ${vm.filtro.descricao || vm.filtro.valor}`
@@ -83,11 +81,13 @@
             dadosGeraisService.get(vm.filtro).then(
                 resultado => {
                     vm.dados = resultado
+                    vm.status.sucesso = true
                     console.log('Dados Gerais - Vm (carregado): ', vm);
                 },
                 erro => {
                     if (erro.config.timeout && erro.config.timeout.$$state.processScheduled == null) {
                         vm.erro = erro
+                        vm.status.erro = true
                     }
                 }
             )
