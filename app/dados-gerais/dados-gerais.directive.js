@@ -11,7 +11,6 @@
             restrict: 'EA',
             templateUrl: 'js/templates/dados-gerais/dados-gerais.html',
             scope: {
-                filtroString: '@filtro',
             },
             link: linkFunc,
             controller: Controller,
@@ -22,7 +21,7 @@
         return directive
 
         function linkFunc(scope, el, attr, ctrl) {
-            scope.$watch('vm.filtroString', () => {
+            scope.$watch('vm.filtro', () => {
                 ctrl.activate()
             })
 
@@ -32,10 +31,10 @@
         }
     }
 
-    Controller.$inject = ['dadosGeraisService', 'cursoService', '$scope']
+    Controller.$inject = ['dadosGeraisService', 'cursoService', '$scope', 'filtroService']
 
     /* @ngInject */
-    function Controller(dadosGeraisService, cursoService, $scope) {
+    function Controller(dadosGeraisService, cursoService, $scope, filtroService) {
         let vm = this
 
         vm.activate = activate
@@ -47,11 +46,12 @@
             vm.status.sucesso = false
             vm.status.erro = false
 
-            if (vm.filtroString !== '') {
-                vm.filtro = JSON.parse(vm.filtroString)
+            $scope.$watch(() => filtroService.get(), () => {
+                vm.filtro = filtroService.get()
+            })
+
+            if (vm.filtro) {
                 vm.subtitulo = `${vm.filtro.campo} - ${vm.filtro.descricao || vm.filtro.valor}`
-            } else {
-                vm.filtro = ''
             }
 
             if (vm.filtro && vm.filtro.campo === 'cursos') {
@@ -82,11 +82,9 @@
                 resultado => {
                     vm.dados = resultado
                     vm.status.sucesso = true
-                    console.log('Dados Gerais - Vm (carregado): ', vm);
                 },
                 erro => {
                     if (erro.config.timeout && erro.config.timeout.$$state.processScheduled == null) {
-                        vm.erro = erro
                         vm.status.erro = true
                     }
                 }

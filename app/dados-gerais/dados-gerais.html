@@ -1,12 +1,4 @@
-<!-- <ag-card titulo="Números Gerais"
-         filtro="{{vm.filtro}}"
-         dados="vm.dados"
-         erro="vm.erro"
-         visualizar="vm.visualizar()"> -->
-<ag-card titulo="Números Gerais"
-        filtro="{{vm.filtro}}"
-        status="vm.status">         
-
+<ag-card titulo="Números Gerais" subtitulo={{vm.subtitulo}} status="vm.status">
   <div class="item item-text-wrap">
     <i class="icon ion-person"></i>
     Usuários totais:
@@ -22,53 +14,4 @@
     Usuários certificados:
     <span class="positive">{{ vm.dados.certificados|number }}</span>
   </div>
-
 </ag-card>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div ng-if="vm.visualizar()" class="card">
-  <div class="item item-divider">
-    Números Gerais
-    <span ng-show="vm.filtro.valor">
-      <br>
-      <strong>{{ vm.filtro.campo|uppercase }} - {{ vm.filtro.descricao || vm.filtro.valor }}</strong>
-    </span>
-  </div>
-  <div ng-hide="vm.dadosGerais || vm.erro">
-    <div class="item item-text-wrap">
-      <ion-spinner></ion-spinner>
-    </div>
-  </div>
-  <div ng-if="vm.dadosGerais" ng-show="vm.dadosGerais">
-    <div class="item item-text-wrap">
-      <i class="icon ion-person"></i>
-      Usuários totais:
-      <span class="positive">{{ vm.dadosGerais.usuarios|number }}</span>
-    </div>
-    <div class="item item-text-wrap">
-      <i class="icon ion-university"></i>
-      Cursos ativos:
-      <span class="positive">{{ vm.dadosGerais.cursos|number }}</span>
-    </div>
-    <div class="item item-text-wrap">
-      <i class="icon ion-ribbon-b"></i>
-      Usuários certificados:
-      <span class="positive">{{ vm.dadosGerais.certificados|number }}</span>
-    </div>
-  </div>
-  <div ng-show="vm.erro">
-    <div class="item item-text-wrap">
-      Não foi possível obter os dados.
-    </div>
-  </div>
-</div> -->

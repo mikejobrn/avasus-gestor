@@ -12,10 +12,9 @@
         activate()
 
         function activate() {
-            $scope.$watch(() => filtroService.get(), () => {
-                vm.filtro = filtroService.get()
-                console.log(vm.filtro);
-            })
+            // $scope.$watch(() => filtroService.get(), () => {
+            //     vm.filtro = filtroService.get()
+            // })
             // vm.dataAtualizacao = ultimaAtualizacaoService.get()
         }
 
@@ -23,7 +22,5 @@
             $scope.atualizarDados()
             $scope.$broadcast('scroll.refreshComplete')
         }
-
-        vm.testar = () => true
     }
 })();

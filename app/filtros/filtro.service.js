@@ -22,6 +22,7 @@
         }
 
         function get() {
+            console.log('GET');
             return this.filtro
         }
     }
