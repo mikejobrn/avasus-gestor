@@ -11,6 +11,7 @@ var babel = require('gulp-babel');
 
 var paths = {
   sass: ['scss/**/*.scss'],
+  templates: ['app/**/*.html'],
   app: ['app/**/*.module.js', 'app/**/*.js'],
   libsJs: [
     // Bundle minimificado contendo AngularJS e componentes do Ionic
@@ -42,15 +43,17 @@ var paths = {
   ]
 };
 
-gulp.task('default', ['app', 'libs', 'sass']);
+gulp.task('default', ['app', 'libs', 'sass', 'templates']);
 
 gulp.task('app', function() {
   gulp.src(paths.app)
     .pipe(concat('all.min.js'))
     .pipe(babel({ presets: ['es2015'] }))
     .pipe(gulp.dest('www/js/'));
+});
 
-  gulp.src('app/**/*.html')
+gulp.task('templates', function() {
+  gulp.src(paths.templates)
     .pipe(gulp.dest('www/js/templates/'));
 });
 
@@ -87,6 +90,7 @@ gulp.task('compress', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.app, ['app']);
+  gulp.watch(paths.templates, ['templates'])
 });
 
 gulp.task('install', ['git-check'], function() {

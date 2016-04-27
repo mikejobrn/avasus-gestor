@@ -1,4 +1,40 @@
-<div ng-if="vm.visualizar()" class="card">
+<ag-card titulo="Números Gerais"
+         subtitulo="vm.subtitulo"
+         filtro="vm.filtro"
+         dados="vm.dados"
+         erro="vm.erro"
+         visualizar="vm.visualizar()">
+
+  <div class="item item-text-wrap">
+    <i class="icon ion-person"></i>
+    Usuários totais:
+    <span class="positive">{{ vm.dados.usuarios|number }}</span>
+  </div>
+  <div class="item item-text-wrap">
+    <i class="icon ion-university"></i>
+    Cursos ativos:
+    <span class="positive">{{ vm.dados.cursos|number }}</span>
+  </div>
+  <div class="item item-text-wrap">
+    <i class="icon ion-ribbon-b"></i>
+    Usuários certificados:
+    <span class="positive">{{ vm.dados.certificados|number }}</span>
+  </div>
+
+</ag-card>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div ng-if="vm.visualizar()" class="card">
   <div class="item item-divider">
     Números Gerais
     <span ng-show="vm.filtro.valor">
@@ -33,4 +69,4 @@
       Não foi possível obter os dados.
     </div>
   </div>
-</div>
+</div> -->

@@ -14,13 +14,16 @@
         function activate() {
             $scope.$watch(() => filtroService.get(), () => {
                 vm.filtro = filtroService.get()
+                console.log(vm.filtro);
             })
-            vm.dataAtualizacao = ultimaAtualizacaoService.get()
+            // vm.dataAtualizacao = ultimaAtualizacaoService.get()
         }
 
         vm.atualizarDash = () => {
             $scope.atualizarDados()
             $scope.$broadcast('scroll.refreshComplete')
         }
+
+        vm.testar = () => true
     }
 })();

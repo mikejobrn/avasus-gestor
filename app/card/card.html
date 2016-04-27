@@ -1,0 +1,21 @@
+<div ng-if="vm.visualizar()" class="card">
+  <div class="item item-divider">
+    {{ vm.titulo }}
+    <span ng-show="vm.subtitulo">
+      <br>
+      <strong>{{ vm.subtitulo }}</strong>
+    </span>
+  </div>
+  <div ng-hide="vm.dados || vm.erro">
+    <div class="item item-text-wrap">
+      <ion-spinner></ion-spinner>
+    </div>
+  </div>
+  <div ng-if="vm.dados" ng-show="vm.dados" ng-transclude>
+  </div>
+  <div ng-show="vm.erro">
+    <div class="item item-text-wrap">
+      Não foi possível obter os dados.
+    </div>
+  </div>
+</div>

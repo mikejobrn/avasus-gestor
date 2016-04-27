@@ -5,17 +5,35 @@
       on-refresh="vm.atualizarDash()">
     </ion-refresher>
 
+    <!-- <ag-card titulo="Números Gerais">
+      <div class="item item-text-wrap">
+        <i class="icon ion-person"></i>
+        Usuários totais:
+        <span class="positive">{{ vm.dadosGerais.usuarios|number }}</span>
+      </div>
+      <div class="item item-text-wrap">
+        <i class="icon ion-university"></i>
+        Cursos ativos:
+        <span class="positive">{{ vm.dadosGerais.cursos|number }}</span>
+      </div>
+      <div class="item item-text-wrap">
+        <i class="icon ion-ribbon-b"></i>
+        Usuários certificados:
+        <span class="positive">{{ vm.dadosGerais.certificados|number }}</span>
+      </div>
+    </ag-card> -->
+
     <ag-dados-gerais filtro={{vm.filtro}}>
     </ag-dados-gerais>
 
-    <ag-grafico-inscricoes-mes filtro={{vm.filtro}}>
+    <!-- <ag-grafico-inscricoes-mes filtro={{vm.filtro}}>
     </ag-grafico-inscricoes-mes>
 
     <ag-grafico-cursos filtro={{vm.filtro}}>
     </ag-grafico-cursos>
 
     <ag-mapa-cursos filtro={{vm.filtro}}>
-    </ag-mapa-cursos>
+    </ag-mapa-cursos> -->
 
     <div id="ultima_atualizacao">
       Dados atualizados em {{ vm.dataAtualizacao.format('DD/MM/YYYY') }} às {{ vm.dataAtualizacao.format('HH:mm:ss') }}

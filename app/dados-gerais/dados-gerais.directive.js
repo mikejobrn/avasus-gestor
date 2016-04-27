@@ -22,9 +22,7 @@
         return directive
 
         function linkFunc(scope, el, attr, ctrl) {
-            scope.$watch('vm.filtroString', () => {
-                ctrl.activate()
-            })
+
 
             scope.$on(Eventos.ATUALIZAR_DADOS, () => {
                 ctrl.activate()
@@ -32,20 +30,28 @@
         }
     }
 
-    Controller.$inject = ['dadosGeraisService', 'cursoService']
+    Controller.$inject = ['dadosGeraisService', 'cursoService', '$scope']
 
     /* @ngInject */
-    function Controller(dadosGeraisService, cursoService) {
+    function Controller(dadosGeraisService, cursoService, $scope) {
         let vm = this
+
 
         vm.activate = activate
         vm.visualizar = visualizar
 
+        $scope.$watch('vm.filtroString', () => {
+          vm.activate()
+        })
+
+
         function activate () {
-            vm.dadosGerais = ''
+            console.log('Dados Gerais - Vm: ', vm);
+            vm.dados = ''
             vm.erro = ''
             if (vm.filtroString !== '') {
                 vm.filtro = JSON.parse(vm.filtroString)
+                vm.subtitulo = `${vm.filtro.campo} - ${vm.filtro.descricao || vm.filtro.valor}`
             } else {
                 vm.filtro = ''
             }
@@ -62,13 +68,13 @@
                 resultado => {
                     let curso = resultado[0]
 
-                    let dadosGerais = {
+                    let dados = {
                         usuarios: curso.inscritos,
                         cursos: 1,
                         certificados: curso.certificados
                     }
 
-                    vm.dadosGerais = dadosGerais
+                    vm.dados = dados
                 }
             )
         }
@@ -76,7 +82,8 @@
         function getDadosGerais () {
             dadosGeraisService.get(vm.filtro).then(
                 resultado => {
-                    vm.dadosGerais = resultado
+                    vm.dados = resultado
+                    console.log('Dados Gerais - Vm (carregado): ', vm);
                 },
                 erro => {
                     if (erro.config.timeout && erro.config.timeout.$$state.processScheduled == null) {
