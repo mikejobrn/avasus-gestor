@@ -11,7 +11,6 @@
             restrict: 'EA',
             templateUrl: 'js/templates/grafico-inscricoes-mes/grafico-inscricoes-mes.html',
             scope: {
-                filtroString: '@filtro'
             },
             link: linkFunc,
             controller: Controller,
@@ -22,7 +21,7 @@
         return directive
 
         function linkFunc(scope, el, attr, ctrl) {
-            scope.$watch('vm.filtroString', () => {
+            scope.$watch('vm.filtro', () => {
                 ctrl.activate()
             })
 
@@ -33,25 +32,29 @@
     }
 
     Controller.$inject = ['$http', 'avasusService', '$scope', '$timeout', '$window',
-      'dadosGeraisService', 'Highcharts', 'Moment']
+      'dadosGeraisService', 'Highcharts', 'Moment', 'filtroService']
 
     /* @ngInject */
     function Controller($http, avasusService, $scope, $timeout, $window,
-        dadosGeraisService, Highcharts, Moment) {
+        dadosGeraisService, Highcharts, Moment, filtroService) {
 
         let vm = this
 
-        vm.carregando = true
-
+        vm.activate = activate
         vm.visualizar = visualizar
+        vm.status = {}
+        vm.status.visivel = visualizar
 
-        vm.activate = function() {
-            vm.carregando = true
+        function activate () {
+            vm.status.sucesso = false
+            vm.status.erro = false
 
-            if (vm.filtroString !== '') {
-                vm.filtro = JSON.parse(vm.filtroString)
-            } else {
-                vm.filtro = ''
+            $scope.$watch(() => filtroService.get(), () => {
+                vm.filtro = filtroService.get()
+            })
+
+            if (vm.filtro) {
+                vm.subtitulo = `${vm.filtro.campo} - ${vm.filtro.descricao || vm.filtro.valor}`
             }
 
             setLocalePtBr()
@@ -59,7 +62,7 @@
             vm.config = getConfigMapa()
 
             getData()
-        };
+        }
 
         function getConfigMapa() {
             return {
@@ -221,12 +224,11 @@
                         },
                     });
 
-                    vm.carregando = false
+                    vm.status.sucesso = true
                 },
                 erro => {
                     if (erro.config.timeout && erro.config.timeout.$$state.processScheduled == null) {
-                        vm.erro = erro
-                        vm.carregando = false
+                        vm.status.erro = true
                     }
                 }
             );
@@ -237,8 +239,8 @@
         }
 
         function visualizar () {
-          return (!vm.filtro || Object.keys(vm.filtro).length === 0) ||
-            (vm.filtro && vm.filtro.campo &&  vm.filtro.campo !== 'perfil' && vm.filtro.campo !== 'cursos')
+            return (!vm.filtro || Object.keys(vm.filtro).length === 0) ||
+                (vm.filtro && vm.filtro.campo &&  vm.filtro.campo !== 'perfil' && vm.filtro.campo !== 'cursos')
         }
     }
 })();
