@@ -1,25 +1,4 @@
-<div ng-if="vm.visualizar()" class="card">
-  <div class="item item-divider">
-    Usuários Inscritos por Curso
-    <span ng-show="vm.filtro.valor">
-      <br>
-      <strong>{{ vm.filtro.campo|uppercase }} - {{ vm.filtro.descricao || vm.filtro.valor|uppercase }}</strong>
-    </span>
-  </div>
-  <div ng-show="vm.carregando">
-    <div class="item item-text-wrap">
-      <ion-spinner></ion-spinner>
-    </div>
-  </div>
-  <div ng-if="!vm.carregando && !vm.erro"
-      ng-show="!vm.carregando && !vm.erro">
-    <highchart id="grafico-cursos-pizza" config="vm.configPizza" ng-hide="vm.carregando"></highchart>
-
-    <highchart id="grafico-cursos-barra" config="vm.configBarra" ng-hide="vm.carregando"></highchart>
-  </div>
-  <div ng-show="!vm.carregando && vm.erro">
-    <div class="item item-text-wrap">
-      Não foi possível obter os dados.
-    </div>
-  </div>
-</div>
+<ag-card titulo="Usuários Inscritos por Curso" subtitulo={{vm.subtitulo}} status="vm.status">
+  <highchart id="grafico-cursos-pizza" config="vm.configPizza"></highchart>
+  <highchart id="grafico-cursos-barra" config="vm.configBarra"></highchart>
+</ag-card>

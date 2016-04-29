@@ -3,23 +3,21 @@
         .module('AvasusGestor')
         .controller('DashCtrl', DashCtrl)
 
-    DashCtrl.$inject = ['$scope', 'filtroService', 'ultimaAtualizacaoService']
+    DashCtrl.$inject = ['$scope', 'ultimaAtualizacaoService', 'localStorageService', 'Eventos']
 
     /* @ngInject */
-    function DashCtrl($scope, filtroService, ultimaAtualizacaoService) {
+    function DashCtrl($scope, ultimaAtualizacaoService, localStorageService, Eventos) {
         let vm = this
 
         activate()
 
         function activate() {
-            // $scope.$watch(() => filtroService.get(), () => {
-            //     vm.filtro = filtroService.get()
-            // })
             // vm.dataAtualizacao = ultimaAtualizacaoService.get()
         }
 
         vm.atualizarDash = () => {
-            $scope.atualizarDados()
+            localStorageService.clear()
+            $scope.$broadcast(Eventos.ATUALIZAR_DADOS)
             $scope.$broadcast('scroll.refreshComplete')
         }
     }

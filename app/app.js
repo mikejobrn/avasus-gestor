@@ -17,7 +17,7 @@
         //////
 
         function activate() {
-            localStorageService.clear()
+            // localStorageService.clear()
 
             $scope.filtrarPorEstado = filtrarPorEstado
             $scope.filtrarPorPerfil = filtrarPorPerfil

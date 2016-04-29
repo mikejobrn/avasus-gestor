@@ -1,4 +1,9 @@
-<ion-view view-title="<div class='dashboard-barra'><img src='img/logo-topo.png'></div>">
+<ion-view>
+ <ion-nav-title>
+   <div class="dashboard-barra">
+     <img src="img/logo-topo.png">
+   </div>
+  </ion-nav-title>
   <ion-content class="padding">
     <ion-refresher
       pulling-text="Puxe para atualizar"
@@ -11,11 +16,11 @@
     <ag-grafico-inscricoes-mes>
     </ag-grafico-inscricoes-mes>
 
-    <!-- <ag-grafico-cursos filtro={{vm.filtro}}>
+    <ag-grafico-cursos>
     </ag-grafico-cursos>
 
-    <ag-mapa-cursos filtro={{vm.filtro}}>
-    </ag-mapa-cursos> -->
+    <ag-mapa-cursos>
+    </ag-mapa-cursos>
 
     <div id="ultima_atualizacao">
       Dados atualizados em {{ vm.dataAtualizacao.format('DD/MM/YYYY') }} às {{ vm.dataAtualizacao.format('HH:mm:ss') }}

@@ -1,23 +1,3 @@
-<div ng-if="vm.visualizar()" class="card">
-  <div class="item item-divider">
-    Usuários Inscritos por Região
-    <span ng-show="vm.filtro.valor">
-      <br>
-      <strong>{{ vm.filtro.campo|uppercase }} - {{ vm.filtro.descricao || vm.filtro.valor|uppercase }}</strong>
-    </span>
-  </div>
-  <div ng-show="vm.carregando">
-    <div class="item item-text-wrap">
-      <ion-spinner></ion-spinner>
-    </div>
-  </div>
-  <div ng-if="!vm.carregando && !vm.erro"
-    ng-show="!vm.carregando && !vm.erro">
-    <highchart id="mapa-cursos" config="vm.config" ng-hide="vm.carregando"></highchart>
-  </div>
-  <div ng-show="!vm.carregando && vm.erro">
-    <div class="item item-text-wrap">
-      Não foi possível obter os dados.
-    </div>
-  </div>
-</div>
+<ag-card titulo="Usuários Inscritos por Região" subtitulo={{vm.subtitulo}} status="vm.status">
+  <highchart id="mapa-cursos" config="vm.config"></highchart>
+</ag-card>

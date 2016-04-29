@@ -11,7 +11,6 @@
             restrict: 'EA',
             templateUrl: 'js/templates/mapa-cursos/mapa-cursos.html',
             scope: {
-                filtroString: '@filtro'
             },
             link: linkFunc,
             controller: Controller,
@@ -22,7 +21,7 @@
         return directive
 
         function linkFunc(scope, el, attr, ctrl) {
-            scope.$watch('vm.filtroString', () => {
+            scope.$watch('vm.filtro', () => {
                 ctrl.activate()
             })
 
@@ -32,23 +31,27 @@
         }
     }
 
-    Controller.$inject = ['cursoService', '$scope', 'Highcharts']
+    Controller.$inject = ['cursoService', '$scope', 'Highcharts', 'filtroService']
 
     /* @ngInject */
-    function Controller(cursoService, $scope, Highcharts) {
+    function Controller(cursoService, $scope, Highcharts, filtroService) {
         let vm = this
 
-        vm.carregando = true
-
+        vm.activate = activate
         vm.visualizar = visualizar
+        vm.status = {}
+        vm.status.visivel = visualizar
 
-        vm.activate = () => {
-            vm.carregando = true
+        function activate () {
+            vm.status.sucesso = false
+            vm.status.erro = false
 
-            if (vm.filtroString !== '') {
-                vm.filtro = JSON.parse(vm.filtroString)
-            } else {
-                vm.filtro = ''
+            $scope.$watch(() => filtroService.get(), () => {
+                vm.filtro = filtroService.get()
+            })
+
+            if (vm.filtro) {
+                vm.subtitulo = `${vm.filtro.campo} - ${vm.filtro.descricao || vm.filtro.valor}`
             }
 
             vm.config = getConfigMapa()
@@ -61,14 +64,12 @@
                 carregarDadosRegiao(['pr', 'sc', 'rs'], 4)
             ]).then(
                 () => {
-                    vm.erro = '';
-                    vm.carregando = false;
+                    vm.status.sucesso = true
                     $scope.$apply();
                 },
                 erro => {
                     if (erro.config.timeout && erro.config.timeout.$$state.processScheduled == null) {
-                        vm.erro = erro
-                        vm.carregando = false
+                        vm.status.erro = true
                     }
                 }
             )

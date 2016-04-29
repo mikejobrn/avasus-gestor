@@ -11,7 +11,6 @@
             restrict: 'EA',
             templateUrl: 'js/templates/grafico-cursos/grafico-cursos.html',
             scope: {
-                filtroString: '@filtro'
             },
             link: linkFunc,
             controller: Controller,
@@ -22,7 +21,7 @@
         return directive
 
         function linkFunc(scope, el, attr, ctrl) {
-            scope.$watch('vm.filtroString', () => {
+            scope.$watch('vm.filtro', () => {
                 ctrl.activate()
             })
 
@@ -32,24 +31,29 @@
         }
     }
 
-    Controller.$inject = ['cursoService', '$scope', '$timeout', 'Highcharts']
+    Controller.$inject = ['cursoService', '$scope', '$timeout', 'Highcharts', 'filtroService']
 
     /* @ngInject */
-    function Controller(cursoService, $scope, $timeout, Highcharts) {
+    function Controller(cursoService, $scope, $timeout, Highcharts, filtroService) {
         var vm = this
 
-        vm.carregando = true
-
+        vm.activate = activate
         vm.visualizar = visualizar
+        vm.status = {}
+        vm.status.visivel = visualizar
 
-        vm.activate = () => {
-            vm.carregando = true
+        function activate () {
+            vm.status.sucesso = false
+            vm.status.erro = false
 
-            if (vm.filtroString !== '') {
-                vm.filtro = JSON.parse(vm.filtroString)
-            } else {
-                vm.filtro = ''
+            $scope.$watch(() => filtroService.get(), () => {
+                vm.filtro = filtroService.get()
+            })
+
+            if (vm.filtro) {
+                vm.subtitulo = `${vm.filtro.campo} - ${vm.filtro.descricao || vm.filtro.valor}`
             }
+
 
             vm.configPizza = getConfigGraficoPizza()
 
@@ -80,15 +84,11 @@
                     vm.configPizza.series[0].data = topCursos
                     vm.configBarra.series[0].data = topCursos
 
-                    $timeout(() => {
-                        vm.carregando = false
-                    })
-
+                    vm.status.sucesso = true
                 },
                 erro => {
                     if (erro.config.timeout && erro.config.timeout.$$state.processScheduled == null) {
-                        vm.erro = erro
-                        vm.carregando = false
+                        vm.status.erro = true
                     }
                 }
             )
