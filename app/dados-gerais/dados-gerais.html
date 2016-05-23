@@ -5,13 +5,18 @@
     <span class="positive">{{ vm.dados.usuarios|number }}</span>
   </div>
   <div class="item item-text-wrap">
+    <i class="icon ion-edit"></i>
+    Usuários matriculados:
+    <span class="positive">{{ vm.dados.inscritos|number }}</span>
+  </div>
+  <div class="item item-text-wrap">
     <i class="icon ion-university"></i>
     Cursos ativos:
     <span class="positive">{{ vm.dados.cursos|number }}</span>
   </div>
   <div class="item item-text-wrap">
     <i class="icon ion-ribbon-b"></i>
-    Usuários certificados:
+    Certificados emitidos:
     <span class="positive">{{ vm.dados.certificados|number }}</span>
   </div>
 </ag-card>
