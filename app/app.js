@@ -22,7 +22,9 @@
             $scope.filtrarPorEstado = filtrarPorEstado
             $scope.filtrarPorPerfil = filtrarPorPerfil
             $scope.filtrarPorCurso = filtrarPorCurso
+            $scope.getFiltro = getFiltro
             $scope.removerFiltro = removerFiltro
+
 
             $scope.voltarParaDashboard = voltarParaDashboard
             $scope.atualizarDados = atualizarDados
@@ -51,6 +53,10 @@
         function filtrarPorCurso (curso) {
             $scope.modalFiltroCurso.hide()
             setFiltro({ campo: 'curso', valor: curso.cursoid, descricao: curso.curso })
+        }
+
+        function getFiltro () {
+            return filtroService.get()
         }
 
         function removerFiltro () {
