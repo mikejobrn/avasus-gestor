@@ -215,7 +215,7 @@
 
         function visualizar() {
             return (!vm.filtro || Object.keys(vm.filtro).length === 0) ||
-                (vm.filtro && vm.filtro.campo && vm.filtro.campo !== 'cursos')
+                (vm.filtro && vm.filtro.campo && vm.filtro.campo !== 'curso')
         }
     }
 })();

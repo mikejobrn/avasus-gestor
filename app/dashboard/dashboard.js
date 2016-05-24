@@ -12,7 +12,7 @@
         activate()
 
         function activate() {
-            // vm.dataAtualizacao = ultimaAtualizacaoService.get()
+            vm.dataAtualizacao = ultimaAtualizacaoService.get()
         }
 
         vm.atualizarDash = () => {

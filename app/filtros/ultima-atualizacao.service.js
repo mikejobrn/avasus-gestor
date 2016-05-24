@@ -3,22 +3,21 @@
         .module('AvasusGestor')
         .factory('ultimaAtualizacaoService', ultimaAtualizacaoService)
 
-    ultimaAtualizacaoService.$inject = []
+    ultimaAtualizacaoService.$inject = ['Moment']
 
     /* @ngInject */
-    /*global moment */
-    function ultimaAtualizacaoService() {
+    function ultimaAtualizacaoService(Moment) {
         let service = {
             get,
         }
 
-        let ultimaAtualizacaoGeral = moment()
+        let ultimaAtualizacaoGeral = Moment()
 
         return service
 
         function get(filtro) {
             if (filtro) {
-                ultimaAtualizacaoGeral = moment()
+                ultimaAtualizacaoGeral = Moment()
             }
 
             return ultimaAtualizacaoGeral

@@ -18,6 +18,9 @@
         ///////////////
 
         function getCursos(filtro, atualizar) {
+            if (filtro && filtro.campo === 'curso') {
+                filtro.campo = 'cursos'
+            }
             let url = avasusService.getUrl('widesus_dashboard_curso', filtro)
             let cursosSalvos = localStorageService.getObject('listaCursos')
             if (cursosSalvos && !atualizar && !filtro) {

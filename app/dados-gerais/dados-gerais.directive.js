@@ -31,10 +31,10 @@
         }
     }
 
-    Controller.$inject = ['dadosGeraisService', 'cursoService', '$scope', 'filtroService']
+    Controller.$inject = ['dadosGeraisService', '$scope', 'filtroService']
 
     /* @ngInject */
-    function Controller(dadosGeraisService, cursoService, $scope, filtroService) {
+    function Controller(dadosGeraisService, $scope, filtroService) {
         let vm = this
 
         vm.activate = activate
@@ -54,7 +54,7 @@
                 vm.subtitulo = `${vm.filtro.campo} - ${vm.filtro.descricao || vm.filtro.valor}`
             }
 
-            if (vm.filtro && vm.filtro.campo === 'cursos') {
+            if (vm.filtro && vm.filtro.campo === 'curso') {
                 getPorCursos()
             } else {
                 getDadosGerais()
@@ -62,14 +62,12 @@
         }
 
         function getPorCursos() {
-            cursoService.getCursos(vm.filtro).then(
+            dadosGeraisService.get(vm.filtro).then(
                 resultado => {
-                    let curso = resultado[0]
-
                     let dados = {
-                        usuarios: curso.inscritos,
+                        usuarios: resultado.inscritos,
                         cursos: 1,
-                        certificados: curso.certificados
+                        certificados: resultado.certificados
                     }
 
                     vm.dados = dados
@@ -93,7 +91,7 @@
 
         function visualizar () {
             return (!vm.filtro || Object.keys(vm.filtro).length === 0) ||
-                    (vm.filtro && vm.filtro.campo && (vm.filtro.campo === 'estado' || vm.filtro.campo === 'cursos'))
+                    (vm.filtro && vm.filtro.campo && (vm.filtro.campo === 'estado' || vm.filtro.campo === 'curso'))
         }
     }
 })();

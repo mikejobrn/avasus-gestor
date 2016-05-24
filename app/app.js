@@ -50,7 +50,7 @@
 
         function filtrarPorCurso (curso) {
             $scope.modalFiltroCurso.hide()
-            setFiltro({ campo: 'cursos', valor: curso.cursoid, descricao: curso.curso })
+            setFiltro({ campo: 'curso', valor: curso.cursoid, descricao: curso.curso })
         }
 
         function removerFiltro () {
@@ -117,10 +117,10 @@
                 .getCursos()
                 .then(
                     cursos => {
-                        $scope.cursos = cursoService.ordenarPorNome(cursos);
+                        $scope.cursos = cursoService.ordenarPorNome(cursos)
                     },
                     () => {
-                        $scope.cursosErro = 'Não foi possível obter lista de cursos.';
+                        $scope.cursosErro = 'Não foi possível obter lista de cursos.'
                     }
                 )
         }

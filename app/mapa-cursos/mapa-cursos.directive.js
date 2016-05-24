@@ -165,7 +165,7 @@
                 vm.filtro.campo &&
                 vm.filtro.campo !== 'estado' &&
                 vm.filtro.campo !== 'perfil' &&
-                vm.filtro.campo !== 'cursos'
+                vm.filtro.campo !== 'curso'
             )
         }
     }
