@@ -52,6 +52,7 @@
 
             vm.status.sucesso = false
             vm.status.erro = false
+            vm.subtitulo = ''
 
             $scope.$watch(() => filtroService.get(), () => {
                 vm.filtro = filtroService.get()
@@ -191,7 +192,7 @@
                     vm.config.series = []
 
                     vm.config.series.push({
-                        name: 'Matrícula',
+                        name: 'Matrículas',
                         color: '#f04847',
                         data: totalInscritos,
                         tooltip : {

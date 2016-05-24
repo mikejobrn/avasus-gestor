@@ -49,6 +49,7 @@
 
             vm.status.sucesso = false
             vm.status.erro = false
+            vm.subtitulo = ''
 
             $scope.$watch(() => filtroService.get(), () => {
                 vm.filtro = filtroService.get()

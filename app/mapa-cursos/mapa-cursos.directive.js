@@ -49,6 +49,7 @@
 
             vm.status.sucesso = false
             vm.status.erro = false
+            vm.subtitulo = ''
 
             $scope.$watch(() => filtroService.get(), () => {
                 vm.filtro = filtroService.get()
@@ -120,8 +121,8 @@
                         formatter: function() {
                             return `<div>
                                 <strong>${this.point.name}</strong><br>
-                                Inscritos: <span class="numero">${formatarNumero(this.point.value)}</span><br>
-                                Certificados: <span class="numero">${formatarNumero(this.point.certificados)}</span>
+                                Usuários totais: <span class="numero">${formatarNumero(this.point.value)}</span><br>
+                                Certificados emitidos: <span class="numero">${formatarNumero(this.point.certificados)}</span>
                                 </div>`;
                         }
                     },

@@ -49,6 +49,7 @@
 
             vm.status.sucesso = false
             vm.status.erro = false
+            vm.subtitulo = ''
 
             $scope.$watch(() => filtroService.get(), () => {
                 vm.filtro = filtroService.get()
@@ -113,9 +114,9 @@
                         formatter: function() {
                             return `<div>
                                 <strong>${this.point.name}</strong><br>
-                                Inscritos: <span class="numero">${formatarNumero(this.y)}
+                                Usuários matriculados: <span class="numero">${formatarNumero(this.y)}
                                 <strong>(${Highcharts.numberFormat(this.percentage, 1)}%)</strong></span><br>
-                                Certificados: <span class="numero">${formatarNumero(this.point.certificados)}</span><br>
+                                Certificados emitidos: <span class="numero">${formatarNumero(this.point.certificados)}</span><br>
                                 Acessos: <span class="numero">${formatarNumero(this.point.acessos)}</span></div>`;
                         }
                     },
@@ -149,8 +150,8 @@
                         formatter: function() {
                             return `<div>
                                 <strong>${this.point.name}</strong><br>
-                                Inscritos: <span class="numero">${formatarNumero(this.y)}</span><br>
-                                Certificados: <span class="numero">${formatarNumero(this.point.certificados)}</span><br>
+                                Usuários totais: <span class="numero">${formatarNumero(this.y)}</span><br>
+                                Certificados emitidos: <span class="numero">${formatarNumero(this.point.certificados)}</span><br>
                                 Acessos: <span class="numero">${formatarNumero(this.point.acessos)}</span></div>`;
                         }
                     },

@@ -18,18 +18,21 @@
         function getUrl(funcao, filtros) {
             let url = avasusConstantes.API_URL +
                       `/${avasusConstantes.API_SERVICO}` +
-                      `?wstoken=${avasusConstantes.API_TOKEN}` +
-                      `&wsfunction=${funcao}` +
-                      `&moodlewsrestformat=json`
+                      `?function=${funcao}`
 
-            if (filtros && filtros.length) {
-                filtros.forEach(filtro => {
-                    if (Object.keys(filtro).length) {
-                        url += `&${filtro.campo}=${filtro.valor}`
-                    }
-                })
-            } else if (filtros) {
-                url += `&${filtros.campo}=${filtros.valor}`
+            let urlFiltros = ''
+            if (filtros) {
+                if (filtros.length) {
+                    filtros.forEach(filtro => {
+                        if (Object.keys(filtro).length) {
+                            urlFiltros += `%26${filtro.campo}%3D${filtro.valor}`
+                        }
+                    })
+                } else {
+                    urlFiltros += `%26${filtros.campo}%3D${filtros.valor}`
+                }
+
+                url += `&filtro=${urlFiltros}`
             }
 
             return url
