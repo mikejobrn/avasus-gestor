@@ -46,6 +46,10 @@
         vm.status.visivel = visualizar
 
         function activate () {
+            if (!vm.status.visivel()) {
+                return
+            }
+
             vm.status.sucesso = false
             vm.status.erro = false
 

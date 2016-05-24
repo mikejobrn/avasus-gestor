@@ -9,7 +9,7 @@
     Usuários matriculados:
     <span class="positive">{{ vm.dados.inscritos|number }}</span>
   </div>
-  <div class="item item-text-wrap">
+  <div class="item item-text-wrap" ng-hide="vm.filtro.campo == 'curso'">
     <i class="icon ion-university"></i>
     Cursos ativos:
     <span class="positive">{{ vm.dados.cursos|number }}</span>

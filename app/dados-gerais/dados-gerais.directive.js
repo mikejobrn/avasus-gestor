@@ -43,6 +43,10 @@
         vm.status.visivel = visualizar
 
         function activate () {
+            if (!vm.status.visivel()) {
+                return
+            }
+
             vm.status.sucesso = false
             vm.status.erro = false
 
@@ -54,11 +58,7 @@
                 vm.subtitulo = `${vm.filtro.campo} - ${vm.filtro.descricao || vm.filtro.valor}`
             }
 
-            if (vm.filtro && vm.filtro.campo === 'curso') {
-                getPorCursos()
-            } else {
-                getDadosGerais()
-            }
+            getDadosGerais()
         }
 
         function getPorCursos() {
