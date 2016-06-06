@@ -15,7 +15,7 @@ var paths = {
   app: ['app/**/*.module.js', 'app/**/*.js'],
   libsJs: [
     // Bundle minimificado contendo AngularJS e componentes do Ionic
-    'lib/ionic/js/ionic.bundle.min.js',
+    'lib/ionic/release/js/ionic.bundle.min.js',
     // Tradução dos componentes do Angular para pt-BR
     'lib/angular-i18n/angular-locale_pt-br.js',
     // Biblioteca para gráficos e mapas

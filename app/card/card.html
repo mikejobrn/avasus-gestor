@@ -6,7 +6,7 @@
       <strong>{{ vm.subtitulo }}</strong>
     </span>
   </div>
-  <div ng-if="!vm.status.sucesso && !vm.status.erro" ng-hide="vm.status.sucesso || vm.status.erro">
+  <div ng-hide="vm.status.sucesso || vm.status.erro">
     <div class="item item-text-wrap">
       <ion-spinner></ion-spinner>
     </div>

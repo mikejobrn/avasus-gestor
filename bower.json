@@ -1,15 +1,13 @@
 {
-  "name": "HelloIonic",
+  "name": "TransparenciaAvasus",
   "private": "true",
-  "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.2.4"
-  },
   "dependencies": {
-    "highcharts": "^4.2.3",
-    "angular-i18n": "^1.5.0",
-    "highcharts-ng": "^0.0.11",
+    "ionic": "~1.3.0",
+    "highcharts": "~4.2.3",
+    "angular-i18n": "~1.5.0",
+    "highcharts-ng": "~0.0.11",
     "highmaps-br": "https://code.highcharts.com/mapdata/countries/br/br-all.js",
-    "google-open-sans": "^1.0.0",
-    "moment": "^2.12.0"
+    "google-open-sans": "~1.0.0",
+    "moment": "~2.12.0"
   }
 }
