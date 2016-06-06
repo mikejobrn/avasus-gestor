@@ -21,24 +21,23 @@
                     !contato.email || contato.email.trim() === '' ||
                     !contato.mensagem || contato.mensagem.trim() === '') {
 
-                $ionicPopup.alert({ title: 'Por favor, preencha todos os campos.' });
+                $ionicPopup.alert({ title: 'Por favor, preencha todos os campos.' })
             } else {
-                enviarEmail(contato);
-                $ionicPopup.alert({ title: 'Sua mensagem foi enviada com sucesso!' });
-                $scope.voltarParaDashboard();
+                enviarEmail(contato)
+                $scope.voltarParaDashboard()
             }
         };
 
         function enviarEmail(contato) {
-            let email = 'moodle@sedis.ufrn.br',
-                subject = 'AVASUS - Gestor',
-                body = `Nome: ${contato.nome}
-                        Email: ${contato.email}
-                        Mensagem: ${contato.mensagem}`
+            let email = 'suporte.sedis@gmail.com',
+                subject = 'Transparência AVASUS',
+                body = `Nome: ${contato.nome}\n` +
+                        `Email: ${contato.email}\n` +
+                        `Mensagem: ${contato.mensagem}`
 
             $window.location.href = `mailto:${email}` +
                 `?subject=${encodeURIComponent(subject)}` +
-                `&body=${encodeURIComponent(body)}`;
+                `&body=${encodeURIComponent(body)}`
         }
     }
 })();

@@ -4,12 +4,12 @@
         .controller('AppCtrl', AppCtrl);
 
     AppCtrl.$inject = ['$ionicModal', '$ionicPopup', '$scope', '$state',
-      '$ionicHistory', 'perfilService', 'cursoService',
+      '$ionicHistory', '$window', 'perfilService', 'cursoService',
       'localStorageService', '$http', 'filtroService'];
 
     /* @ngInject */
     function AppCtrl($ionicModal, $ionicPopup, $scope, $state,
-        $ionicHistory, perfilService, cursoService,
+        $ionicHistory, $window, perfilService, cursoService,
         localStorageService, $http, filtroService) {
 
         activate()
@@ -17,7 +17,7 @@
         //////
 
         function activate() {
-            // localStorageService.clear()
+            localStorageService.clear()
 
             $scope.filtrarPorEstado = filtrarPorEstado
             $scope.filtrarPorPerfil = filtrarPorPerfil
@@ -28,6 +28,7 @@
 
             $scope.voltarParaDashboard = voltarParaDashboard
             $scope.atualizarDados = atualizarDados
+            $scope.avaliar = avaliar
 
             criarModal('FiltroDados',   'js/templates/filtros/filtro.modal.html')
 
@@ -83,6 +84,10 @@
             if (filtro) {
                 filtroService.set(filtro)
             }
+        }
+
+        function avaliar() {
+            $window.open(`market://details?id=br.ufrn.huol.lais.transparenciaavasus`, '_system')
         }
 
         function criarModal (nome, caminhoTemplate) {
