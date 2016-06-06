@@ -29,6 +29,7 @@
             $scope.voltarParaDashboard = voltarParaDashboard
             $scope.atualizarDados = atualizarDados
             $scope.avaliar = avaliar
+            $scope.acessarAva = acessarAva
 
             criarModal('FiltroDados',   'js/templates/filtros/filtro.modal.html')
 
@@ -87,7 +88,12 @@
         }
 
         function avaliar() {
-            $window.open(`market://details?id=br.ufrn.huol.lais.transparenciaavasus`, '_system')
+            $window.open('market://details?id=br.ufrn.huol.lais.transparenciaavasus', '_system')
+        }
+
+        function acessarAva() {
+            $window.open('https://avasus.ufrn.br/', '_blank',
+                'location=no,zoom=yes,clearcache=yes,clearsessioncache=yes')
         }
 
         function criarModal (nome, caminhoTemplate) {
