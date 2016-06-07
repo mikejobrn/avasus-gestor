@@ -8,6 +8,7 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 var babel = require('gulp-babel');
+var autoprefixer = require('gulp-autoprefixer');
 
 var paths = {
   sass: ['scss/**/*.scss'],
@@ -73,6 +74,10 @@ gulp.task('sass', function(done) {
     .pipe(sass())
     .on('error', sass.logError)
     .pipe(gulp.dest('www/css/'))
+    .pipe(autoprefixer({
+        browsers: ['> 1%'],
+        cascade: false
+    }))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))

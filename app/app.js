@@ -30,6 +30,7 @@
             $scope.atualizarDados = atualizarDados
             $scope.avaliar = avaliar
             $scope.acessarAva = acessarAva
+            $scope.enviarContato = enviarContato
 
             criarModal('FiltroDados',   'js/templates/filtros/filtro.modal.html')
 
@@ -40,6 +41,9 @@
 
             criarModal('FiltroCurso',   'js/templates/filtros/filtro-curso.modal.html')
             carregarListaCursos()
+
+            criarModal('Contato',       'js/templates/contato/contato.modal.html')
+            criarModal('Creditos',      'js/templates/creditos/creditos.modal.html')
         }
 
         function filtrarPorEstado (estado) {
@@ -140,6 +144,31 @@
                         $scope.cursosErro = 'Não foi possível obter lista de cursos.'
                     }
                 )
+        }
+
+        function enviarContato(contato) {
+            if (!contato ||
+                    !contato.nome || contato.nome.trim() === '' ||
+                    !contato.email || contato.email.trim() === '' ||
+                    !contato.mensagem || contato.mensagem.trim() === '') {
+
+                $ionicPopup.alert({ title: 'Por favor, preencha todos os campos.' })
+            } else {
+                enviarEmail(contato)
+                $scope.fecharModalContato()
+            }
+        }
+
+        function enviarEmail(contato) {
+            let email = 'suporte.sedis@gmail.com',
+                subject = 'Transparência AVASUS',
+                body = `Nome: ${contato.nome}\n` +
+                        `Email: ${contato.email}\n` +
+                        `Mensagem: ${contato.mensagem}`
+
+            $window.location.href = `mailto:${email}` +
+                `?subject=${encodeURIComponent(subject)}` +
+                `&body=${encodeURIComponent(body)}`
         }
 
     }

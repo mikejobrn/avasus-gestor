@@ -1,4 +1,10 @@
-<ion-view view-title="Fale conosco">
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Fale conosco</h1>
+    <div class="buttons">
+      <button ng-click="fecharModalContato()" class="button button-clear">Fechar</button>
+    </div>
+  </ion-header-bar>
   <ion-content>
     <div class="list">
       <label class="item item-input item-floating-label">
@@ -12,8 +18,8 @@
       </label>
       <div class="padding">
         <button class="button button-block button-positive"
-            ng-Click="vm.enviar(contato)">Enviar</button>
+            ng-Click="enviarContato(contato)">Enviar</button>
       </div>
     </div>
   </ion-content>
-</ion-view>
+</ion-modal-view>
